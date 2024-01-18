@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <!-- Reset CSS -->
+        <!-- <link rel="stylesheet" th:href="@{assets/css/reset.css}" /> -->
+
+        <!-- Style CSS -->
+        <!-- <link rel="stylesheet" th:href="@{assets/css/common.css}" />
+        <link rel="stylesheet" th:href="@{assets/css/login-style.css}" /> -->
+        <html xmlns:th="http://www.thymeleaf.org"></html>
+        <link
+            rel="stylesheet"
+            href="../static/assets/css/reset.css"
+            th:href="@{/assets/css/reset.css}"
+        />
+        <link
+            rel="stylesheet"
+            href="../static/assets/css/common.css"
+            th:href="@{/assets/css/common.css}"
+        />
+        <link
+            rel="stylesheet"
+            href="../static/assets/css/login-style.css"
+            th:href="@{/assets/css/login-style.css}"
+        />
+
+        <!-- Embed Font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Roboto:wght@400;500&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <div class="login">
+            <div class="login-left">
+                <a href="/">
+                    <img
+                        src="../static/assets/img/quizgrad.svg"
+                        th:src="@{/assets/img/quizgrad.svg}"
+                        alt=""
+                    />
+                </a>
+                <p class="desc">
+                    Welcome back! <br />Please login/Signup to your account.
+                </p>
+                <form action="/login" class="login-form" method="post">
+                    <div class="input-wrapper">
+                        <label for="username">Email Address</label>
+                        <input
+                            type="text"
+                            placeholder=""
+                            name="username"
+                            id="username"
+                            autocomplete="nope"
+                        />
+                        <div class="bar"></div>
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="password">Password</label>
+                        <input
+                            type="password"
+                            placeholder=""
+                            name="password"
+                            id="password"
+                        />
+                        <div class="bar"></div>
+                    </div>
+                    <div class="box_wrapper">
+                        <input
+                            type="checkbox"
+                            name="remember"
+                            id="remember"
+                            hidden
+                        />
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <input type="submit" value="Login" class="btn" />
+                    <a href="#!" class="btn registerBtn">Register</a>
+                </form>
+            </div>
+            <div class="login-right">
+                <img
+                    src="../static/assets/img/hands-graduate.svg"
+                    th:src="@{/assets/img/hands-graduate.svg}"
+                    alt=""
+                />
+            </div>
+        </div>
+        <div class="modal">
+            <div class="modal-container">
+                <div class="header">Register</div>
+                <form action="/login" class="register-form" method="post">
+                    <div class="form-wrapper">
+                        <div class="input-wrapper">
+                            <label for="lastname">Họ</label>
+                            <input
+                                type="text"
+                                placeholder=""
+                                name="lastname"
+                                id="lastname"
+                                autocomplete="nope"
+                                rules="required"
+                            />
+                            <div class="bar"></div>
+                        </div>
+                        <span class="form-message"></span>
+                        <div class="input-wrapper">
+                            <label for="firstname">Tên</label>
+                            <input
+                                type="text"
+                                placeholder=""
+                                name="firstname"
+                                id="firstname"
+                                autocomplete="nope"
+                                rules="required"
+                            />
+                            <div class="bar"></div>
+                        </div>
+                        <span class="form-message"></span>
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="username">User Name</label>
+                        <input
+                            type="text"
+                            placeholder=""
+                            name="username"
+                            id="username"
+                            autocomplete="nope"
+                            rules="required"
+                        />
+                        <div class="bar"></div>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="input-wrapper">
+                        <label for="password">Password</label>
+                        <input
+                            type="password"
+                            placeholder=""
+                            name="password"
+                            id="password"
+                            rules="required|min:6"
+                        />
+                        <div class="bar"></div>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="input-wrapper">
+                        <label for="confirm-password">Confirm Password</label>
+                        <input
+                            type="password"
+                            placeholder=""
+                            name="confirm-password"
+                            id="confirm-password"
+                            rules="required|confirmPassword"
+                        />
+                        <div class="bar"></div>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="box-wrapper">
+                        <input type="radio" name="gender" id="male" checked />
+                        <label for="male" checked>Nam</label>
+                        <input type="radio" name="gender" id="female" />
+                        <label for="female">Nữ</label>
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="address">Địa chỉ</label>
+                        <input
+                            type="text"
+                            placeholder=""
+                            name="address"
+                            id="address"
+                            rules="required"
+                        />
+                        <div class="bar"></div>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="input-wrapper">
+                        <label for="masv">Mã Sinh Viên</label>
+                        <input
+                            type="text"
+                            placeholder=""
+                            name="address"
+                            id="masv"
+                            rules="required"
+                        />
+                        <div class="bar"></div>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="select-wrapper">
+                        <label for="classes">Chọn lớp:</label>
+                        <select id="classes" name="class">
+                            <option value="D21CQCN01-N">D21CQCN01-N</option>
+                            <option value="D21CQCN02-N">D21CQCN02-N</option>
+                        </select>
+                    </div>
+                    <div class="btn-controller">
+                        <button
+                            type="submit"
+                            href="#!"
+                            class="btn registerSubmitBtn"
+                        >
+                            Register
+                        </button>
+                        <a href="#!" class="btn-trans closeBtn">Close</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+    <script
+        th:src="@{/javascript/validation.js}"
+        src="../static/javascript/validation.js"
+    ></script>
+    <script>
+        Validator(".register-form");
+        const submitRegister = document.querySelector(".registerSubmitBtn");
+        const registerBtn = document.querySelector(".registerBtn");
+        const closeBtn = document.querySelector(".closeBtn");
+        const modal = document.querySelector(".modal");
+        const modalContainer = document.querySelector(".modal-container");
+        let closeModal = function () {
+            modal.classList.remove("open");
+            let formGroups = document.querySelectorAll(".input-wrapper");
+            for (let formGroup of formGroups) {
+                if (formGroup.classList.contains("invalid")) {
+                    formGroup.classList.remove("invalid");
+                    formGroup.nextElementSibling.classList.remove("invalid");
+                    formGroup.nextElementSibling.textContent = "";
+                }
+            }
+        };
+        modal.addEventListener("click", closeModal);
+
+        // Ngan su kien noi bot ke tu modal container
+        modalContainer.addEventListener("click", function (event) {
+            event.stopPropagation();
+        });
+
+        closeBtn.addEventListener("click", closeModal);
+
+        registerBtn.addEventListener("click", function () {
+            modal.classList.add("open");
+        });
+    </script>
+</html>

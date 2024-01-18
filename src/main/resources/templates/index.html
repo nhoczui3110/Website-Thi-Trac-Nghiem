@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+
+        <!-- Reset CSS -->
+        <link
+            rel="stylesheet"
+            th:href="@{assets/css/reset.css}"
+            href="../static/assets/css/reset.css"
+        />
+
+        <!-- Style CSS -->
+        <link
+            rel="stylesheet"
+            th:href="@{assets/css/common.css}"
+            href="../static/assets/css/common.css"
+        />
+        <link
+            rel="stylesheet"
+            th:href="@{assets/css/index-style.css}"
+            href="../static/assets/css/index-style.css"
+        />
+
+        <!-- Embed Font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Roboto:wght@400;500&display=swap"
+            rel="stylesheet"
+        />
+
+        <!-- Favicon -->
+        <link
+            rel="apple-touch-icon"
+            sizes="57x57"
+            href="./assets/favicon/apple-icon-57x57.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="60x60"
+            href="./assets/favicon/apple-icon-60x60.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="72x72"
+            href="./assets/favicon/apple-icon-72x72.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="76x76"
+            href="./assets/favicon/apple-icon-76x76.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="114x114"
+            href="./assets/favicon/apple-icon-114x114.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="120x120"
+            href="./assets/favicon/apple-icon-120x120.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="144x144"
+            href="./assets/favicon/apple-icon-144x144.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="152x152"
+            href="./assets/favicon/apple-icon-152x152.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="./assets/favicon/apple-icon-180x180.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="192x192"
+            href="./assets/favicon/android-icon-192x192.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="./assets/favicon/favicon-32x32.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="96x96"
+            href="./assets/favicon/favicon-96x96.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="./assets/favicon/favicon-16x16.png"
+        />
+        <link rel="manifest" href="./assets/favicon/manifest.json" />
+        <meta name="msapplication-TileColor" content="#ffffff" />
+        <meta
+            name="msapplication-TileImage"
+            content="./assets/favicon/ms-icon-144x144.png"
+        />
+        <meta name="theme-color" content="#ffffff" />
+    </head>
+    <body>
+        <header class="header">
+            <div class="wrapper">
+                <a href="/"
+                    ><img
+                        src="../static/assets/img/quizgrad.svg"
+                        alt="QuizGrad"
+                        srcset=""
+                        th:src="@{/assets/img/quizgrad.svg}"
+                /></a>
+                <ul class="nav__wrapper">
+                    <li class="item">
+                        <a href="#!" class="text">How it works?</a>
+                    </li>
+                    <li class="item">
+                        <a href="#!" class="text">Features</a>
+                    </li>
+                    <li class="item">
+                        <a href="#!" class="text">About us</a>
+                    </li>
+                    <li class="item">
+                        <a href="/login" class="btn-trans">
+                            <span>Login</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <div class="hero">
+            <div class="wrapper">
+                <div class="hero__left">
+                    <h1 class="title">
+                        Learn <br />new concepts <br />for each question
+                    </h1>
+                    <p class="desc">We help you prepare for exams and quizes</p>
+                    <div class="control">
+                        <a href="/login" class="btn">Start solving</a>
+                        <div class="text-wrapper">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="13.5"
+                                height="12  "
+                                viewBox="0 0 9 8"
+                                fill="none"
+                            >
+                                <path
+                                    d="M4.40843 7.88428L1.14031 2.22373L7.67655 2.22373L4.40843 7.88428Z"
+                                    fill="#FCC822"
+                                />
+                            </svg>
+                            <a href="#!" class="text">know more</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero__right">
+                    <img
+                        src="../static/assets/img/hero.svg"
+                        alt="Hero"
+                        srcset=""
+                        th:src="@{/assets/img/hero.svg}"
+                    />
+                </div>
+            </div>
+        </div>
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="196"
+            height="72"
+            viewBox="0 0 196 72"
+            fill="none"
+        >
+            <path
+                d="M192.034 162.568C192.034 162.568 198.813 133.543 187.499 122.705C176.48 112.15 148.591 119.125 148.591 119.125C148.591 119.125 110.911 130.133 91.5414 119.125C58.4737 100.333 111.05 51.0288 86.648 21.8545C59.4721 -10.6356 -20.767 6.81645 -20.767 6.81645"
+                stroke="url(#paint0_linear_11_72)"
+                stroke-width="2.92514"
+            />
+            <defs>
+                <linearGradient
+                    id="paint0_linear_11_72"
+                    x1="-21.452"
+                    y1="9.66583"
+                    x2="209.634"
+                    y2="191.61"
+                    gradientUnits="userSpaceOnUse"
+                >
+                    <stop stop-color="#FFDD72" />
+                    <stop offset="1" stop-color="#FCC822" />
+                </linearGradient>
+            </defs>
+        </svg>
+    </body>
+    <script>
+        console.log(1);
+        setTimeout(() => {
+            console.log(2);
+        }, 1000);
+        console.log(3);
+    </script>
+</html>

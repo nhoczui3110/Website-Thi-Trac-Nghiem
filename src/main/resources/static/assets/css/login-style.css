@@ -1,0 +1,262 @@
+.login {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.login-left {
+    padding: 0 65px 0 43px;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.login-left img {
+    width: 329px;
+}
+
+.login-left .desc {
+    margin-top: 68px;
+    margin-bottom: 44px;
+    color: var(--primary-black-color);
+    text-align: center;
+    font-family: Roboto;
+    font-size: 2rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    width: 336px;
+}
+
+.login-form {
+    width: 50%;
+}
+
+.register-form {
+    width: 100%;
+    padding: 36px;
+}
+
+.input-wrapper {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 0.6px solid #C1BBBB;
+    padding: 6px 16px;
+    position: relative;
+    background-color: #fff;
+}
+
+.input-wrapper label {
+    color: rgba(0, 0, 0, 0.61);
+    font-family: Roboto;
+    font-size: 1.4rem;
+    transition: color 0.2 ease-in-out;
+}
+
+.input-wrapper input {
+    width: 100%;
+    border: none;
+    color: #000;
+    font-size: 1.4rem;
+}
+
+.input-wrapper input:focus {
+    outline: none;
+}
+
+.input-wrapper .bar {
+    position: absolute;
+    width: 0;
+    background-color: var(--primary-color);
+    left: 0;
+    bottom: 0;
+    top: 0;
+    transition: width ease-in-out 0.2s;
+}
+
+.input-wrapper input:focus+.bar {
+    display: inline-block;
+    width: 4px;
+}
+
+.input-wrapper:focus-within label {
+    color: var(--primary-color);
+}
+
+.login-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+    background: radial-gradient(72.53% 75.59% at 50% 50%, rgba(255, 255, 255, 0.41) 16.55%, rgba(243, 243, 243, 0.41) 32.78%);
+}
+
+.box_wrapper {
+    margin-top: 36px;
+    display: flex;
+    align-items: center;
+}
+
+.box_wrapper label {
+    display: flex;
+    align-items: center;
+    position: relative;
+    column-gap: 6px;
+}
+
+.box_wrapper label::before {
+    content: "";
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+    /* background-color: antiquewhite; */
+    border: 1px solid var(--primary-color);
+
+}
+
+.box_wrapper input:checked~label::before {
+    background-color: var(--primary-color);
+}
+
+.box_wrapper input:checked~label::after {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 5px;
+    background-color: transparent;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    position: absolute;
+    rotate: -45deg;
+    left: 2px;
+    bottom: 6px;
+}
+
+.login-form .btn {
+    margin-top: 82px;
+    margin-right: 20px;
+    width: 125px;
+    height: 66px;
+}
+
+/* modal register */
+.modal {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.open {
+    display: flex;
+}
+
+.modal-container {
+    width: 500px;
+    /* height: 500px; */
+    background-color: #fff;
+    animation: modalFadeIn ease 0.3s;
+}
+
+.modal-container .header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 0;
+    background-color: var(--primary-color);
+    font-size: 2.5rem;
+    color: #fff;
+    font-weight: 500;
+}
+
+.modal-container .box-wrapper {
+    margin-top: 16px;
+}
+
+.modal-container select {
+    /* border: red 1px solid; */
+}
+
+.modal-container .select-wrapper {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+}
+
+.closeBtn {
+    height: 55.55px;
+}
+
+.btn-controller {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+    justify-content: space-between;
+}
+
+.input-wrapper.invalid {
+    border: red 0.6px solid;
+}
+
+.form-message {
+    opacity: 0;
+}
+
+.input-wrapper.invalid+.form-message {
+    margin-top: 16px;
+    opacity: 1;
+    color: red;
+}
+
+.form-wrapper {
+    display: grid;
+    grid-template-areas:
+        "formLastname formFirstName"
+        "errorMessageLastname errorMessageFirstName"
+    ;
+    column-gap: 16px;
+    margin-bottom: 16px;
+}
+
+
+.form-wrapper .input-wrapper:nth-of-type(1) {
+    grid-area: formLastname;
+    margin: 0;
+}
+
+.form-wrapper .input-wrapper:nth-of-type(1)+.form-message {
+    grid-area: errorMessageLastname;
+}
+
+.form-wrapper .input-wrapper:nth-of-type(2) {
+    grid-area: formFirstName;
+    margin: 0;
+}
+
+.form-wrapper .input-wrapper:nth-of-type(2)+.form-message {
+    grid-area: errorMessageFirstName;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-120px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
