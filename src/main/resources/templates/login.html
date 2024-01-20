@@ -80,7 +80,6 @@
                         <label for="remember">Remember me</label>
                     </div>
                     <input type="submit" value="Login" class="btn" />
-                    <a href="#!" class="btn registerBtn">Register</a>
                 </form>
             </div>
             <div class="login-right">
@@ -89,125 +88,6 @@
                     th:src="@{/assets/img/hands-graduate.svg}"
                     alt=""
                 />
-            </div>
-        </div>
-        <div class="modal">
-            <div class="modal-container">
-                <div class="header">Register</div>
-                <form action="/login" class="register-form" method="post">
-                    <div class="form-wrapper">
-                        <div class="input-wrapper">
-                            <label for="lastname">Họ</label>
-                            <input
-                                type="text"
-                                placeholder=""
-                                name="lastname"
-                                id="lastname"
-                                autocomplete="nope"
-                                rules="required"
-                            />
-                            <div class="bar"></div>
-                        </div>
-                        <span class="form-message"></span>
-                        <div class="input-wrapper">
-                            <label for="firstname">Tên</label>
-                            <input
-                                type="text"
-                                placeholder=""
-                                name="firstname"
-                                id="firstname"
-                                autocomplete="nope"
-                                rules="required"
-                            />
-                            <div class="bar"></div>
-                        </div>
-                        <span class="form-message"></span>
-                    </div>
-                    <div class="input-wrapper">
-                        <label for="username">User Name</label>
-                        <input
-                            type="text"
-                            placeholder=""
-                            name="username"
-                            id="username"
-                            autocomplete="nope"
-                            rules="required"
-                        />
-                        <div class="bar"></div>
-                    </div>
-                    <span class="form-message"></span>
-                    <div class="input-wrapper">
-                        <label for="password">Password</label>
-                        <input
-                            type="password"
-                            placeholder=""
-                            name="password"
-                            id="password"
-                            rules="required|min:6"
-                        />
-                        <div class="bar"></div>
-                    </div>
-                    <span class="form-message"></span>
-                    <div class="input-wrapper">
-                        <label for="confirm-password">Confirm Password</label>
-                        <input
-                            type="password"
-                            placeholder=""
-                            name="confirm-password"
-                            id="confirm-password"
-                            rules="required|confirmPassword"
-                        />
-                        <div class="bar"></div>
-                    </div>
-                    <span class="form-message"></span>
-                    <div class="box-wrapper">
-                        <input type="radio" name="gender" id="male" checked />
-                        <label for="male" checked>Nam</label>
-                        <input type="radio" name="gender" id="female" />
-                        <label for="female">Nữ</label>
-                    </div>
-                    <div class="input-wrapper">
-                        <label for="address">Địa chỉ</label>
-                        <input
-                            type="text"
-                            placeholder=""
-                            name="address"
-                            id="address"
-                            rules="required"
-                        />
-                        <div class="bar"></div>
-                    </div>
-                    <span class="form-message"></span>
-                    <div class="input-wrapper">
-                        <label for="masv">Mã Sinh Viên</label>
-                        <input
-                            type="text"
-                            placeholder=""
-                            name="address"
-                            id="masv"
-                            rules="required"
-                        />
-                        <div class="bar"></div>
-                    </div>
-                    <span class="form-message"></span>
-                    <div class="select-wrapper">
-                        <label for="classes">Chọn lớp:</label>
-                        <select id="classes" name="class">
-                            <option value="D21CQCN01-N">D21CQCN01-N</option>
-                            <option value="D21CQCN02-N">D21CQCN02-N</option>
-                        </select>
-                    </div>
-                    <div class="btn-controller">
-                        <button
-                            type="submit"
-                            href="#!"
-                            class="btn registerSubmitBtn"
-                        >
-                            Register
-                        </button>
-                        <a href="#!" class="btn-trans closeBtn">Close</a>
-                    </div>
-                </form>
             </div>
         </div>
     </body>
