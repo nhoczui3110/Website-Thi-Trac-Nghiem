@@ -1,6 +1,7 @@
 const featureItems = document.querySelectorAll(".controller-wrapper .item");
 const quanLiSv = featureItems[1];
 const quanLiGv = featureItems[2];
+const quanLiThi = featureItems[3];
 console.log(quanLiGv);
 
 //Handle
@@ -120,13 +121,19 @@ function createForm(type) {
             <div class="bar"></div>
         </div>
         <span class="form-message"></span>
-        <div class="select-wrapper">
+        <div class="input-wrapper">
             <label for="classes">Chọn lớp:</label>
             <select id="classes" name="class">
                 <option value="D21CQCN01-N">D21CQCN01-N</option>
                 <option value="D21CQCN02-N">D21CQCN02-N</option>
             </select>
         </div>
+        <span class="form-message"></span>
+        <div class="input-wrapper">
+            <label for="birthday">Ngày sinh</label>
+            <input type="date" name="birthday" id="birthday" rules="required"/>
+        </div>
+        <span class="form-message"></span>
         <div class="btn-controller">
             <button
                 type="submit"
@@ -138,6 +145,197 @@ function createForm(type) {
             <a href="#!" class="btn-trans closeBtn">Close</a>
         </div>
     </form>`;
+    else if (type === "gv")
+        return `<div class="header">Register</div>
+    <form action="/login" class="register-form" method="post">
+        <div class="form-wrapper">
+            <div class="input-wrapper">
+                <label for="lastname">Họ</label>
+                <input
+                    type="text"
+                    placeholder=""
+                    name="lastname"
+                    id="lastname"
+                    autocomplete="nope"
+                    rules="required"
+                />
+                <div class="bar"></div>
+            </div>
+            <span class="form-message"></span>
+            <div class="input-wrapper">
+                <label for="firstname">Tên</label>
+                <input
+                    type="text"
+                    placeholder=""
+                    name="firstname"
+                    id="firstname"
+                    autocomplete="nope"
+                    rules="required"
+                />
+                <div class="bar"></div>
+            </div>
+            <span class="form-message"></span>
+        </div>
+        <div class="input-wrapper">
+            <label for="username">User Name</label>
+            <input
+                type="text"
+                placeholder=""
+                name="username"
+                id="username"
+                autocomplete="nope"
+                rules="required"
+            />
+            <div class="bar"></div>
+        </div>
+        <span class="form-message"></span>
+        <div class="input-wrapper">
+            <label for="password">Password</label>
+            <input
+                type="password"
+                placeholder=""
+                name="password"
+                id="password"
+                rules="required|min:6"
+            />
+            <div class="bar"></div>
+        </div>
+        <span class="form-message"></span>
+        <div class="input-wrapper">
+            <label for="confirm-password">Confirm Password</label>
+            <input
+                type="password"
+                placeholder=""
+                name="confirm-password"
+                id="confirm-password"
+                rules="required|confirmPassword"
+            />
+            <div class="bar"></div>
+        </div>
+        <span class="form-message"></span>
+        <div class="box-wrapper">
+            <input type="radio" name="gender" id="male" checked />
+            <label for="male" checked>Nam</label>
+            <input type="radio" name="gender" id="female" />
+            <label for="female">Nữ</label>
+        </div>
+        <span class="form-message"></span>
+        <div class="input-wrapper">
+            <label for="hocvi">Học vị:</label>
+            <select id="hocvi" name="hocvi">
+                <option value="Tú tài">Tú tài</option>
+                <option value="Cử nhân">Cử nhân</option>
+                <option value="Thạc sĩ">Thạc sĩ</option>
+                <option value="Tiến sĩ">Tiến sĩ</option>
+            </select>
+        </div>
+        <span class="form-message"></span>
+        <div class="input-wrapper">
+            <label for="hocham">Học hàm:</label>
+            <select id="hocham" name="hocham">
+                <option value="Giáo sư">Giáo sư</option>
+                <option value="Phó giáo sư">Phó giáo sư</option>
+            </select>
+        </div>
+        <span class="form-message"></span>
+        <div class="input-wrapper">
+            <label for="magv">Mã giảng viên</label>
+            <input
+                type="text"
+                placeholder=""
+                name="address"
+                id="magv"
+                rules="required"
+            />
+            <div class="bar"></div>
+        </div>
+        <span class="form-message"></span>
+        <div class="input-wrapper">
+            <label for="birthday">Ngày sinh</label>
+            <input type="date" name="birthday" id="birthday" rules="required"/>
+        </div>
+        <span class="form-message"></span>
+        <div class="btn-controller">
+            <button
+                type="submit"
+                href="#!"
+                class="btn registerSubmitBtn"
+            >
+                Register
+            </button>
+            <a href="#!" class="btn-trans closeBtn">Close</a>
+        </div>
+    </form>`;
+    else if (type === "thi")
+        return `<div class="header">Register</div>
+        <form action="/login" class="register-form" method="post">
+            <div class="input-wrapper">
+                <label for="tengv">Mã giảng viên :</label>
+                <select id="tengv" name="magv">
+                    <option value="GV01">lUU NGUYEN KI THU</option>
+                    <option value="GV02">HUYNH CHI TRUNG</option>
+                </select>
+            </div>
+            <div class="input-wrapper">
+                <label for="tenmh">Tên môn học:</label>
+                <select id="tenmh" name="mamh">
+                    <option value="INIT01">C++</option>
+                    <option value="INIT02">Python</option>
+                </select>
+            </div>
+            <div class="input-wrapper">
+                <label for="tenlop">Tên lớp: </label>
+                <select id="tenlop" name="malop">
+                    <option value="D21CQCN01">D21CQCN01</option>
+                    <option value="D21CQCN02">D21CQCN02</option>
+                </select>
+            </div>
+            <div class="input-wrapper">
+                <label for="lanthi">Lần thi</label>
+                <input
+                    type="number"
+                    placeholder=""
+                    name="lanthi"
+                    id="lanthi"
+                    autocomplete="nope"
+                    rules="required"
+                />
+                <div class="bar"></div>
+            </div>
+            <span class="form-message"></span>
+            <div class="input-wrapper">
+                <label for="socau">Số câu</label>
+                <input
+                    type="number"
+                    placeholder=""
+                    name="socau"
+                    id="socau"
+                    autocomplete="nope"
+                    rules="required"
+                />
+                <div class="bar"></div>
+            </div>
+            <div class="input-wrapper">
+                <label for="ngaythi">Ngày thi</label>
+                <input type="date" name="ngaythi" id="ngaythi" rules="required"/>
+            </div>
+            <span class="form-message"></span>
+            <div class="input-wrapper">
+                <label for="thoigianthi">Thời gian thi</label>
+                <input type="time" name="thoigianthi" id="thoigianthi" rules="required"/>
+            </div>
+            <span class="form-message"></span>
+            <div class="btn-controller">
+                <button
+                    type="submit"
+                    href="#!"
+                    class="btn registerSubmitBtn"
+                >
+                    Register
+                </button>
+                <a href="#!" class="btn-trans closeBtn">Close</a>
+            </div>
+        </form>`;
 }
 
 function createThead(type) {
@@ -152,6 +350,31 @@ function createThead(type) {
         <th>Ngày sinh</th>
         <th>Username</th>
         <th>Password</th>
+        <th>Action</th>
+        </tr>`;
+        return thead;
+    } else if (type === "gv") {
+        thead.innerHTML = `<tr>
+        <th>Mã giảng viên</th>
+        <th>Họ</th>
+        <th>Tên</th>
+        <th>Giới tính</th>
+        <th>Học vị</th>
+        <th>Học hàm</th>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Action</th>
+        </tr>`;
+        return thead;
+    } else if (type === "thi") {
+        thead.innerHTML = `<tr>
+        <th>Mã môn học</th>
+        <th>Mã lớp</th>
+        <th>Lần</th>
+        <th>Số câu</th>
+        <th>Ngày thi</th>
+        <th>Thời lượng</th>
+        <th>Mã Giáo Viên</th>
         <th>Action</th>
         </tr>`;
         return thead;
@@ -174,17 +397,23 @@ function addModal(type) {
             />
         </svg>
     </div>
-    <span>Add Students</span>
+    <span></span>
 </a>`;
-
     const contentBottom = document.querySelector(".content-bottom");
     contentBottom.insertAdjacentHTML("afterend", templateBtn);
-
     if (type === "sv") {
-        const modalContainer = document.querySelector(".modal-container");
-        modalContainer.innerHTML = createForm(type);
-        Validator(".register-form");
+        const textBtn = document.querySelector(".btn-register span");
+        textBtn.textContent = "Thêm sinh viên";
+    } else if (type === "gv") {
+        const textBtn = document.querySelector(".btn-register span");
+        textBtn.textContent = "Thêm giảng viên";
+    } else if (type === "thi") {
+        const textBtn = document.querySelector(".btn-register span");
+        textBtn.textContent = "Thêm bài thi";
     }
+    const modalContainer = document.querySelector(".modal-container");
+    modalContainer.innerHTML = createForm(type);
+    Validator(".register-form");
 
     function openModal() {
         modal.classList.add("open");
@@ -201,13 +430,13 @@ function addModal(type) {
             formGroup.classList.remove("invalid");
             const nextElement = formGroup.nextElementSibling;
             nextElement.classList.remove("invalid");
-            nextElement.textContent = "";
+            console.log(nextElement);
+            // nextElement.textContent = "";
         });
     }
     const registerBtn = document.querySelector(".btn-register");
     const closeBtn = document.querySelector(".closeBtn");
     const modal = document.querySelector(".modal");
-    const modalContainer = document.querySelector(".modal-container");
 
     modal.addEventListener("click", closeModal);
 
@@ -222,7 +451,7 @@ function addModal(type) {
     registerBtn.addEventListener("click", openModal);
 }
 
-function handleQuanLiSv(type) {
+function handleQuanLi(type) {
     clearTable();
     addModal(type);
     const text = document.querySelector(".content-top .text");
@@ -255,7 +484,9 @@ function handleQuanLiSv(type) {
     contentBottom.appendChild(findWrapper);
     contentBottom.appendChild(tableSv);
 
-    if ((type = "sv")) text.textContent = "Students";
+    if (type === "sv") text.textContent = "Students";
+    else if (type === "gv") text.textContent = "Lecturers";
+    else if (type === "thi") text.textContent = "Exams";
 }
 
 //  Su li xu kien
@@ -266,4 +497,6 @@ featureItems.forEach((item) => {
     });
 });
 
-quanLiSv.addEventListener("click", () => handleQuanLiSv("sv"));
+quanLiSv.addEventListener("click", () => handleQuanLi("sv"));
+quanLiGv.addEventListener("click", () => handleQuanLi("gv"));
+quanLiThi.addEventListener("click", () => handleQuanLi("thi"));
