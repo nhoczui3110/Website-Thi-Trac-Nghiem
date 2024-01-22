@@ -29,4 +29,7 @@ public class SinhVien {
     private String passWord;
     @Column(name = "MALOP")
     private String maLop;
+    public String toString(){
+        return ten + "  " + maLop;
+    }
 }
