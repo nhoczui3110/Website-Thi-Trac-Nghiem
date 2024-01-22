@@ -9,7 +9,6 @@
     bottom: 0;
     top: 0;
     background-color: var(--primary-color);
-    z-index: 999;
     padding: 63px 63px 90px;
     border-radius: 0px 40px 40px 0px;
 }
@@ -37,9 +36,11 @@
     cursor: pointer;
 }
 
-.feature-list .item:hover {
+.feature-list .item:hover,
+.feature-list .item.active {
     color: #FFF;
 }
+
 
 .header {
     padding: 36px 106px;
@@ -219,7 +220,7 @@ th {
     color: #FFF;
 }
 
-.btn-create-exam {
+.btn-register {
     margin-top: 37px;
     border-radius: 10px;
     width: 236px;
@@ -229,11 +230,11 @@ th {
     background-color: #FFF;
 }
 
-.btn-create-exam:hover .circle {
+.btn-register:hover .circle {
     background-color: #FFF;
 }
 
-.btn-create-exam .circle {
+.btn-register .circle {
     width: 28px;
     height: 28px;
     display: flex;
@@ -244,18 +245,18 @@ th {
     transition: background-color ease-in-out .5s;
 }
 
-.btn-create-exam span {
+.btn-register span {
     font-weight: 700;
     font-family: Roboto;
     font-size: 2.4rem;
 }
 
-.btn-create-exam .circle svg {
+.btn-register .circle svg {
     color: #FFF;
     transition: color ease-in-out .5s;
 }
 
-.btn-create-exam:hover .circle svg {
+.btn-register:hover .circle svg {
     color: var(--primary-color);
 }
 

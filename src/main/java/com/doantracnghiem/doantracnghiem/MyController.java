@@ -22,6 +22,7 @@ public class MyController {
         return "login";
     }
 
+    // Kiem tra dang nhap
     @PostMapping("/login")
     public String postLogin(@RequestParam(name = "username", defaultValue = "") String username,
             @RequestParam(name = "password", defaultValue = "") String password,
