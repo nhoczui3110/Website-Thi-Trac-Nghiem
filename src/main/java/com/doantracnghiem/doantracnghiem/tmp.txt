@@ -1,0 +1,12 @@
+StoredProcedureQuery query = entityManager.createStoredProcedureQuery("check_account");
+
+        query.registerStoredProcedureParameter("username", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("password", String.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("result", Integer.class, ParameterMode.OUT);
+
+        query.setParameter("username", username);
+        query.setParameter("password", password);
+
+        query.execute();
+
+        return (Integer) query.getOutputParameterValue("result");
