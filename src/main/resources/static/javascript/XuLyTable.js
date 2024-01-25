@@ -1,9 +1,3 @@
-const featureItems = document.querySelectorAll(".controller-wrapper .item");
-const quanLiSv = featureItems[1];
-const quanLiGv = featureItems[2];
-const quanLiThi = featureItems[3];
-console.log(quanLiGv);
-
 //Handle
 function handleClearFeatureList() {
     featureItems.forEach((item) => {
@@ -23,6 +17,7 @@ function clearTable() {
 }
 
 function createForm(type) {
+    if (type === "quanLiExamStudent" || type === "thiStudent") return;
     if (type === "sv")
         return `<div class="header">Register</div>
     <form action="/login" class="register-form" method="post">
@@ -378,10 +373,31 @@ function createThead(type) {
         <th>Action</th>
         </tr>`;
         return thead;
+    } else if (type === "quanLiExamStudent") {
+        thead.innerHTML = `<tr>
+        <th>Môn học</th>
+        <th>Lần thi</th>
+        <th>Điểm</th>
+        <th>Số câu</th>
+        <th>Ngày thi</th>
+        <th>Thời lượng</th>
+        <th>Action</th>
+        </tr>`;
+        return thead;
+    } else if (type === "thiStudent") {
+        thead.innerHTML = `<tr>
+        <th>Môn thi</th>
+        <th>Số câu</th>
+        <th>Ngày thi</th>
+        <th>Thời lượng</th>
+        <th>Action</th>
+        </tr>`;
+        return thead;
     }
 }
 
 function addModal(type) {
+    if (type === "quanLiExamStudent" || type === "thiStudent") return;
     const templateBtn = `<a href="#!" class="btn-trans btn-register">
     <div class="circle">
         <svg
@@ -410,6 +426,9 @@ function addModal(type) {
     } else if (type === "thi") {
         const textBtn = document.querySelector(".btn-register span");
         textBtn.textContent = "Thêm bài thi";
+    } else if (type === "thi") {
+        const textBtn = document.querySelector(".btn-register span");
+        textBtn.textContent = "Thêm câu hỏi";
     }
     const modalContainer = document.querySelector(".modal-container");
     modalContainer.innerHTML = createForm(type);
@@ -429,9 +448,9 @@ function addModal(type) {
         formGroups.forEach((formGroup) => {
             formGroup.classList.remove("invalid");
             const nextElement = formGroup.nextElementSibling;
-            nextElement.classList.remove("invalid");
             console.log(nextElement);
-            // nextElement.textContent = "";
+            nextElement.classList.remove("invalid");
+            nextElement.textContent = "";
         });
     }
     const registerBtn = document.querySelector(".btn-register");
@@ -457,11 +476,22 @@ function handleQuanLi(type) {
     const text = document.querySelector(".content-top .text");
     const contentBottom = document.querySelector(".content-bottom");
     const findWrapper = document.createElement("div");
-    const tableSv = document.createElement("table");
+    const table = document.createElement("table");
     const thead = createThead(type);
     const tbody = document.createElement("tbody");
+    const tableController = document.createElement("div");
+    const contentWrapper = document.querySelector(".content-wrapper");
+    tableController.classList.add("table-controller");
 
-    tableSv.classList.add("table");
+    tableController.innerHTML = `
+    <span class="text">Previous</span>
+                        <div class="page-number">
+                            <span class="item">1</span>
+                            <span class="item">2</span>
+                            <span class="item">3</span>
+                        </div>
+                        <span class="text"> Next</span>`;
+    table.classList.add("table");
     findWrapper.classList.add("find-wrapper");
 
     findWrapper.innerHTML = `<label for="search">Entries</label>
@@ -479,24 +509,17 @@ function handleQuanLi(type) {
         />
     </div>`;
 
-    tableSv.appendChild(thead);
-    tableSv.appendChild(tbody);
+    table.appendChild(thead);
+    table.appendChild(tbody);
     contentBottom.appendChild(findWrapper);
-    contentBottom.appendChild(tableSv);
-
+    contentBottom.appendChild(table);
+    contentBottom.appendChild(tableController);
+    contentWrapper.style.display = "block";
     if (type === "sv") text.textContent = "Students";
     else if (type === "gv") text.textContent = "Lecturers";
-    else if (type === "thi") text.textContent = "Exams";
+    else if (type === "thi" || type === "quanLiExamStudent")
+        text.textContent = "Exams";
+    else if (type === "thiStudent") text.textContent = "Existing Exam";
 }
 
 //  Su li xu kien
-featureItems.forEach((item) => {
-    item.addEventListener("click", () => {
-        handleClearFeatureList();
-        item.classList.add("active");
-    });
-});
-
-quanLiSv.addEventListener("click", () => handleQuanLi("sv"));
-quanLiGv.addEventListener("click", () => handleQuanLi("gv"));
-quanLiThi.addEventListener("click", () => handleQuanLi("thi"));
