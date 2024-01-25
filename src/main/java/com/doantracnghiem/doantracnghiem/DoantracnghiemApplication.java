@@ -15,7 +15,7 @@ public class DoantracnghiemApplication {
 		System.out.println("=============================\nSINHVIEN:");
 		System.out.println(dangNhapService.checkExistUserName("PHUONG"));
 		System.out.println("=========================");
-		((ConfigurableApplicationContext) context).close();
+		// ((ConfigurableApplicationContext) context).close();
 	}
 
 }

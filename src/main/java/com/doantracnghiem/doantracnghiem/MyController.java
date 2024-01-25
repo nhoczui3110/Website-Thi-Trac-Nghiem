@@ -30,6 +30,6 @@ public class MyController {
         System.out.println(password);
         System.out.println(isRemember);
         model.addAttribute("result", isRemember);
-        return "test";
+        return "admin";
     }
 }
