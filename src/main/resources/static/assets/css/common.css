@@ -291,6 +291,8 @@ a {
     background-color: var(--primary-color);
     padding: 63px 63px 90px;
     border-radius: 0px 40px 40px 0px;
+    /* width: 600px; */
+    max-width: 20%;
 }
 
 .controller-wrapper .admin-text {
