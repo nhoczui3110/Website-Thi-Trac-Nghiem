@@ -4,8 +4,10 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Data;
 
 @Entity
+@Data
 @Table(name = "NHANVIENGV")
 public class NhanVien {
     @Id
@@ -21,6 +23,7 @@ public class NhanVien {
     private String userName;
     @Column(name = "PASSWORD")
     private String passWord;
-    @Column (name = "TRANGTHAIXOA")
+    @Column(name = "TRANGTHAIXOA")
     private boolean trangThaiXoa;
+
 }

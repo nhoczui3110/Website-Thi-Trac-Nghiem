@@ -40,7 +40,7 @@
                 <span class="admin-text">Admin</span>
             </div>
             <ul class="feature-list">
-                <li class="item">
+                <li class="item" data-name="dashboard">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -60,7 +60,7 @@
                     </svg>
                     <span class="text">Dashboard</span>
                 </li>
-                <li class="item">
+                <li class="item" data-name="student">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -76,7 +76,7 @@
                     </svg>
                     <span class="text">Quản lí SV</span>
                 </li>
-                <li class="item">
+                <li class="item" data-name="lecturer">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="19"
@@ -92,7 +92,7 @@
                     </svg>
                     <span class="text">Quản lí GV</span>
                 </li>
-                <li class="item">
+                <li class="item" data-name="exam">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -154,9 +154,157 @@
             </div>
         </div>
         <div class="content">
-            <div class="content-wrapper">
+            <div class="content-wrapper" data-name="student">
                 <div class="content-top">
-                    <span class="text"></span>
+                    <span class="text">Students</span>
+                    <div class="sort-wrapper">
+                        <label for="sort-student">Sort</label>
+                        <select id="sort-student">
+                            <option value="">All</option>
+                            <option value="">Toay</option>
+                            <option value="">This Week</option>
+                            <option value="">This Month</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="content-bottom">
+                    <div class="find-wrapper">
+                        <label for="search">Entries</label>
+                        <div class="search-wrapper">
+                            <img
+                                src="../static/assets/img/search-icon.svg"
+                                th:src="@{/assets/img/search-icon.svg}"
+                                alt=""
+                            />
+                            <input
+                                type="text"
+                                name=""
+                                id="search-student"
+                                placeholder="Search..."
+                            />
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Mã sinh viên</th>
+                                <th>Họ</th>
+                                <th>Tên</th>
+                                <th>Giới tính</th>
+                                <th>Địa chỉ</th>
+                                <th>Ngày sinh</th>
+                                <th>Username</th>
+                                <th>Password</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <div class="table-controller">
+                        <span class="text">Previous</span>
+                        <div class="page-number">
+                            <span class="item">1</span>
+                            <span class="item">2</span>
+                            <span class="item">3</span>
+                        </div>
+                        <span class="text"> Next</span>
+                    </div>
+                </div>
+                <a href="#!" class="btn-trans btn-register">
+                    <div class="circle">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="17"
+                            height="17"
+                            viewBox="0 0 17 17"
+                            fill="none"
+                        >
+                            <path
+                                d="M15.7857 6.67857H10.3214V1.21429C10.3214 0.543772 9.77766 0 9.10714 0H7.89286C7.22234 0 6.67857 0.543772 6.67857 1.21429V6.67857H1.21429C0.543772 6.67857 0 7.22234 0 7.89286V9.10714C0 9.77766 0.543772 10.3214 1.21429 10.3214H6.67857V15.7857C6.67857 16.4562 7.22234 17 7.89286 17H9.10714C9.77766 17 10.3214 16.4562 10.3214 15.7857V10.3214H15.7857C16.4562 10.3214 17 9.77766 17 9.10714V7.89286C17 7.22234 16.4562 6.67857 15.7857 6.67857Z"
+                                fill="currentColor"
+                            ></path>
+                        </svg>
+                    </div>
+                    <span>Thêm sinh viên</span>
+                </a>
+            </div>
+            <div class="content-wrapper" data-name="lecturer">
+                <div class="content-top">
+                    <span class="text">Lecturers</span>
+                    <div class="sort-wrapper">
+                        <label for="sort-lecturer">Sort</label>
+                        <select id="sort-lecturer">
+                            <option value="">All</option>
+                            <option value="">Toay</option>
+                            <option value="">This Week</option>
+                            <option value="">This Month</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="content-bottom">
+                    <div class="find-wrapper">
+                        <label for="search">Entries</label>
+                        <div class="search-wrapper">
+                            <img
+                                src="../static/assets/img/search-icon.svg"
+                                th:src="@{/assets/img/search-icon.svg}"
+                                alt=""
+                            />
+                            <input
+                                type="text"
+                                name=""
+                                id="search-lecturer"
+                                placeholder="Search..."
+                            />
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Mã giảng viên</th>
+                                <th>Họ</th>
+                                <th>Tên</th>
+                                <th>Giới tính</th>
+                                <th>Học vị</th>
+                                <th>Học hàm</th>
+                                <th>Username</th>
+                                <th>Password</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <div class="table-controller">
+                        <span class="text">Previous</span>
+                        <div class="page-number">
+                            <span class="item">1</span>
+                            <span class="item">2</span>
+                            <span class="item">3</span>
+                        </div>
+                        <span class="text"> Next</span>
+                    </div>
+                </div>
+                <a href="#!" class="btn-trans btn-register">
+                    <div class="circle">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="17"
+                            height="17"
+                            viewBox="0 0 17 17"
+                            fill="none"
+                        >
+                            <path
+                                d="M15.7857 6.67857H10.3214V1.21429C10.3214 0.543772 9.77766 0 9.10714 0H7.89286C7.22234 0 6.67857 0.543772 6.67857 1.21429V6.67857H1.21429C0.543772 6.67857 0 7.22234 0 7.89286V9.10714C0 9.77766 0.543772 10.3214 1.21429 10.3214H6.67857V15.7857C6.67857 16.4562 7.22234 17 7.89286 17H9.10714C9.77766 17 10.3214 16.4562 10.3214 15.7857V10.3214H15.7857C16.4562 10.3214 17 9.77766 17 9.10714V7.89286C17 7.22234 16.4562 6.67857 15.7857 6.67857Z"
+                                fill="currentColor"
+                            ></path>
+                        </svg>
+                    </div>
+                    <span>Thêm giảng viên</span>
+                </a>
+            </div>
+            <div class="content-wrapper" data-name="exam">
+                <div class="content-top">
+                    <span class="text">Exams</span>
                     <div class="sort-wrapper">
                         <label for="sort">Sort</label>
                         <select id="sort">
@@ -167,13 +315,427 @@
                         </select>
                     </div>
                 </div>
-                <div class="content-bottom"></div>
+                <div class="content-bottom">
+                    <div class="find-wrapper">
+                        <label for="search">Entries</label>
+                        <div class="search-wrapper">
+                            <img
+                                src="../static/assets/img/search-icon.svg"
+                                th:src="@{/assets/img/search-icon.svg}"
+                                alt=""
+                            />
+                            <input
+                                type="text"
+                                name=""
+                                id="search-exam"
+                                placeholder="Search..."
+                            />
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Mã môn học</th>
+                                <th>Mã lớp</th>
+                                <th>Lần</th>
+                                <th>Số câu</th>
+                                <th>Ngày thi</th>
+                                <th>Thời lượng</th>
+                                <th>Mã Giáo Viên</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <div class="table-controller">
+                        <span class="text">Previous</span>
+                        <div class="page-number">
+                            <span class="item">1</span>
+                            <span class="item">2</span>
+                            <span class="item">3</span>
+                        </div>
+                        <span class="text"> Next</span>
+                    </div>
+                </div>
+                <a href="#!" class="btn-trans btn-register">
+                    <div class="circle">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="17"
+                            height="17"
+                            viewBox="0 0 17 17"
+                            fill="none"
+                        >
+                            <path
+                                d="M15.7857 6.67857H10.3214V1.21429C10.3214 0.543772 9.77766 0 9.10714 0H7.89286C7.22234 0 6.67857 0.543772 6.67857 1.21429V6.67857H1.21429C0.543772 6.67857 0 7.22234 0 7.89286V9.10714C0 9.77766 0.543772 10.3214 1.21429 10.3214H6.67857V15.7857C6.67857 16.4562 7.22234 17 7.89286 17H9.10714C9.77766 17 10.3214 16.4562 10.3214 15.7857V10.3214H15.7857C16.4562 10.3214 17 9.77766 17 9.10714V7.89286C17 7.22234 16.4562 6.67857 15.7857 6.67857Z"
+                                fill="currentColor"
+                            ></path>
+                        </svg>
+                    </div>
+                    <span>Thêm bài thi</span>
+                </a>
             </div>
         </div>
 
         <!-- Modal -->
         <div class="modal">
-            <div class="modal-container"></div>
+            <div class="modal-container" data-name="student">
+                <div class="header">Register</div>
+                <form action="/login" class="register-form" method="post">
+                    <div class="form-wrapper">
+                        <div class="input-wrapper">
+                            <label for="lastname-student">Họ</label>
+                            <input
+                                type="text"
+                                placeholder=""
+                                name="lastname"
+                                id="lastname-student"
+                                autocomplete="nope"
+                                rules="required"
+                            />
+                            <div class="bar"></div>
+                        </div>
+                        <span class="form-message"></span>
+                        <div class="input-wrapper">
+                            <label for="firstname-student">Tên</label>
+                            <input
+                                type="text"
+                                placeholder=""
+                                name="firstname"
+                                id="firstname-student"
+                                autocomplete="nope"
+                                rules="required"
+                            />
+                            <div class="bar"></div>
+                        </div>
+                        <span class="form-message"></span>
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="username-student">User Name</label>
+                        <input
+                            type="text"
+                            placeholder=""
+                            name="username"
+                            id="username-student"
+                            autocomplete="nope"
+                            rules="required"
+                        />
+                        <div class="bar"></div>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="input-wrapper">
+                        <label for="password-student">Password</label>
+                        <input
+                            type="password"
+                            placeholder=""
+                            name="password"
+                            id="password-student"
+                            rules="required|min:6"
+                        />
+                        <div class="bar"></div>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="input-wrapper">
+                        <label for="confirm-password-student"
+                            >Confirm Password</label
+                        >
+                        <input
+                            type="password"
+                            placeholder=""
+                            name="confirm-password"
+                            id="confirm-password-student"
+                            rules="required|confirmPassword"
+                        />
+                        <div class="bar"></div>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="box-wrapper">
+                        <input
+                            type="radio"
+                            name="gender"
+                            id="male-student"
+                            checked
+                        />
+                        <label for="male" checked>Nam</label>
+                        <input type="radio" name="gender" id="female-student" />
+                        <label for="female">Nữ</label>
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="address">Địa chỉ</label>
+                        <input
+                            type="text"
+                            placeholder=""
+                            name="address"
+                            id="address"
+                            rules="required"
+                        />
+                        <div class="bar"></div>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="input-wrapper">
+                        <label for="masv">Mã Sinh Viên</label>
+                        <input
+                            type="text"
+                            placeholder=""
+                            name="address"
+                            id="masv"
+                            rules="required"
+                        />
+                        <div class="bar"></div>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="input-wrapper">
+                        <label for="classes">Chọn lớp:</label>
+                        <select id="classes" name="class">
+                            <option value="D21CQCN01-N">D21CQCN01-N</option>
+                            <option value="D21CQCN02-N">D21CQCN02-N</option>
+                        </select>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="input-wrapper">
+                        <label for="birthday-student">Ngày sinh</label>
+                        <input
+                            type="date"
+                            name="birthday"
+                            id="birthday-student"
+                            rules="required"
+                        />
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="btn-controller">
+                        <button
+                            type="submit"
+                            href="#!"
+                            class="btn registerSubmitBtn"
+                        >
+                            Register
+                        </button>
+                        <a href="#!" class="btn-trans closeBtn">Close</a>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-container" data-name="lecturer">
+                <div class="header">Register</div>
+                <form action="/login" class="register-form" method="post">
+                    <div class="form-wrapper">
+                        <div class="input-wrapper">
+                            <label for="lastname-lecturer">Họ</label>
+                            <input
+                                type="text"
+                                placeholder=""
+                                name="lastname"
+                                id="lastname-lecturer"
+                                autocomplete="nope"
+                                rules="required"
+                            />
+                            <div class="bar"></div>
+                        </div>
+                        <span class="form-message"></span>
+                        <div class="input-wrapper">
+                            <label for="firstname-lecturer">Tên</label>
+                            <input
+                                type="text"
+                                placeholder=""
+                                name="firstname"
+                                id="firstname-lecturer"
+                                autocomplete="nope"
+                                rules="required"
+                            />
+                            <div class="bar"></div>
+                        </div>
+                        <span class="form-message"></span>
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="username-lecturer">User Name</label>
+                        <input
+                            type="text"
+                            placeholder=""
+                            name="username"
+                            id="username-lecturer"
+                            autocomplete="nope"
+                            rules="required"
+                        />
+                        <div class="bar"></div>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="input-wrapper">
+                        <label for="password-lecturer">Password</label>
+                        <input
+                            type="password"
+                            placeholder=""
+                            name="password"
+                            id="password-lecturer"
+                            rules="required|min:6"
+                        />
+                        <div class="bar"></div>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="input-wrapper">
+                        <label for="confirm-password-lecturer"
+                            >Confirm Password</label
+                        >
+                        <input
+                            type="password"
+                            placeholder=""
+                            name="confirm-password"
+                            id="confirm-password-lecturer"
+                            rules="required|confirmPassword"
+                        />
+                        <div class="bar"></div>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="box-wrapper">
+                        <input
+                            type="radio"
+                            name="gender"
+                            id="male-lecturer"
+                            checked
+                        />
+                        <label for="male" checked>Nam</label>
+                        <input
+                            type="radio"
+                            name="gender"
+                            id="female-lecturer"
+                        />
+                        <label for="female">Nữ</label>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="input-wrapper">
+                        <label for="hocvi">Học vị:</label>
+                        <select id="hocvi" name="hocvi">
+                            <option value="Tú tài">Tú tài</option>
+                            <option value="Cử nhân">Cử nhân</option>
+                            <option value="Thạc sĩ">Thạc sĩ</option>
+                            <option value="Tiến sĩ">Tiến sĩ</option>
+                        </select>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="input-wrapper">
+                        <label for="hocham">Học hàm:</label>
+                        <select id="hocham" name="hocham">
+                            <option value="Giáo sư">Giáo sư</option>
+                            <option value="Phó giáo sư">Phó giáo sư</option>
+                        </select>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="input-wrapper">
+                        <label for="magv">Mã giảng viên</label>
+                        <input
+                            type="text"
+                            placeholder=""
+                            name="address"
+                            id="magv"
+                            rules="required"
+                        />
+                        <div class="bar"></div>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="input-wrapper">
+                        <label for="birthday-lecturer">Ngày sinh</label>
+                        <input
+                            type="date"
+                            name="birthday"
+                            id="birthday-lecturer"
+                            rules="required"
+                        />
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="btn-controller">
+                        <button
+                            type="submit"
+                            href="#!"
+                            class="btn registerSubmitBtn"
+                        >
+                            Register
+                        </button>
+                        <a href="#!" class="btn-trans closeBtn">Close</a>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-container" data-name="exam">
+                <div class="header">Register</div>
+                <form action="/login" class="register-form" method="post">
+                    <div class="input-wrapper">
+                        <label for="tengv">Mã giảng viên :</label>
+                        <select id="tengv" name="magv">
+                            <option value="GV01">lUU NGUYEN KI THU</option>
+                            <option value="GV02">HUYNH CHI TRUNG</option>
+                        </select>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="input-wrapper">
+                        <label for="tenmh">Tên môn học:</label>
+                        <select id="tenmh" name="mamh">
+                            <option value="INIT01">C++</option>
+                            <option value="INIT02">Python</option>
+                        </select>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="input-wrapper">
+                        <label for="tenlop">Tên lớp: </label>
+                        <select id="tenlop" name="malop">
+                            <option value="D21CQCN01">D21CQCN01</option>
+                            <option value="D21CQCN02">D21CQCN02</option>
+                        </select>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="input-wrapper">
+                        <label for="lanthi">Lần thi</label>
+                        <input
+                            type="number"
+                            name="lanthi"
+                            id="lanthi"
+                            autocomplete="nope"
+                            rules="required"
+                        />
+                        <div class="bar"></div>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="input-wrapper">
+                        <label for="socau">Số câu</label>
+                        <input
+                            type="number"
+                            placeholder=""
+                            name="socau"
+                            id="socau"
+                            autocomplete="nope"
+                            rules="required"
+                        />
+                        <div class="bar"></div>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="input-wrapper">
+                        <label for="ngaythi">Ngày thi</label>
+                        <input
+                            type="date"
+                            name="ngaythi"
+                            id="ngaythi"
+                            rules="required"
+                        />
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="input-wrapper">
+                        <label for="thoigianthi">Thời gian thi</label>
+                        <input
+                            type="time"
+                            name="thoigianthi"
+                            id="thoigianthi"
+                            rules="required"
+                        />
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="btn-controller">
+                        <button
+                            type="submit"
+                            href="#!"
+                            class="btn registerSubmitBtn"
+                        >
+                            Register
+                        </button>
+                        <a href="#!" class="btn-trans closeBtn">Close</a>
+                    </div>
+                </form>
+            </div>
         </div>
         <!-- Script -->
         <script

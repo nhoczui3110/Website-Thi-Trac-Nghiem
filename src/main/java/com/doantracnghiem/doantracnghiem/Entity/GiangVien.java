@@ -8,16 +8,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "GIANGVIEN") 
-public class GiangVien implements Serializable{
+@Table(name = "GIANGVIEN")
+public class GiangVien implements Serializable {
     @Id
     @Column(name = "MAGV")
-    private String magv;
+    private String maGv;
     @Column(name = "HO")
     private String ho;
     @Column(name = "TEN")
     private String ten;
-    @Column(name = "GIOITINH")// 0: nam, 1: nu
+    @Column(name = "GIOITINH") // 0: nam, 1: nu
     private boolean gioiTinh;
     @Column(name = "HOCVI")
     private String hocVi;
@@ -29,25 +29,32 @@ public class GiangVien implements Serializable{
     private String passWord;
     @Column(name = "TRANGTHAIXOA")
     private boolean trangThaiXoa;
-    public String getMangv(){
-        return magv;
+
+    public String getMaGv() {
+        return maGv;
     }
-    public String getHo(){
+
+    public String getHo() {
         return ho;
     }
-    public String getTen(){
+
+    public String getTen() {
         return ten;
     }
-    public boolean getGioiTinh(){
+
+    public boolean getGioiTinh() {
         return gioiTinh;
     }
-    public String getHocVi(){
+
+    public String getHocVi() {
         return hocVi;
     }
-    public String getHocHam(){
+
+    public String getHocHam() {
         return hocHam;
     }
-    public String getUserName(){
+
+    public String getUserName() {
         return userName;
     }
 }
