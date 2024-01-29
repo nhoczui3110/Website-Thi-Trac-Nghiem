@@ -38,7 +38,7 @@
                 <span class="admin-text">Lecturer</span>
             </div>
             <ul class="feature-list">
-                <li class="item">
+                <li class="item" data-name="xemdiem">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -58,7 +58,7 @@
                     </svg>
                     <span class="text">Xem điểm</span>
                 </li>
-                <li class="item">
+                <li class="item" data-name="cauhoi">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -97,8 +97,12 @@
             </div>
         </div>
         <div class="content">
-            <div class="content-wrapper"></div>
-            <div class="content-monhoc"></div>
+            <div class="content-wrapper content-xemdiem" data-name="xemdiem">
+                Xem Diem
+            </div>
+            <div class="content-wrapper content-cauhoi" data-name="cauhoi">
+                Cau Hoi
+            </div>
             <div class="content-profile">
                 <div class="profile-left">
                     <span class="profile">Profile</span>
@@ -139,7 +143,8 @@
                 </div>
                 <div class="separate"></div>
                 <div class="profile-right">
-                    <form action="/login" class="config-form" method="post">
+                    <form action="" class="config-form" method="post">
+                        <span class="error-message"></span>
                         <div class="form-wrapper">
                             <div class="input-wrapper">
                                 <label for="lastname">Họ</label>

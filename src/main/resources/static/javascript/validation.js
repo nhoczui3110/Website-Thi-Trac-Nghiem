@@ -1,4 +1,4 @@
-function Validator(selector) {
+function Validator(selector, anotherCheck) {
     let formRules = {};
     let validateRules = {
         required: function (value) {
@@ -102,21 +102,20 @@ function Validator(selector) {
                 formElement.querySelector('[name="password"]');
             return originalPasswordInput ? originalPasswordInput.value : "";
         }
-        formElement.onsubmit = function (event) {
+        formElement.addEventListener("submit", function (event) {
             event.preventDefault();
-            var inputs = formElement.querySelectorAll("[name][rules]");
-            var isValid = true;
+            let isValid = true;
 
             for (let input of inputs) {
                 if (!handleValidate({ target: input })) {
                     isValid = false;
                 }
             }
-            console.log(isValid);
-            if (isValid) {
+
+            if (isValid && !anotherCheck) {
                 formElement.submit();
             }
-        };
+        });
     }
 }
 

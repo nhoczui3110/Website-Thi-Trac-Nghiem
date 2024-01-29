@@ -1,4 +1,4 @@
-function start() {
+function startTable() {
     const featureItems = document.querySelectorAll(".feature-list .item");
 
     featureItems.forEach((item) => {
@@ -20,6 +20,7 @@ function clearModalContainers() {
 
 function handlerBtnRegister(contentWrapper) {
     const btnRegister = contentWrapper.querySelector(".btn-register");
+    if (!btnRegister) return;
     btnRegister.addEventListener("click", () => {
         clearModalContainers();
         const modal = document.querySelector(".modal");
@@ -69,17 +70,18 @@ function handleclearFeatureList() {
     });
 }
 function clearContentWrapper() {
-    const contentWrappers = document.querySelectorAll(
-        ".content .content-wrapper"
-    );
+    const contentWrappers = document.querySelectorAll(".content > div");
+    console.log(contentWrappers);
     contentWrappers.forEach((item) => (item.style.display = "none"));
 }
 
-function renderContentWrapper(dataName) {
+function renderContentWrapper(dataName, callback) {
     const contentWrapper = document.querySelector(
         `.content div[data-name=${dataName}]`
     );
     contentWrapper.style.display = "block";
+    // Fetch api
+    callback();
     return contentWrapper;
 }
-start();
+startTable();

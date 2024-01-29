@@ -7,7 +7,6 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Data
 @Table(name = "NHANVIENGV")
 public class NhanVien {
     @Id
@@ -25,5 +24,4 @@ public class NhanVien {
     private String passWord;
     @Column(name = "TRANGTHAIXOA")
     private boolean trangThaiXoa;
-
 }

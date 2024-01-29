@@ -17,7 +17,6 @@ public class DoantracnghiemApplication {
 		System.out.println("=============================\nSINHVIEN:");
 		System.out.println(dangNhapService.checkAccount("quang", "113"));
 		System.out.println("=========================");
-		// ((ConfigurableApplicationContext) context).close();
 	}
 
 }
