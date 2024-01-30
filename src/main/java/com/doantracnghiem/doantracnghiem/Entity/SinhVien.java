@@ -1,6 +1,6 @@
 package com.doantracnghiem.doantracnghiem.Entity;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,7 +22,7 @@ public class SinhVien {
     @Column(name = "DIACHI")
     private String diaChi;
     @Column(name = "NGAYSINH")
-    private LocalDate ngaySinh;
+    private Date ngaySinh;
     @Column(name = "USERNAME")
     private String userName;
     @Column(name = "PASSWORD")
