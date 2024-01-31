@@ -187,7 +187,7 @@ a {
 
 
 .modal.open .modal-container {
-    width: 500px;
+    min-width: 500px;
     /* height: 500px; */
     background-color: #fff;
     animation: modalFadeIn ease 0.3s;
@@ -560,9 +560,131 @@ th {
     font-weight: 500;
 }
 
+.table-controller .page-number .item.active {
+    background-color: var(--primary-color);
+    color: #FFF;
+}
+
 .table-controller .page-number .item:hover {
     opacity: 0.9;
     cursor: pointer;
     background-color: var(--primary-color);
     color: #FFF;
+}
+
+/* Toast */
+
+.toast {
+    min-width: 576px;
+    max-width: 600px;
+    padding: 34px;
+    border-radius: 24px;
+    background: #20315C;
+    display: inline-flex;
+    column-gap: 24px;
+    position: fixed;
+    right: 16px;
+    top: 16px;
+    z-index: 999;
+}
+
+.toast--content {
+    flex-grow: 1;
+}
+
+.toast--top {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.toast--title {
+    color: #FFF;
+    font-weight: 500;
+    font-family: Roboto;
+    font-size: 2.2rem;
+}
+
+.toast--desc {
+    color: #9FAED7;
+    font-family: Roboto;
+    font-size: 1.4rem;
+    line-height: 1.68688;
+    margin-top: 7px;
+}
+
+.toast>i {
+    padding: 16px;
+    background-color: #48B16E;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+
+.toast--top>i {
+    color: #9DACD3;
+    cursor: pointer;
+}
+
+.toast--top>i:hover {
+    color: #fff;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(calc(100% + 16px));
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+    }
+}
+
+/* Nut them sinh vien, tham bai thi... */
+.btn-register {
+    margin-top: 37px;
+    border-radius: 10px;
+    column-gap: 16px;
+    align-items: center;
+    background-color: #FFF;
+}
+
+.btn-register:hover .circle {
+    background-color: #FFF;
+}
+
+.btn-register .circle {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    transition: background-color ease-in-out .5s;
+}
+
+.btn-register span {
+    font-weight: 700;
+    font-family: Roboto;
+    font-size: 2.4rem;
+}
+
+.btn-register .circle svg {
+    color: #FFF;
+    transition: color ease-in-out .5s;
+}
+
+.btn-register:hover .circle svg {
+    color: var(--primary-color);
 }

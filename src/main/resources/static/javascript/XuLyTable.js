@@ -1,4 +1,4 @@
-function startTable() {
+function startTable(objectGet) {
     const featureItems = document.querySelectorAll(".feature-list .item");
 
     featureItems.forEach((item) => {
@@ -9,13 +9,48 @@ function startTable() {
             contentWrapper = renderContentWrapper(
                 item.getAttribute("data-name")
             );
+            objectGet[item.getAttribute("data-name")]();
             handlerBtnRegister(contentWrapper);
         });
     });
+    featureItems[0].classList.add("active");
+    contentWrapper = renderContentWrapper(
+        featureItems[0].getAttribute("data-name")
+    );
 }
+
+function clearFormValidation() {
+    const formGroups = document.querySelectorAll(".input-wrapper");
+    console.log(formGroups);
+    formGroups.forEach((formGroup) => {
+        const input = formGroup.querySelector("input");
+        if (input) input.value = "";
+        formGroup.classList.remove("invalid");
+        const formMessage = formGroup.nextElementSibling;
+        formMessage.classList.remove("invalid");
+        formMessage.textContent = "";
+    });
+}
+
 function clearModalContainers() {
     const modalContainers = document.querySelectorAll(".modal-container");
     modalContainers.forEach((item) => item.classList.remove("open"));
+}
+
+function openModal(modalContainer) {
+    const modal = document.querySelector(".modal");
+    modal.classList.add("open");
+    modalContainer.classList.add("open");
+    modalContainer.addEventListener("click", (event) =>
+        event.stopPropagation()
+    );
+}
+
+function closeModal(modalContainer) {
+    const modal = document.querySelector(".modal");
+    modal.classList.remove("open");
+    modalContainer.classList.remove("open");
+    clearFormValidation();
 }
 
 function handlerBtnRegister(contentWrapper) {
@@ -34,31 +69,11 @@ function handlerBtnRegister(contentWrapper) {
                 "data-name"
             )}] .closeBtn`
         );
-        function openModal() {
-            modal.classList.add("open");
-            modalContainer.classList.add("open");
-        }
-        function clearFormValidation() {
-            const formGroups = document.querySelectorAll(".input-wrapper");
-            formGroups.forEach((formGroup) => {
-                formGroup.classList.remove("invalid");
-                const formMessage = formGroup.nextElementSibling;
-                formMessage.classList.remove("invalid");
-                formMessage.textContent = "";
-            });
-        }
-        function closeModal() {
-            modal.classList.remove("open");
-            modalContainer.classList.remove("open");
-            clearFormValidation();
-        }
-        openModal();
+        openModal(modalContainer);
         Validator(".register-form");
-        modalContainer.addEventListener("click", (event) =>
-            event.stopPropagation()
-        );
-        modal.addEventListener("click", closeModal);
-        closeBtn.addEventListener("click", closeModal);
+
+        modal.addEventListener("click", () => closeModal(modalContainer));
+        closeBtn.addEventListener("click", () => closeModal(modalContainer));
         // Ngan su kien noi bot ke tu modal container
     });
 }
@@ -71,7 +86,6 @@ function handleclearFeatureList() {
 }
 function clearContentWrapper() {
     const contentWrappers = document.querySelectorAll(".content > div");
-    console.log(contentWrappers);
     contentWrappers.forEach((item) => (item.style.display = "none"));
 }
 
@@ -80,8 +94,6 @@ function renderContentWrapper(dataName, callback) {
         `.content div[data-name=${dataName}]`
     );
     contentWrapper.style.display = "block";
-    // Fetch api
-    callback();
+
     return contentWrapper;
 }
-startTable();
