@@ -24,11 +24,14 @@ function renderSortMonHoc(subjects) {
     let currentPage = 1;
     const htmlTemplate = subjectsHtmlArray.join("");
     sortMh.innerHTML = htmlTemplate;
-    function getNumOfQuestion(magv, mamh) {
+    function getNumOfQuestion(magv, mamh, remove) {
         fetch(`/lecturer/CountQuestionBySubjectAndLecturer/${magv}/${mamh}`)
             .then((response) => response.json())
             .then((maxPage) => {
-                renderPageNumber(maxPage, getQuestionByMaGvAndMaMh);
+                if (remove && currentPage > maxPage) {
+                    currentPage--;
+                } else currentPage = 1;
+                renderPageNumber(maxPage);
                 getQuestionByMaGvAndMaMh(magv, mamh, currentPage);
             });
     }
@@ -37,14 +40,21 @@ function renderSortMonHoc(subjects) {
         contentBottom.style.minWidth = "1200px";
         const tbody = document.querySelector("tbody");
         tbody.innerHTML = "";
+        if (!Array.isArray(questions)) return;
         questions.forEach((item) => {
             const tr = document.createElement("tr");
             const maCauHoi = item[0];
+            const noiDungCauHoi = item[3];
+            const dapAnDung = item[4];
             item.forEach((cell, index) => {
-                const td = document.createElement("td");
-                if (index == 3) td.classList.add("question-content");
-                td.textContent = stringFormat(cell);
-                tr.appendChild(td);
+                // index 4 la thu tu lua chon dung
+                if (index !== 4) {
+                    const td = document.createElement("td");
+                    // index = 3 la noi dung cau hoi
+                    if (index === 3) td.classList.add("question-content");
+                    td.textContent = stringFormat(cell);
+                    tr.appendChild(td);
+                }
             });
 
             const actionTd = document.createElement("td");
@@ -77,6 +87,33 @@ function renderSortMonHoc(subjects) {
                 modal.onclick = function () {
                     closeModal(questionDetailModal);
                 };
+                // tao lua chon
+                const selectionWrapper =
+                    document.querySelector(".selection-wrapper");
+                selectionWrapper.innerHTML = "";
+                for (let i = 0; i < questionDetail.length; i++) {
+                    const selection = document.createElement("span");
+                    selection.classList.add("selection");
+
+                    // questionDetail[i][0] la  noi dung lua chon
+                    selection.textContent = `${i + 1}. ${stringFormat(
+                        questionDetail[i][0]
+                    )}`;
+
+                    // questionDetail[i][1] la thu tu cua lua chon
+                    if (questionDetail[i][1] === dapAnDung) {
+                        selection.classList.add("correct");
+                    }
+                    selectionWrapper.appendChild(selection);
+                }
+                const questionContent = document.querySelector(
+                    ".modal .question-content"
+                );
+                console.log(questionContent);
+                // questionDetail[i][1] la noi dung cau hoi
+                questionContent.textContent = stringFormat(noiDungCauHoi);
+                const questionId = document.querySelector(".question-id span");
+                questionId.textContent = maCauHoi;
             }
 
             function getQuestionDetail(maCauHoi, callback) {
@@ -89,10 +126,44 @@ function renderSortMonHoc(subjects) {
             moreBtn.onclick = function () {
                 getQuestionDetail(maCauHoi, renderQuestionDetail);
             };
+            function deleteQuestion(maCauHoi) {
+                fetch(`/lecturer/deleteQuestion/${maCauHoi}`, {
+                    method: "delete",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(maCauHoi),
+                })
+                    .then((response) => response.text())
+                    .then(() => {
+                        getNumOfQuestion(
+                            initialProfile.maGv,
+                            sortMh.value,
+                            true
+                        );
+                        toast({
+                            type: "success",
+                            title: "Success!",
+                            message: `Xóa thành công câu hỏi có mã ${maCauHoi}`,
+                        });
+                    });
+            }
+            trashBtn.onclick = function () {
+                popup(
+                    {
+                        type: "remove",
+                        title: `Xóa câu hỏi có mã câu hỏi ${maCauHoi}`,
+                        desc: "Hành động này sẽ xóa câu hỏi của bạn",
+                    },
+                    deleteQuestion,
+                    maCauHoi
+                );
+            };
         });
     }
     function getQuestionByMaGvAndMaMh(magv, mamh, pageNumber) {
-        fetch(`/lecturer/questionManagement/${magv}/${mamh}/${pageNumber}`)
+        const validPageNumber = Math.max(1, pageNumber);
+        fetch(`/lecturer/questionManagement/${magv}/${mamh}/${validPageNumber}`)
             .then((response) => response.json())
             .then((questions) => {
                 currentPage = pageNumber;
@@ -113,7 +184,6 @@ function renderSortMonHoc(subjects) {
             const pageNums = document.querySelectorAll(
                 ".table-controller .item"
             );
-            console.log(pageNums[page - 1]);
             pageNums[page - 1].classList.add("active");
             getQuestionByMaGvAndMaMh(
                 initialProfile.maGv,

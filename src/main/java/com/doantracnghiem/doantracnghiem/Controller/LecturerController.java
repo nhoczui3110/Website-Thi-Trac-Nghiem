@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 // import org.hibernate.mapping.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.doantracnghiem.doantracnghiem.Entity.CauHoi;
 import com.doantracnghiem.doantracnghiem.Entity.GiangVien;
+import com.doantracnghiem.doantracnghiem.Service.CauHoiService;
 import com.doantracnghiem.doantracnghiem.Service.DangNhapService;
 import com.doantracnghiem.doantracnghiem.Service.TableGiangVien;
 import com.doantracnghiem.doantracnghiem.Service.UpdateGiangVien;
@@ -29,6 +32,9 @@ public class LecturerController {
 
     @Autowired
     UpdateGiangVien updateGiangVien;
+
+    @Autowired
+    CauHoiService cauHoiService;
 
     @Autowired
     TableGiangVien tableGiangVien;
@@ -52,10 +58,9 @@ public class LecturerController {
     @GetMapping("/CountQuestionBySubjectAndLecturer/{magv}/{mamh}")
     public double getNumOfQuestion(@PathVariable("magv") String maGv,
             @PathVariable("mamh") String maMh) {
-        int maxPage = (int) Math.floor(tableGiangVien.getCountQuestionByMonHocAndLecturer(maGv, maMh) / pageSize) + 1;
-        System.out.println(maxPage);
+        double maxPage = Math
+                .ceil((double) tableGiangVien.getCountQuestionByMonHocAndLecturer(maGv, maMh) / (double) pageSize);
         return maxPage;
-
     }
 
     @GetMapping("/questionManagement/{magv}/{mamh}/{page}")
@@ -67,6 +72,11 @@ public class LecturerController {
     @GetMapping("/questionDetail/{maCauHoi}")
     public List<Object[]> getLuaChonByMaCauHoi(@PathVariable("maCauHoi") int maCauHoi) {
         return tableGiangVien.getLuaChocByMaCauHoi(maCauHoi);
+    }
+
+    @DeleteMapping("/deleteQuestion/{maCauHoi}")
+    public String deleteQuestion(@PathVariable("maCauHoi") Integer maCauHoi) {
+        return cauHoiService.deleteQuestion(maCauHoi);
     }
     // @GetMapping("/getQuestionBySubject/{maGv}")
     // public List<Object[]> getQuestionBySubject(@PathVariable("maGv") String maGv)

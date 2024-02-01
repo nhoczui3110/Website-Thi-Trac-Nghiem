@@ -45,6 +45,7 @@ select:focus {
 .btn-trans {
     border: 0.871px solid var(--primary-color);
     /* width: 149px; */
+    min-width: 180px;
     height: 58px;
     display: inline-flex;
     justify-content: center;
@@ -95,7 +96,7 @@ select:focus {
     justify-content: center;
     align-items: center;
     color: #fff;
-    width: 180px;
+    min-width: 180px;
     height: 55.5px;
     background: var(--primary-color);
     box-shadow: 0px 10.45px 23.223px -6.967px var(--primary-color);
@@ -687,4 +688,100 @@ th {
 
 .btn-register:hover .circle svg {
     color: var(--primary-color);
+}
+
+/* popup */
+.popup-wrapper {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.popup {
+    padding: 24px;
+    min-width: 400px;
+    max-width: 500px;
+    background-color: #fff;
+    border-radius: 12px;
+}
+
+.popup .icon-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 48px;
+    height: 48px;
+    background-color: #039855;
+    border-radius: 50%;
+}
+
+.popup .top {
+    display: flex;
+    justify-content: space-between;
+}
+
+.popup .close {
+    opacity: 0.7;
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+.popup .close:hover {
+    opacity: 1;
+}
+
+.popup .icon-wrapper i {
+    color: #fff;
+}
+
+
+
+.popup-wrapper a {
+    height: 44px;
+    padding: 10px;
+    /* min-width: 170px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    min-width: 170px;
+    font-size: 1.6rem;
+}
+
+.popup-wrapper .cancel-btn {
+    border: 1.5px solid #D0D5DD;
+    color: #344054;
+}
+
+.popup-wrapper .confirm-btn {
+    background-color: #039855;
+    color: #fff;
+}
+
+.popup-wrapper a:hover {
+    cursor: pointer;
+    opacity: 0.9;
+}
+
+.popup .title {
+    margin-top: 16px;
+    display: block;
+    font-size: 1.8rem;
+}
+
+.popup .desc {
+    margin-top: 16px;
+    font-size: 1.4rem;
+    color: #475467;
+    line-height: 1.6;
+}
+
+.popup .btn-group {
+    margin-top: 32px;
+    display: flex;
+    justify-content: space-between;
 }

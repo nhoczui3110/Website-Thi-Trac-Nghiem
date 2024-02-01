@@ -21,7 +21,6 @@ function startTable(objectGet) {
 
 function clearFormValidation() {
     const formGroups = document.querySelectorAll(".input-wrapper");
-    console.log(formGroups);
     formGroups.forEach((formGroup) => {
         const input = formGroup.querySelector("input");
         if (input) input.value = "";

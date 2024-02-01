@@ -35,6 +35,25 @@
         />
     </head>
     <body>
+        <!-- <div class="popup-wrapper">
+            <div class="popup">
+                <div class="top">
+                    <div class="icon-wrapper">
+                        <i class="fa-solid fa-check check"></i>
+                    </div>
+                    <i class="fa-solid fa-xmark close"></i>
+                </div>
+                <span class="title">Blog post published</span>
+                <div class="desc">
+                    This blog post has been published. Team members will be able
+                    to edit this post and republish changes.
+                </div>
+                <div class="btn-group">
+                    <a href="#!" class="cancel-btn">Cancel</a>
+                    <a href="#!" class="confirm-btn">Confirm</a>
+                </div>
+            </div>
+        </div> -->
         <div class="controller-wrapper">
             <div class="logo-wrapper">
                 <img
@@ -519,40 +538,21 @@
                 <div class="question-detail-wrapper">
                     <div class="top">
                         <span class="question-id"
-                            >Mã câu hỏi: <span>5</span></span
-                        >
+                            >Mã câu hỏi: <span></span
+                        ></span>
                         <i class="fa-solid fa-xmark"></i>
                     </div>
                     <span class="text">Nội dung câu hỏi:</span>
-                    <p class="question-content">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Officia, fugiat aliquid accusantium ducimus nulla
-                        laboriosam inventore cupiditate quia eveniet itaque
-                        similique commodi maxime totam sequi eum, et doloribus
-                        enim neque?
-                    </p>
-                    <div class="selection-wrapper">
-                        <span class="selection correct"
-                            >1. Lorem ipsum dolor sit amet, consectetur
-                            adipisicing elit. Id, optio.</span
-                        >
-                        <span class="selection"
-                            >2. Lorem ipsum dolor sit amet, consectetur
-                            adipisicing elit. Id, optio.</span
-                        >
-                        <span class="selection"
-                            >3. Lorem ipsum dolor sit amet, consectetur
-                            adipisicing elit. Id, optio.</span
-                        >
-                        <span class="selection"
-                            >4. Lorem ipsum dolor sit amet, consectetur
-                            adipisicing elit. Id, optio.</span
-                        >
-                    </div>
+                    <p class="question-content"></p>
+                    <div class="selection-wrapper"></div>
                 </div>
             </div>
         </div>
         <!-- Script -->
+        <script
+            th:src="@{/javascript/popup.js}"
+            src="../static/javascript/popup.js"
+        ></script>
         <script
             th:src="@{/javascript/toast.js}"
             src="../static/javascript/toast.js"
