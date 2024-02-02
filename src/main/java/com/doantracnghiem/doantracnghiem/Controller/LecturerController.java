@@ -78,6 +78,31 @@ public class LecturerController {
     public String deleteQuestion(@PathVariable("maCauHoi") Integer maCauHoi) {
         return cauHoiService.deleteQuestion(maCauHoi);
     }
+
+    @PostMapping("/searchCauHoi/{magv}/{page}")
+    public List<Object[]> searchCauHoi(@RequestBody String keyword,
+            @PathVariable("magv") String magv,
+            @PathVariable("page") int pageNumber) {
+        List<Object[]> list = tableGiangVien.searchCauHoi(magv, pageNumber, pageSize, keyword);
+        return list;
+    }
+
+    // @GetMapping("/finding/{magv}/{keyword}")
+    // public double getMaxPageFinding(@PathVariable("magv") String maGv,
+    // @PathVariable("keyword") String keyword) {
+    // System.out.println("vo day");
+    // double maxPage = Math.ceil((double)
+    // tableGiangVien.getCountCauHoiByFinding(maGv, keyword) / (double) pageSize);
+    // return maxPage;
+    // }
+    @PostMapping("/countCauHoiByFinding/{magv}")
+    public double getMaxPageFinding(@PathVariable("magv") String maGv, @RequestBody String keyword) {
+        System.out.println("maGv: " + maGv);
+        System.out.println("keyword: " + keyword);
+        double maxPage = Math.ceil((double) tableGiangVien.getCountCauHoiByFinding(maGv, keyword) / (double) pageSize);
+        return maxPage;
+    }
+
     // @GetMapping("/getQuestionBySubject/{maGv}")
     // public List<Object[]> getQuestionBySubject(@PathVariable("maGv") String maGv)
 }

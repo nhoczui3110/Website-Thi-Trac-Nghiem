@@ -29,4 +29,14 @@ public class TableGiangVien {
     public List<Object[]> getLuaChocByMaCauHoi(Integer maCauHoi) {
         return cauHoiRepository.findLuaChocByMaCauHoi(maCauHoi);
     }
+
+    public List<Object[]> searchCauHoi(String magv, int pageNumber, int pageSize, String keyword) {
+        List<Object[]> list = cauHoiRepository.searchCauHoi(magv, pageNumber, pageSize, keyword);
+        System.out.println(list);
+        return list;
+    }
+
+    public int getCountCauHoiByFinding(String magv, String keyword) {
+        return cauHoiRepository.countQuestionByFinding(magv, keyword);
+    }
 }
