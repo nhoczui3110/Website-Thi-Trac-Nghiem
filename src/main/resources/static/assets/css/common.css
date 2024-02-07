@@ -190,6 +190,7 @@ a {
 .modal.open .modal-container {
     min-width: 500px;
     /* height: 500px; */
+    box-shadow: 0px 8px 24px 0px rgba(149, 157, 165, 0.20);
     background-color: #fff;
     animation: modalFadeIn ease 0.3s;
     display: none;

@@ -1,5 +1,6 @@
 let currentPage = 1;
 let initialProfile;
+let subjectObject;
 function stringFormat(string) {
     if (typeof string !== "string") return string;
     return string
@@ -18,6 +19,46 @@ function getProfileLecturer(callback) {
         .catch((error) => console.log("Error: ", error));
 }
 
+function renderLuaChon(orderSelection, noiDungLuaChon, isEdit) {
+    const modalContainer = document.querySelector(
+        ".modal-container[data-name='create-cauhoi']"
+    );
+    const templateSelection = `<div class="input-wrapper input-selection">
+                <input
+                    type="radio"
+                    name="luaChon"
+                    value="placehoder"
+                    id="${orderSelection}"
+                    data-num="${orderSelection}"
+                    class="radio-luachon"
+                    hidden
+                />
+                <label for="${orderSelection}">Nhập lựa chọn:</label>
+                <input type="text" name="noiDungLuaChon" rules="required" value="${noiDungLuaChon}" data-count="${orderSelection}">
+                <i class="fa-solid fa-trash trash"></i>
+                <div class="bar"></div>
+                </div>
+                <span class="form-message"></span>`;
+    const addSelectionBtn = modalContainer.querySelector(".add-selection-btn");
+    if (addSelectionBtn) {
+        addSelectionBtn.insertAdjacentHTML("beforebegin", templateSelection);
+    } else {
+        const btnController = modalContainer.querySelector(".btn-controller");
+        btnController.insertAdjacentHTML("beforebegin", templateSelection);
+    }
+    if (!isEdit) {
+        const deleteSelectionBtn = document.querySelector(
+            `.input-wrapper input[data-num='${orderSelection}'] ~ .trash`
+        );
+        const inputWrapper = deleteSelectionBtn.parentElement;
+        deleteSelectionBtn.onclick = function () {
+            if (modalContainer.querySelectorAll(".input-selection").length <= 1)
+                return;
+            inputWrapper.remove();
+        };
+    }
+}
+
 function renderQuestion(questions) {
     const contentBottom = document.querySelector(".content-bottom");
     contentBottom.style.minWidth = "1200px";
@@ -27,8 +68,10 @@ function renderQuestion(questions) {
     questions.forEach((item) => {
         const tr = document.createElement("tr");
         const maCauHoi = item[0];
+        const tenMonHoc = item[1];
+        const hinhThuc = item[2];
         const noiDungCauHoi = item[3];
-        const dapAnDung = item[4];
+        let dapAnDung = item[4];
         item.forEach((cell, index) => {
             // index 4 la thu tu lua chon dung
             if (index !== 4) {
@@ -92,7 +135,6 @@ function renderQuestion(questions) {
             const questionContent = document.querySelector(
                 ".modal .question-content"
             );
-            console.log(questionContent);
             // questionDetail[i][1] la noi dung cau hoi
             questionContent.textContent = stringFormat(noiDungCauHoi);
             const questionId = document.querySelector(".question-id span");
@@ -103,8 +145,188 @@ function renderQuestion(questions) {
             fetch(`/lecturer/questionDetail/${maCauHoi}`)
                 .then((response) => response.json())
                 .then((questionDetail) => {
+                    console.log(questionDetail);
+                    console.log("Dap an dung ne: ", dapAnDung);
                     callback(questionDetail);
                 });
+        }
+        function deleteLuaChon(maLuaChon, deleteSelectionBtn) {
+            fetch(`/lecturer/deleteSelection/${maCauHoi}/${maLuaChon}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Xóa lựa chọn không thành công");
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    dapAnDung = data;
+                    console.log("DapAnDung mới:", dapAnDung);
+                    toast({ message: "Xóa lựa chọn thành công!" });
+                    deleteSelectionBtn.parentElement.remove();
+                })
+                .catch((error) => {
+                    console.error("Lỗi:", error);
+                    toast({ message: "Xóa lựa chọn không thành công!" });
+                });
+        }
+        function addSelection(order, noiDungLuaChon) {
+            const numOfSelection = document.querySelectorAll(
+                ".modal-container[data-name='create-cauhoi'] .input-selection"
+            ).length;
+            const orderSelection = numOfSelection + 1;
+            const selectionObject = {};
+            selectionObject["thuTuLuaChon"] = orderSelection;
+            selectionObject["maCauHoi"] = maCauHoi;
+            selectionObject["noiDungLuaChon"] = noiDungLuaChon;
+            fetch(`/lecturer/addSelection/${maCauHoi}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(selectionObject),
+            }).then((data) => {
+                toast({
+                    type: "success",
+                    message: "Thêm lựa chọn thành công!",
+                });
+            });
+            renderLuaChon(order, noiDungLuaChon);
+        }
+        function renderQuestionEdit(questionDetail) {
+            resetSelectionQuestion();
+            let orderSelection = 1;
+            const modalContainer = document.querySelector(
+                ".modal-container[data-name='create-cauhoi']"
+            );
+            openModal(modalContainer);
+            const form = modalContainer.querySelector(".register-form");
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+            });
+            if (hinhThuc.toUpperCase() !== "YES/NO") {
+                const addSelectionBtn = document.createElement("div");
+                addSelectionBtn.classList.add("add-selection-btn");
+                addSelectionBtn.innerHTML = `<i class="fa-solid fa-plus"></i>`;
+                const btnController = form.querySelector(".btn-controller");
+                btnController.insertAdjacentElement(
+                    "beforebegin",
+                    addSelectionBtn
+                );
+                addSelectionBtn.onclick = function () {
+                    popup(
+                        {
+                            type: "remove",
+                            title: "Thêm lựa chọn",
+                            desc: "Vui lòng nhập nội dung lựa chọn",
+                        },
+                        true,
+                        addSelection,
+                        orderSelection
+                    );
+                    orderSelection++;
+                };
+            }
+
+            const cauHoi = modalContainer.querySelector("textarea");
+            cauHoi.textContent = noiDungCauHoi;
+            const selectMonHoc = modalContainer.querySelector("select");
+            const templateOption = subjectObject.map(
+                (item) =>
+                    `<option value="${item[0]}" data-name="${item[1]}">${item[1]}</option>`
+            );
+            selectMonHoc.innerHTML = templateOption.join("");
+            const selectedMonHoc = selectMonHoc.querySelector(
+                `option[data-name='${tenMonHoc}']`
+            );
+            selectMonHoc.value = selectedMonHoc.value;
+            questionDetail.forEach((item) => {
+                const isEdit = true;
+                const maLuaChon = item[2];
+                renderLuaChon(orderSelection, item[0], isEdit);
+                modalContainer
+                    .querySelector(`input[data-count='${orderSelection}']`)
+                    .setAttribute("data-id", maLuaChon);
+                if (item[1] === dapAnDung) {
+                    const radioCorrect = modalContainer.querySelector(
+                        `input[data-num='${orderSelection}']`
+                    );
+                    radioCorrect.checked = true;
+                }
+                if (hinhThuc.toUpperCase() !== "YES/NO") {
+                    const deleteSelectionBtn = document.querySelector(
+                        `.input-wrapper input[data-num='${orderSelection}'] ~ .trash`
+                    );
+                    deleteSelectionBtn.addEventListener("click", function () {
+                        popup(
+                            {
+                                type: "remove",
+                                title: "Xóa lựa chọn",
+                                desc: "Hành đông này sẽ xóa lựa chon của bạn",
+                            },
+                            false,
+                            deleteLuaChon,
+                            maLuaChon,
+                            deleteSelectionBtn
+                        );
+                    });
+                }
+                orderSelection++;
+            });
+
+            const submitBtn =
+                modalContainer.querySelector(".registerSubmitBtn");
+            function submitQuestion() {
+                const radioValue = modalContainer.querySelector(
+                    "input[type='radio']:checked"
+                );
+                const inputs = document.querySelectorAll(
+                    "input[name='noiDungLuaChon']"
+                );
+                const textArea = document.querySelector(
+                    "textarea[name='noiDungCauHoi']"
+                );
+                const check = Array.from(inputs).every(
+                    (input) => !!input.value
+                );
+                if (radioValue && check && textArea.value) {
+                    fetch(
+                        `/lecturer/updateQuestion/${initialProfile.maGv}/${maCauHoi}`,
+                        {
+                            method: "PATCH",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify(
+                                getCurrentUpdateQuestion(hinhThuc)
+                            ),
+                        }
+                    ).then(() => {
+                        closeModal(
+                            document.querySelector(
+                                ".modal-container[data-name='create-cauhoi']"
+                            )
+                        );
+                        toast({
+                            type: "success", // Default type is "success"
+                            title: "Success!", // Default title is "Success!"
+                            message: "Cập nhật câu hỏi thành công", // Default message is an empty string
+                            duration: 3000, // Default duration is 3000 milliseconds (3 seconds)
+                        });
+                        getMonhoc(renderSortMonHoc);
+                    });
+                } else {
+                    toast({
+                        type: "error",
+                        title: "Thông tin không đầy đủ",
+                        message: "Vui lòng nhập đầu đủ thông tin câu hỏi",
+                    });
+                }
+            }
+            const throttleSubmitQuestion = throttle(submitQuestion, 1000);
+            submitBtn.onclick = throttleSubmitQuestion;
         }
         moreBtn.onclick = function () {
             getQuestionDetail(maCauHoi, renderQuestionDetail);
@@ -142,9 +364,13 @@ function renderQuestion(questions) {
                     title: `Xóa câu hỏi có mã câu hỏi ${maCauHoi}`,
                     desc: "Hành động này sẽ xóa câu hỏi của bạn",
                 },
+                false,
                 deleteQuestion,
                 maCauHoi
             );
+        };
+        editBtn.onclick = function () {
+            getQuestionDetail(maCauHoi, renderQuestionEdit);
         };
     });
 }
@@ -167,7 +393,6 @@ function getNumOfQuestion(magv, mamh, remove, callback) {
                 currentPage--;
             } else currentPage = 1;
             renderPageNumber(maxPage, getQuestionByMaGvAndMaMh, magv, mamh);
-            console.log(maxPage);
             callback(magv, mamh, currentPage);
         });
 }
@@ -194,7 +419,6 @@ function renderPageNumber(maxPage, callback, ...params) {
 
     function handleButtonClick(offset) {
         const newPage = currentPage + offset;
-        console.log(newPage);
         if (newPage >= 1 && newPage <= maxPage) {
             currentPage += offset;
             updatePage(newPage);
@@ -273,6 +497,7 @@ function getMonhoc(callback) {
     fetch(`/lecturer/getSubjectByLecturer/${initialProfile.maGv}`)
         .then((response) => response.json())
         .then((subjects) => {
+            subjectObject = [...subjects];
             // renderCauHoi(questionInfo);
             callback(subjects);
             const searchInput = document.querySelector("#search-cauhoi");
@@ -291,8 +516,6 @@ function getMonhoc(callback) {
 
 function checkSaveProfileBtn() {
     const currentProfile = getCurrentProfile();
-    console.log("vo profile");
-    console.log(currentProfile);
     const checkedValid = Object.keys(currentProfile).every((key) => {
         return currentProfile[key] === initialProfile[key];
     });
@@ -422,11 +645,281 @@ function profileHandler() {
     getProfileLecturer(renderProfile);
 }
 
+function handleTypeQuestion() {
+    const nextBtn = document.querySelector(".modal-container .next-btn");
+    nextBtn.addEventListener("click", () => {
+        const typeQuestion = document.querySelector(
+            ".modal-container[data-name='cauhoi'] .type-selection"
+        ).value;
+        renderFormCreateQuestion(typeQuestion);
+    });
+}
+
+function resetSelectionQuestion() {
+    const template = `<form action="/login" class="register-form" method="post">
+        <div class="input-wrapper">
+            <label for="monHoc">Chọn môn học:</label>
+            <select id="monHoc" name="monHoc"></select>
+        </div>
+        <span class="form-message"></span>
+        <div class="input-wrapper">
+            <label for="noiDungCauHoi">Nội dung câu hỏi</label>
+            <textarea
+                name="noiDungCauHoi"
+                id="noiDungCauHoi"
+                cols="30"
+                rows="2"
+                required
+            ></textarea>
+            <div class="bar"></div>
+        </div>
+        <span class="form-message"></span>
+        <div class="btn-controller">
+            <button
+                type="submit"
+                href="#!"
+                class="btn registerSubmitBtn"
+            >
+                Register
+            </button>
+            <a href="#!" class="btn-trans closeBtn">Close</a>
+        </div>
+    </form>`;
+    const modalContainer = document.querySelector(
+        ".modal-container[data-name='create-cauhoi']"
+    );
+    modalContainer.innerHTML = template;
+}
+
+function renderYesNoQuestion(typeQuestion) {
+    const modalContainer = document.querySelector(
+        ".modal-container[data-name='create-cauhoi']"
+    );
+    const template = `<div class="box-wrapper">
+        <input
+            type="radio"
+            name="yes/no"
+            id="yes"
+            checked
+            class="radio-luachon"
+            hidden
+            data-name="Yes"
+        />
+        <label for="yes">Yes</label>
+        <input
+            type="radio"
+            name="yes/no"
+            id="no"
+            class="radio-luachon"
+            hidden
+            data-name="No"
+        />
+        <label for="no">No</label>
+    </div>`;
+    const btnController = document.querySelector(
+        ".modal-container[data-name='create-cauhoi'] .btn-controller"
+    );
+    btnController.insertAdjacentHTML("beforebegin", template);
+    const form = modalContainer.querySelector(".register-form");
+    const textArea = modalContainer.querySelector(
+        "textarea[name='noiDungCauHoi']"
+    );
+    const submitBtn = btnController.querySelector(".registerSubmitBtn");
+    function submitQuestion() {
+        fetch(`/lecturer/addQuestion/${initialProfile.maGv}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(getCurrentAddQuestion(typeQuestion)),
+        }).then(() => {
+            closeModal(
+                document.querySelector(
+                    ".modal-container[data-name='create-cauhoi']"
+                )
+            );
+            toast({
+                type: "success", // Default type is "success"
+                title: "Success!", // Default title is "Success!"
+                message: "Thêm câu hỏi thành công", // Default message is an empty string
+                duration: 3000, // Default duration is 3000 milliseconds (3 seconds)
+            });
+            getMonhoc(renderSortMonHoc);
+        });
+    }
+    submitBtn.addEventListener("click", () => {
+        if (textArea.value) {
+            submitQuestion();
+        } else {
+            toast({
+                type: "error",
+                title: "Thông tin không đầy đủ",
+                message: "Vui lòng nhập đầu đủ thông tin câu hỏi",
+            });
+        }
+    });
+}
+
+function renderSelectionQuestion(orderSelection, typeQuestion) {
+    const modalContainer = document.querySelector(
+        ".modal-container[data-name='create-cauhoi']"
+    );
+    const form = modalContainer.querySelector(".register-form");
+    const addSelectionBtn = document.createElement("div");
+    addSelectionBtn.classList.add("add-selection-btn");
+    addSelectionBtn.innerHTML = `<i class="fa-solid fa-plus"></i>`;
+    const btnController = form.querySelector(".btn-controller");
+    btnController.insertAdjacentElement("beforebegin", addSelectionBtn);
+    renderLuaChon(orderSelection++, "");
+    addSelectionBtn.onclick = function () {
+        renderLuaChon(orderSelection++, "");
+    };
+    const submitBtn = modalContainer.querySelector(".registerSubmitBtn");
+    function submitQuestion() {
+        const radioValue = modalContainer.querySelector(
+            "input[type='radio']:checked"
+        );
+        const inputs = document.querySelectorAll(
+            "input[name='noiDungLuaChon']"
+        );
+        const textArea = document.querySelector(
+            "textarea[name='noiDungCauHoi']"
+        );
+        const check = Array.from(inputs).every((input) => !!input.value);
+        if (radioValue && check && textArea.value) {
+            fetch(`/lecturer/addQuestion/${initialProfile.maGv}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(getCurrentAddQuestion(typeQuestion)),
+            }).then(() => {
+                closeModal(
+                    document.querySelector(
+                        ".modal-container[data-name='create-cauhoi']"
+                    )
+                );
+                toast({
+                    type: "success", // Default type is "success"
+                    title: "Success!", // Default title is "Success!"
+                    message: "Thêm câu hỏi thành công", // Default message is an empty string
+                    duration: 3000, // Default duration is 3000 milliseconds (3 seconds)
+                });
+                getMonhoc(renderSortMonHoc);
+            });
+        } else {
+            toast({
+                type: "error",
+                title: "Thông tin không đầy đủ",
+                message: "Vui lòng nhập đầu đủ thông tin câu hỏi",
+            });
+        }
+    }
+    const throttleSubmitQuestion = throttle(submitQuestion, 1000);
+    submitBtn.onclick = throttleSubmitQuestion;
+}
+
+function getCurrentUpdateQuestion(typeQuestion) {
+    const question = {};
+    const modalContainer = document.querySelector(
+        ".modal-container[data-name='create-cauhoi']"
+    );
+    const selectMonHoc = modalContainer.querySelector("select[name='monHoc']");
+    question["monHoc"] = selectMonHoc.value;
+    const textArea = modalContainer.querySelector("textarea");
+    question["noiDungCauHoi"] = textArea.value;
+    const radios = document.querySelectorAll(".radio-luachon");
+    radios.forEach((radio, index) => {
+        if (radio.checked) question["dapAnDung"] = index + 1;
+    });
+    question["luaChon"] = [];
+    if (typeQuestion === "YES/NO") {
+    } else {
+        const inputs = modalContainer.querySelectorAll(
+            "input[name='noiDungLuaChon']"
+        );
+        inputs.forEach((input, index) => {
+            const selectInfo = {};
+            selectInfo.maLuaChon = parseInt(input.getAttribute("data-id"));
+            selectInfo.noiDungLuaChon = input.value;
+            question["luaChon"].push(selectInfo);
+        });
+    }
+    console.log("log: ", question);
+    return question;
+}
+
+function getCurrentAddQuestion(typeQuestion) {
+    const question = {};
+    question["hinhThuc"] = typeQuestion;
+    const modalContainer = document.querySelector(
+        ".modal-container[data-name='create-cauhoi']"
+    );
+    const selectMonHoc = modalContainer.querySelector("select[name='monHoc']");
+    question["monHoc"] = selectMonHoc.value;
+    const textArea = modalContainer.querySelector("textarea");
+    question["noiDungCauHoi"] = textArea.value;
+    const radios = document.querySelectorAll(".radio-luachon");
+    radios.forEach((radio, index) => {
+        if (radio.checked) question["dapAnDung"] = index + 1;
+    });
+    question["luaChon"] = [];
+    if (typeQuestion === "YES/NO") {
+        radios.forEach((radio, index) => {
+            const obj = {};
+            obj.thuTuLuaChon = index + 1;
+            obj.noiDungLuaChon = radio.getAttribute("data-name");
+            question["luaChon"].push(obj);
+        });
+    } else {
+        const inputs = modalContainer.querySelectorAll(
+            "input[name='noiDungLuaChon']"
+        );
+        inputs.forEach((input, index) => {
+            const selectInfo = {};
+            selectInfo.thuTuLuaChon = index + 1;
+            selectInfo.noiDungLuaChon = input.value;
+            question["luaChon"].push(selectInfo);
+        });
+    }
+    return question;
+}
+
+function renderFormCreateQuestion(typeQuestion) {
+    resetSelectionQuestion();
+
+    let orderSelection = 1;
+    const modalTypeQuestion = document.querySelector(
+        ".modal-container[data-name='cauhoi']"
+    );
+    const modalCreateQuestion = document.querySelector(
+        ".modal-container[data-name='create-cauhoi']"
+    );
+    closeModal(modalTypeQuestion);
+    openModal(modalCreateQuestion);
+    const selectMonHoc = modalCreateQuestion.querySelector("select");
+    console.log(subjectObject);
+    const templateOption = subjectObject.map(
+        (item) => `<option value="${item[0]}">${item[1]}</option>`
+    );
+    selectMonHoc.innerHTML = templateOption.join("");
+    const form = modalCreateQuestion.querySelector(".register-form");
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+    });
+    if (typeQuestion === "YES/NO") {
+        renderYesNoQuestion(typeQuestion);
+    } else {
+        renderSelectionQuestion(orderSelection, typeQuestion);
+    }
+}
+
 (function start() {
     getProfileLecturer();
     startTable({
         cauhoi: () => {
             getMonhoc(renderSortMonHoc);
+            handleTypeQuestion();
         },
     });
     const profileBtn = document.querySelectorAll(".setting-wrapper .item")[0];

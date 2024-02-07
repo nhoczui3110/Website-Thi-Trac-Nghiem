@@ -18,4 +18,6 @@ public interface DayHocRepository extends JpaRepository<DayHoc, Integer> {
     @Query(value = "findMonHocByMagv @magv = :magv", nativeQuery = true)
     List<Object[]> findMonHocByMaGv(@Param("magv") String magv);
 
+    @Query(value = "EXEC findIDDHByMaMhAndMaGv @MAMH = :mamh, @MAGV = :magv", nativeQuery = true)
+    Integer findIDDHByMaMhAndMaGv(@Param("mamh") String mamh, @Param("magv") String magv);
 }

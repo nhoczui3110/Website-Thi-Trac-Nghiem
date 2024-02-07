@@ -400,126 +400,47 @@
         </div>
         <div class="modal">
             <div class="modal-container" data-name="cauhoi">
-                <div class="header">Register</div>
-                <form action="/login" class="register-form" method="post">
-                    <div class="form-wrapper">
-                        <div class="input-wrapper">
-                            <label for="lastname-student">Họ</label>
-                            <input
-                                type="text"
-                                placeholder=""
-                                name="lastname"
-                                id="lastname-student"
-                                autocomplete="nope"
-                                rules="required"
-                            />
-                            <div class="bar"></div>
-                        </div>
-                        <span class="form-message"></span>
-                        <div class="input-wrapper">
-                            <label for="firstname-student">Tên</label>
-                            <input
-                                type="text"
-                                placeholder=""
-                                name="firstname"
-                                id="firstname-student"
-                                autocomplete="nope"
-                                rules="required"
-                            />
-                            <div class="bar"></div>
-                        </div>
-                        <span class="form-message"></span>
-                    </div>
-                    <div class="input-wrapper">
-                        <label for="username-student">User Name</label>
-                        <input
-                            type="text"
-                            placeholder=""
-                            name="username"
-                            id="username-student"
-                            autocomplete="nope"
-                            rules="required"
-                        />
-                        <div class="bar"></div>
-                    </div>
-                    <span class="form-message"></span>
-                    <div class="input-wrapper">
-                        <label for="password-student">Password</label>
-                        <input
-                            type="password"
-                            placeholder=""
-                            name="password"
-                            id="password-student"
-                            rules="required|min:6"
-                        />
-                        <div class="bar"></div>
-                    </div>
-                    <span class="form-message"></span>
-                    <div class="input-wrapper">
-                        <label for="confirm-password-student"
-                            >Confirm Password</label
+                <div class="type-wrapper">
+                    <label for="type-question" class="text-type"
+                        >Vui lòng chọn hình thức câu hỏi</label
+                    >
+                    <select name="" id="type-question" class="type-selection">
+                        <option value="ĐIỀN KHUYẾT">Điền khuyết</option>
+                        <option value="CHỌN 1 TRONG NHIỀU LỰA CHỌN">
+                            Chọn một trong nhiều lựa chọn
+                        </option>
+                        <option value="YES/NO">Yes/No</option>
+                    </select>
+                    <div class="btn-controller">
+                        <a href="#!" class="btn-trans closeBtn">Close</a>
+                        <button
+                            type="submit"
+                            href="#!"
+                            class="btn registerSubmitBtn next-btn"
                         >
-                        <input
-                            type="password"
-                            placeholder=""
-                            name="confirm-password"
-                            id="confirm-password-student"
-                            rules="required|confirmPassword"
-                        />
-                        <div class="bar"></div>
+                            next
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-container" data-name="create-cauhoi">
+                <div class="header">Tạo câu hỏi</div>
+                <form action="" class="register-form" method="post">
+                    <div class="input-wrapper">
+                        <label for="monHoc">Chọn môn học:</label>
+                        <select id="monHoc" name="monHoc"></select>
                     </div>
                     <span class="form-message"></span>
-                    <div class="box-wrapper">
-                        <input
-                            type="radio"
-                            name="gender"
-                            id="male-student"
-                            checked
-                        />
-                        <label for="male" checked>Nam</label>
-                        <input type="radio" name="gender" id="female-student" />
-                        <label for="female">Nữ</label>
-                    </div>
                     <div class="input-wrapper">
-                        <label for="address">Địa chỉ</label>
-                        <input
-                            type="text"
-                            placeholder=""
-                            name="address"
-                            id="address"
+                        <label for="noiDungCauHoi">Nội dung câu hỏi</label>
+                        <textarea
+                            name="noiDungCauHoi"
+                            id="noiDungCauHoi"
+                            cols="30"
+                            rows="2"
                             rules="required"
-                        />
+                        ></textarea>
                         <div class="bar"></div>
-                    </div>
-                    <span class="form-message"></span>
-                    <div class="input-wrapper">
-                        <label for="masv">Mã Sinh Viên</label>
-                        <input
-                            type="text"
-                            placeholder=""
-                            name="address"
-                            id="masv"
-                            rules="required"
-                        />
-                        <div class="bar"></div>
-                    </div>
-                    <span class="form-message"></span>
-                    <div class="input-wrapper">
-                        <label for="classes">Chọn lớp:</label>
-                        <select id="classes" name="class">
-                            <option value="D21CQCN01-N">D21CQCN01-N</option>
-                            <option value="D21CQCN02-N">D21CQCN02-N</option>
-                        </select>
-                    </div>
-                    <span class="form-message"></span>
-                    <div class="input-wrapper">
-                        <label for="birthday-student">Ngày sinh</label>
-                        <input
-                            type="date"
-                            name="birthday"
-                            id="birthday-student"
-                            rules="required"
-                        />
                     </div>
                     <span class="form-message"></span>
                     <div class="btn-controller">
@@ -569,5 +490,17 @@
             th:src="@{/javascript/XuLyLecturer.js}"
             src="../static/javascript/XuLyLecturer.js"
         ></script>
+        <!-- <script>
+            popup(
+                {
+                    type: "remove",
+                    title: "Thêm lựa chọn",
+                    desc: "Vui lòng nhập nội dung lựa chọn",
+                },
+                true,
+                console.log,
+                "Hello"
+            );
+        </script> -->
     </body>
 </html>

@@ -1,5 +1,6 @@
 function popup(
     { type = "error", title = "Thông báo", desc = "This is a desc" },
+    isInput,
     callback,
     ...params
 ) {
@@ -39,7 +40,7 @@ function popup(
     const submitBtn = popup.querySelector(".confirm-btn");
 
     function closePop() {
-        popupWrapper.style.display = "none";
+        popupWrapper.remove();
     }
 
     popup.addEventListener("click", (event) => {
@@ -48,8 +49,29 @@ function popup(
     popupWrapper.addEventListener("click", closePop);
     cancelBtn.addEventListener("click", closePop);
     closeBtn.addEventListener("click", closePop);
-    submitBtn.addEventListener("click", () => {
-        callback(...params);
-        closePop();
-    });
+    if (isInput) {
+        const template = `<div class="input-wrapper">
+        <input
+            type="text"
+            name="noiDungLuaChon"
+            id="noiDungLuaChon"
+        />
+        <div class="bar"></div>
+    </div>`;
+        const popup = document.querySelector(".popup");
+        const btnGroup = popup.querySelector(".btn-group");
+        console.log(btnGroup);
+        btnGroup.insertAdjacentHTML("beforebegin", template);
+
+        submitBtn.addEventListener("click", () => {
+            const ndlc = document.querySelector("#noiDungLuaChon").value;
+            callback(...params, ndlc);
+            closePop();
+        });
+    } else {
+        submitBtn.addEventListener("click", () => {
+            callback(...params);
+            closePop();
+        });
+    }
 }

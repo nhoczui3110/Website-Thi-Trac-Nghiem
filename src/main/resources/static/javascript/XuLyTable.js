@@ -43,6 +43,10 @@ function openModal(modalContainer) {
     modalContainer.addEventListener("click", (event) =>
         event.stopPropagation()
     );
+    modal.addEventListener("click", () => closeModal(modalContainer));
+    const closeBtn = modalContainer.querySelector(`.closeBtn`);
+    if (!closeBtn) return;
+    closeBtn.addEventListener("click", () => closeModal(modalContainer));
 }
 
 function closeModal(modalContainer) {
@@ -63,16 +67,8 @@ function handlerBtnRegister(contentWrapper) {
                 "data-name"
             )}]`
         );
-        const closeBtn = document.querySelector(
-            `.modal-container[data-name=${contentWrapper.getAttribute(
-                "data-name"
-            )}] .closeBtn`
-        );
         openModal(modalContainer);
         Validator(".register-form");
-
-        modal.addEventListener("click", () => closeModal(modalContainer));
-        closeBtn.addEventListener("click", () => closeModal(modalContainer));
         // Ngan su kien noi bot ke tu modal container
     });
 }
@@ -88,7 +84,7 @@ function clearContentWrapper() {
     contentWrappers.forEach((item) => (item.style.display = "none"));
 }
 
-function renderContentWrapper(dataName, callback) {
+function renderContentWrapper(dataName) {
     const contentWrapper = document.querySelector(
         `.content div[data-name=${dataName}]`
     );
