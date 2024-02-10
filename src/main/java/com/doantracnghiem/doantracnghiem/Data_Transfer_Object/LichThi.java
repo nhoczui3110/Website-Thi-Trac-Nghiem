@@ -5,13 +5,21 @@ import java.sql.Date;
 
 
 public class LichThi implements Serializable{
-    public LichThi( String tenMH, Date ngayThi, Integer lanThi, Integer soCau, Integer thoiLuong, Boolean trangThai) {
+    public LichThi(String maMh ,String tenMH, Date ngayThi, Integer lanThi, Integer soCau, Integer thoiLuong, Boolean trangThai) {
+        this.maMH = maMh;
         this.tenMH = tenMH;
         this.ngayThi = ngayThi;
         this.lanThi = lanThi;
         this.soCau = soCau;
         this.thoiLuong = thoiLuong;
         this.trangThai = trangThai;
+    }
+    private String maMH;
+    public String getMaMH() {
+        return maMH;
+    }
+    public void setMaMH(String maMH) {
+        this.maMH = maMH;
     }
     private String tenMH;
     private Date ngayThi;

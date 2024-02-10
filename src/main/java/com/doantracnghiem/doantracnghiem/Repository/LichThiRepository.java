@@ -23,15 +23,23 @@ public class LichThiRepository {
 
             // Lấy và hiển thị dữ liệu từ ResultSet
             LichThi tmp = null;
+            String maMH;
+            String tenMonHoc;
+            Date ngayThi;
+            int lanThi;
+            int soCau;
+            int thoiLuong;
+            boolean trangThai;
             while (rs.next()) {
-                String tenMonHoc = rs.getString("TENMH");
-                Date ngayThi = rs.getDate("NGAYTHI");
-                int lanThi = rs.getInt("LANTHI");
-                System.out.println(lanThi);
-                int soCau = rs.getInt("SOCAU");
-                int thoiLuong = rs.getInt("THOILUONG");
-                boolean trangThai = rs.getBoolean("TRANGTHAI");
-                tmp = new LichThi(tenMonHoc, ngayThi, lanThi, soCau, thoiLuong, trangThai);
+                maMH = rs.getString("MAMH");
+                tenMonHoc = rs.getString("TENMH");
+                ngayThi = rs.getDate("NGAYTHI");
+                lanThi = rs.getInt("LANTHI");
+                // System.out.println(lanThi);
+                soCau = rs.getInt("SOCAU");
+                thoiLuong = rs.getInt("THOILUONG");
+                trangThai = rs.getBoolean("TRANGTHAI");
+                tmp = new LichThi(maMH,tenMonHoc, ngayThi, lanThi, soCau, thoiLuong, trangThai);
                 lichthi.add(tmp);
             }
 

@@ -109,6 +109,7 @@
                             <td>
                                 <div th:if="${lich.isTrangThai()}">
                                     <form th:action="@{/thi}" method="post">
+                                        <input name = "mamh" th:value = "${lich.getMaMH()}" type="hidden">
                                         <input name = "tenmh" th:value="${lich.getTenMH()}" type="hidden"/>
                                         <input name = "ngaythi" th:value="${lich.getNgayThi()}" type="hidden"/>
                                         <input name = "lanthi" th:value="${lich.getSoCau()}" type="hidden"/>
