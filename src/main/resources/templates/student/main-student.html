@@ -99,15 +99,24 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="lich: ${lichthi}">
-                            <td th:text=${lich.getStt()}> </td>
+                        <tr th:each="lich,status: ${lichthi}">
+                            <td th:text="${status.index + 1}"> </td>
                             <td th:text=${lich.getTenMH()}> </td>
                             <td th:text=${lich.getNgayThi()}> </td>
                             <td th:text=${lich.getLanThi()}> </td>
                             <td th:text=${lich.getSoCau()}> </td>
                             <td th:text=${lich.getThoiLuong()}> </td>
                             <td>
-                                <button th:if="${lich.isTrangThai()}" type="button">Thi</button>
+                                <div th:if="${lich.isTrangThai()}">
+                                    <form th:action="@{/thi}" method="post">
+                                        <input name = "tenmh" th:value="${lich.getTenMH()}" type="hidden"/>
+                                        <input name = "ngaythi" th:value="${lich.getNgayThi()}" type="hidden"/>
+                                        <input name = "lanthi" th:value="${lich.getSoCau()}" type="hidden"/>
+                                        <input name = "socau" th:value="${lich.getSoCau()}" type="hidden"/>
+                                        <input name = "thoiluong" th:value="${lich.getThoiLuong()}" type="hidden"/>
+                                        <button  type="submit">Thi</button>
+                                    </form>
+                                </div>
                                 <button th:unless="${lich.isTrangThai()}" type="button" th:disabled="true">Thi</button>
                             </td>
                         </tr>
@@ -138,7 +147,8 @@
             </div>
         </div>
     </div>
-    <script src="./../../static/javascript/student/main-student.js" th:src="@{/javascript/student/main-student.js}"></script>
+    <script src="./../../static/javascript/student/main-student.js"
+        th:src="@{/javascript/student/main-student.js}"></script>
 </body>
 
 </html>

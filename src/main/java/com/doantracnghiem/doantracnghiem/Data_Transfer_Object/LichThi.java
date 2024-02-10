@@ -1,11 +1,11 @@
 package com.doantracnghiem.doantracnghiem.Data_Transfer_Object;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 
-public class LichThi {
-    public LichThi(int stt, String tenMH, Date ngayThi, int lanThi, int soCau, int thoiLuong, boolean trangThai) {
-        this.stt = stt;
+public class LichThi implements Serializable{
+    public LichThi( String tenMH, Date ngayThi, Integer lanThi, Integer soCau, Integer thoiLuong, Boolean trangThai) {
         this.tenMH = tenMH;
         this.ngayThi = ngayThi;
         this.lanThi = lanThi;
@@ -13,32 +13,28 @@ public class LichThi {
         this.thoiLuong = thoiLuong;
         this.trangThai = trangThai;
     }
-    private int stt;
     private String tenMH;
     private Date ngayThi;
-    public int getStt() {
-        return stt;
-    }
     public String getTenMH() {
         return tenMH;
     }
     public Date getNgayThi() {
         return ngayThi;
     }
-    public int getLanThi() {
+    public Integer getLanThi() {
         return lanThi;
     }
-    public int getSoCau() {
+    public Integer getSoCau() {
         return soCau;
     }
-    public int getThoiLuong() {
+    public Integer getThoiLuong() {
         return thoiLuong;
     }
-    public boolean isTrangThai() {
+    public Boolean isTrangThai() {
         return trangThai;
     }
-    private int lanThi;
-    private int soCau;
-    private int thoiLuong;
-    private boolean trangThai;
+    private Integer lanThi;
+    private Integer soCau;
+    private Integer thoiLuong;
+    private Boolean trangThai;
 }

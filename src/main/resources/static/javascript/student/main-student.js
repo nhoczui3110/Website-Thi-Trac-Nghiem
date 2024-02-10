@@ -37,12 +37,14 @@ function bodyClick(){
     const li = document.getElementById("profile-logout");
     li.style.display = "none";
 }
+
 // ====================Main==============================
 // ==================biến======================
 const xem_lich_thi = document.getElementById("item1");
 const xem_diem = document.getElementById("item2");
 const icon = document.getElementById("icon");
 const main_container = document.getElementsByClassName("main-container")[0];
+const btn = document.getElementById("thi-btn")
 // ================gắn sự kiện==========================
 setView()
 xem_lich_thi.addEventListener("click",showViewXemLichThi);
