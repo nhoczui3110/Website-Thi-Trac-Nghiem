@@ -2,15 +2,11 @@ package com.doantracnghiem.doantracnghiem.Repository;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.stereotype.Repository;
-
 import com.doantracnghiem.doantracnghiem.ConnectDataObject.JDBCUtil;
-import com.doantracnghiem.doantracnghiem.Data_Transfer_Object.LichThi;
 import com.doantracnghiem.doantracnghiem.Entity.CauHoi;
 
 @Repository
@@ -23,14 +19,12 @@ public class DanhSachCauHoiRepository {
             cs.setString(1, maMH);
             cs.setInt(2, soCau);
             ResultSet rs = cs.executeQuery();
-
             // Lấy và hiển thị dữ liệu từ ResultSet
             CauHoi tmp = null;
             int IDCH;
             String hinhThuc;
             String noiDung;
             int iddh;
-            boolean trangThai;
             while (rs.next()) {
                 IDCH = rs.getInt("IDCH");
                 hinhThuc = rs.getString("HINHTHUC");
