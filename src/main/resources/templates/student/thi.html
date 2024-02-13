@@ -3,57 +3,66 @@
 
 <head>
     <title>Thi</title>
-    <link rel="stylesheet" href="../../static/assets/css/student/thi.css"
-    th:href="@{/assets/css/student/thi.css}" >
+    <link rel="stylesheet" href="../../static/assets/css/student/thi.css" th:href="@{/assets/css/student/thi.css}">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
-            rel="stylesheet"
-        />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet" />
 </head>
 
-<body>
+<body th:onload="'showQuestion(0, ' + ${socau} + '); countdownMinutes(' + ${thoiluong} + ');'">
     <div class="main-container">
         <div class="question-index-bar">
-            <div><a href="">Câu 1</a></div>
-            <div><a href="">Câu 2</a></div>
-            <div><a href="">Câu 3</a></div>
-            <div><a href="">Câu 4</a></div>
-            <div><a href="">Câu 5</a></div>
+            <div th:each="i: ${#numbers.sequence(0, socau)}">
+                <a th:text="'Câu '+ ${i}" th:onclick="'showQuestion(' + ${i} + ',' + ${socau} + ');'"></a>
+            </div>
         </div>
         <div class="exam-view">
-            <div class="subject-name">THỰC TẬP CƠ SỞ</div>
-            <div class="question">CÂU 1: HÃY CHO BIẾT</div>
-            <div class="box-answer">
-                <form class="form">
-                    <div class="answer">
-                        <input type="radio" id="A" name="answer">
-                        <label for="A">HÃY CHO BIẾT</label>
+            <div class="subject-name" th:text="${tenmh}"></div>
+            <form th:action="@{/ketqua}" method="post" th:object="${danhsachch}" class="form" id = "form">
+                <div th:each="cauhoi,itemStat : *{list}" class="question-answer">
+                    <input type="hidden" th:field = "*{list[__${itemStat.index}__].CauHoi.idch}">
+                    <div class="question" th:text="${cauhoi.getCauHoi().getNoiDung()}"></div>
+                    <input type="hidden" th:field="*{list[__${itemStat.index}__].CauHoi.noiDung}">
+                    <input type="hidden" th:field="*{list[__${itemStat.index}__].ctBaiThi.thuTuChon}" th:placeholder = "${itemStat.index}">
+                    <input type="hidden" th:field="*{list[__${itemStat.index}__].ctBaiThi.idch}" th:placeholder = "${cauhoi.getCauHoi().getIdch()}">
+                    <input type="hidden" th:field="*{list[__${itemStat.index}__].ctBaiThi.idThi}" th:placeholder = "${idthi}">
+                    <div class="box-answer">
+                        <div class="answer" th:each="luachon,stat : ${cauhoi.getLuaChon()}">
+                            <input type="hidden" th:field="*{list[__${itemStat.index}__].LuaChon[__${stat.index}__].noiDung}">
+                            <input type="radio" th:value="${stat.index + 1}"
+                                th:field="*{list[__${itemStat.index}__].ctBaiThi.dapAnSv}"
+                                th:id="${'radio' + stat.index}" />
+                            <label th:for="${'radio' + stat.index}" th:text="${luachon.getNoiDung()}"></label>
+                        </div>
                     </div>
-                    <div class="answer">
-                        <input type="radio" id="B" name="answer">
-                        <label for="B">HÃY CHO BIẾT</label>
+                </div>
+            </form>
+
+            <!-- <form th:action="@{/ketqua}" method="post" th:object="${ketqua}" class="form" id = "form">
+                <input type="hidden" th:field="*{result[__${socau}__].value}" placeholder="0"/>
+                <div th:each="cauhoi,itemStat : ${danhsachch.getList()}" class="question-answer">
+                    <div class="question" th:text="${cauhoi.getCauHoi.getNoiDung()}"></div>
+                    <div class="box-answer">
+                        <div class="answer" th:each="luachon,stat : ${cauhoi.getLuaChon()}">
+                            <input type="radio" th:value="${stat.index + 1}"
+                                th:field="*{result[__${itemStat.index}__].value}"
+                                th:id="${'radio' + stat.index}"/>
+                            <label th:for="${'radio' + stat.index}" th:text="${luachon.getNoiDung()}"></label>
+                        </div>
                     </div>
-                    <div class="answer">
-                        <input type="radio" id="C" name="answer">
-                        <label for="C">HÃY CHO BIẾT</label>
-                    </div>
-                    <div class="answer">
-                        <input type="radio" id="D" name="answer">
-                        <label for="D">HÃY CHO BIẾT</label>
-                    </div>
-                </form>
-            </div>
+                </div>
+            </form> -->
             <div class="navigation">
                 <a href="#" class="previous">&laquo; Previous</a>
                 <a href="#" class="next">Next &raquo;</a>
             </div>
         </div>
         <div class="info-view">
-            <div class = "time-left">
+            <div class="time-left" id = "time">
                 <p>Thời gian: 60:00 phút</p>
-                <p>Còn lại:  59:00 phút</p>
+                <p>Còn lại: 59:00 phút</p>
             </div>
             <div class="candidate-info">
                 <div>THÔNG TIN</div>
@@ -62,14 +71,14 @@
                 <div>Lần thi: 1</div>
                 <div>Ngày thi: 1/1/2024</div>
             </div>
-            <div class = "score">
+            <div class="score">
                 <div>ĐIỂM</div>
                 <div>100</div>
             </div>
-            <button class = "submit">SUBMIT</button>
+            <button class="submit" id = "submitbtn" onclick="subMit()"><a>SUBMIT</a></button>
         </div>
     </div>
-    <script src = "../../static/javascript/student/thi.js"></script>
+    <script src="./../../static/javascript/student/thi.js" th:src="@{/javascript/student/thi.js}"></script>
 </body>
 
 </html>

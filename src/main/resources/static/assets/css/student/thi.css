@@ -44,7 +44,24 @@ html {
     align-items: center;
 }
 /* =========================question and answer========================== */
-.exam-view .question {
+.exam-view .subject-name {
+    color: #4A3AFF;
+    font-weight: 700;
+    padding-left: 35%;
+    font-size: 2.8rem;
+    height: 40px;
+}
+.exam-view .form {
+    display: flex;
+    flex-direction: column ;
+    flex-grow:10;
+}
+.exam-view .form .question-answer{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+.exam-view .form .question-answer .question {
     flex-grow: 1;
     border: solid 1px;
     border-radius: 10px;
@@ -53,31 +70,20 @@ html {
     padding: 10px;
 }
 
-.exam-view .subject-name {
-    color: #4A3AFF;
-    font-weight: 700;
-    padding-left: 35%;
-    font-size: 2.8rem;
-    height: 40px;
-}
 
-.exam-view .box-answer {
+.exam-view .form .question-answer .box-answer {
     border: 1px solid rgb(0, 0, 0);
     border-radius: 10px;
-    flex-grow: 9;
     display: flex;
     flex-direction: column;
-    padding:10px;
+    padding:20px;
+    flex-grow: 10;
+    /* height: 55vh; */
 }
 
-.exam-view .box-answer .form {
-    display: flex;
-    flex-direction: column;
+.exam-view .form .question-answer .box-answer .answer {
     flex-grow: 1;
-}
-
-.exam-view .box-answer .form .answer {
-    flex-grow: 1;
+    
 }
 
 /* ======================previous and next========================= */

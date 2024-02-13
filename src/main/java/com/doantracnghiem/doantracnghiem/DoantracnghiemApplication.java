@@ -25,16 +25,15 @@ public class DoantracnghiemApplication {
 
 	public static void main(String[] args) {
 		ApplicationContext context = SpringApplication.run(DoantracnghiemApplication.class, args);
-
-		DanhSachCauHoiRepository tmp = context.getBean(DanhSachCauHoiRepository.class);
-		for (CauHoi a : tmp.layCauHoiThi("mh1", 1)){
-			System.out.println(a);
-		}
-		LuaChonRepository b = context.getBean(LuaChonRepository.class);
-		System.out.println(b.findAllByIdch(1));
-		CauHoiThiService c = context.getBean(CauHoiThiService.class);
-		System.out.println(c.layCauHoiThi("mh1", 1));
-		((ConfigurableApplicationContext) context).close();
+		// DanhSachCauHoiRepository tmp = context.getBean(DanhSachCauHoiRepository.class);
+		// for (CauHoi a : tmp.layCauHoiThi("mh1", 1)){
+		// 	System.out.println(a);
+		// }
+		// LuaChonRepository b = context.getBean(LuaChonRepository.class);
+		// System.out.println(b.findAllByIdch(1));
+		// CauHoiThiService c = context.getBean(CauHoiThiService.class);
+		// System.out.println(c.layCauHoiThi("mh1", 1));
+		// ((ConfigurableApplicationContext) context).close();
 	}
 
 }
