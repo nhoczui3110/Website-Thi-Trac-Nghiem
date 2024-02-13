@@ -18,6 +18,8 @@ public class Thi {
     private String masv;
     @Column(name = "IDDK")
     private int iddk;
+    @Column(name = "DATHI")
+    private boolean dathi;
     @Column(name = "DIEM")
     private float diem;
     @Column(name = "TRANGTHAIXOA")
