@@ -23,6 +23,7 @@ public class LichThiRepository {
 
             // Lấy và hiển thị dữ liệu từ ResultSet
             LichThi tmp = null;
+            int IDTHI;
             String maMH;
             String tenMonHoc;
             Date ngayThi;
@@ -31,15 +32,15 @@ public class LichThiRepository {
             int thoiLuong;
             boolean trangThai;
             while (rs.next()) {
+                IDTHI = rs.getInt("IDTHI");
                 maMH = rs.getString("MAMH");
                 tenMonHoc = rs.getString("TENMH");
                 ngayThi = rs.getDate("NGAYTHI");
                 lanThi = rs.getInt("LANTHI");
-                // System.out.println(lanThi);
                 soCau = rs.getInt("SOCAU");
                 thoiLuong = rs.getInt("THOILUONG");
                 trangThai = rs.getBoolean("TRANGTHAI");
-                tmp = new LichThi(maMH,tenMonHoc, ngayThi, lanThi, soCau, thoiLuong, trangThai);
+                tmp = new LichThi(IDTHI,maMH,tenMonHoc, ngayThi, lanThi, soCau, thoiLuong, trangThai);
                 lichthi.add(tmp);
             }
 
