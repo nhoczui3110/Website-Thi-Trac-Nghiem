@@ -11,7 +11,7 @@ import com.doantracnghiem.doantracnghiem.Entity.CauHoi;
 
 @Repository
 public class DanhSachCauHoiRepository {
-    public List<CauHoi> layCauHoiThi(String maMH,int soCau){
+    public List<CauHoi> layCauHoiThi(String maMH,int soCau,List<Integer> dap_an){
         List<CauHoi> list = new ArrayList<>();
         Connection c = JDBCUtil.getConnection();
         String spCall = "{call layDanhSachCauHoi(?,?)}";
@@ -25,11 +25,14 @@ public class DanhSachCauHoiRepository {
             String hinhThuc;
             String noiDung;
             int iddh;
+            int dapandung;
             while (rs.next()) {
                 IDCH = rs.getInt("IDCH");
                 hinhThuc = rs.getString("HINHTHUC");
                 noiDung = rs.getString("NOIDUNG");
                 iddh = rs.getInt("IDDH");
+                dapandung = rs.getInt("DAPANDUNG");
+                dap_an.add(dapandung);
                 tmp = new CauHoi(IDCH,hinhThuc,noiDung,0,iddh,false);
                 list.add(tmp);
             }

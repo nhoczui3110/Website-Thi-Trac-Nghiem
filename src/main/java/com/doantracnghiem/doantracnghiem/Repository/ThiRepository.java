@@ -13,6 +13,6 @@ import com.doantracnghiem.doantracnghiem.Entity.Thi;
 public interface ThiRepository extends JpaRepository<Thi,Integer>{
     @Transactional
     @Modifying
-    @Query("update Thi t set t.dathi = true where t.idThi = :idthi")
-    public void update(@Param(value = "idthi") int idthi);
+    @Query("update Thi t set t.dathi = true,t.diem = :diem where t.idThi = :idthi")
+    public void update(@Param(value = "idthi") int idthi,@Param(value = "diem")float diem);
 }

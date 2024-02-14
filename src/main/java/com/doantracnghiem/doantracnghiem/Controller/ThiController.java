@@ -18,6 +18,7 @@ import com.doantracnghiem.doantracnghiem.Service.XemLichThiService;
 import jakarta.servlet.http.HttpSession;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -59,7 +60,8 @@ public class ThiController {
         System.out.println(IDTHI);
         System.out.println("====================");
         KetQua tmp = getKetQua(soCau);
-        DanhSachCauHoiThiDTO list = cauHoiThiService.layCauHoiThi(maMH, soCau,IDTHI);
+        List<Integer> dap_an = new ArrayList<>();
+        DanhSachCauHoiThiDTO list = cauHoiThiService.layCauHoiThi(maMH, soCau,IDTHI,dap_an);
         model.addAttribute("idthi", IDTHI);
         model.addAttribute("tenmh",tenMh);
         model.addAttribute("ngaythi",ngayThi);
@@ -68,7 +70,7 @@ public class ThiController {
         model.addAttribute("thoiluong",thoiLuong);
         model.addAttribute("danhsachch", list);
         model.addAttribute("ketqua", tmp);
-        session.setAttribute("danhsachch", list);
+        session.setAttribute("dapan", dap_an);
         return "/student/thi";
     }
     // @PostMapping("/ketqua")
@@ -80,8 +82,10 @@ public class ThiController {
     //     return "/student/exam-result";
     // }
     @PostMapping("/ketqua")
-    public String tmp(@ModelAttribute DanhSachCauHoiThiDTO danhSach){
-        cauHoiThiService.luuCauHoiThi(danhSach);
+    @SuppressWarnings("unchecked")
+    public String tmp(@ModelAttribute DanhSachCauHoiThiDTO danhSach,HttpSession session){
+        List<Integer> dap_an = (List<Integer>)session.getAttribute("dapan");
+        cauHoiThiService.luuCauHoiThi(danhSach,dap_an);
         danhSach.showTest();
         return "/student/exam-result";
     }

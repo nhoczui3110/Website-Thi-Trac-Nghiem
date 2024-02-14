@@ -26,15 +26,14 @@ public class CauHoiThiService {
     @Autowired
     private ThiRepository thiRepository;
 
-    public DanhSachCauHoiThiDTO layCauHoiThi(String mamh, int socau, int idthi) {
+    public DanhSachCauHoiThiDTO layCauHoiThi(String mamh, int socau, int idthi,List<Integer> dap_an) {
         DanhSachCauHoiThiDTO listCauHoiThi = new DanhSachCauHoiThiDTO();
         List<CauHoi> listCauHoi;
         List<LuaChon> listLuaChon;
         CauHoiThiDTO tmp;
         CTBaiThi tmp1;
         int thuTuChon = 1;
-        listCauHoi = danhSachCauHoiRepository.layCauHoiThi(mamh, socau);
-        System.out.println("tai service");
+        listCauHoi = danhSachCauHoiRepository.layCauHoiThi(mamh, socau,dap_an);
         for (CauHoi ch : listCauHoi) {
             listLuaChon = myLuaChonRepository.findAllByIdch(ch.getIdch());
             tmp1 = new CTBaiThi(idthi);
@@ -45,13 +44,22 @@ public class CauHoiThiService {
         }
         return listCauHoiThi;
     }
-    public void luuCauHoiThi(DanhSachCauHoiThiDTO list ){
-        System.out.println("save");
+    public void luuCauHoiThi(DanhSachCauHoiThiDTO list, List<Integer> dap_an ){
+        float diem = 0;
+        System.out.println(dap_an);
+        int soCauDung = 0,tongSoCau = 0,index = 0;
         List<CTBaiThi> ctBaiThi = new ArrayList<>();
         for(CauHoiThiDTO ch:list.getList()){
             ctBaiThi.add(ch.getCtBaiThi());
+            if(ch.getCtBaiThi().getDapAnSv() == dap_an.get(index++))soCauDung ++;
+            System.out.println(ch.getCtBaiThi().getDapAnSv());
+            tongSoCau ++;
         }
-        thiRepository.update(ctBaiThi.get(0).getIdThi());
+        System.out.println(soCauDung);
+        diem = (float)soCauDung/tongSoCau;
+        diem = (float)Math.round(diem*100)/100;
+        System.out.println(diem);
+        thiRepository.update(ctBaiThi.get(0).getIdThi(),diem);
         ctBaiThiRepository.saveAll(ctBaiThi);
     }
 }
