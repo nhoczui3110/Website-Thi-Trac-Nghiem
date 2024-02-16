@@ -272,21 +272,7 @@ tbody .more {
     bottom: 6.5px;
 }
 
-.add-selection-btn {
-    display: inline-block;
-}
 
-.add-selection-btn i {
-    background-color: #ccc;
-    padding: 16px;
-    border-radius: 50%;
-    color: #fff;
-    cursor: pointer;
-}
-
-.add-selection-btn i:hover {
-    opacity: 0.9;
-}
 
 .input-selection {
     position: relative;
@@ -329,4 +315,34 @@ tbody .more {
 .modal-container[data-name='add-selection'] {
     position: fixed;
 
+}
+
+.fa-solid {
+    cursor: pointer;
+}
+
+.fa-solid:hover {
+    opacity: 0.8;
+}
+
+.content[data-name="xemdiem"] table {
+    overflow-y: scroll;
+}
+
+.modal-container[data-name="xemdiem"] {
+    padding: 16px;
+    height: 500px;
+}
+
+.modal-container[data-name="xemdiem"] .closeBtn {
+    display: block;
+    width: fit-content;
+    margin-left: auto;
+}
+
+.modal-container .table {
+    min-width: 700px;
+    overflow-y: scroll;
+    border-radius: 16px;
+    height: 60px;
 }

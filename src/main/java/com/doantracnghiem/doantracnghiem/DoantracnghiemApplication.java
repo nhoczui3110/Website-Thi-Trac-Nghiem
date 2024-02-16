@@ -14,7 +14,7 @@ public class DoantracnghiemApplication {
 	public static void main(String[] args) {
 		ApplicationContext context = SpringApplication.run(DoantracnghiemApplication.class, args);
 		DangNhapService dangNhapService = context.getBean(DangNhapService.class);
-		System.out.println("=============================\nSINHVIEN:");
+		System.out.println("==================	===========\nSINHVIEN:");
 		System.out.println(dangNhapService.checkAccount("quang", "113"));
 		System.out.println("=========================");
 	}

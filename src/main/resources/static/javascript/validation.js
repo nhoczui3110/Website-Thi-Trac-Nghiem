@@ -1,4 +1,5 @@
 function Validator(selector, anotherCheck) {
+    console.log("vo day duoc");
     let formRules = {};
     let validateRules = {
         required: function (value) {

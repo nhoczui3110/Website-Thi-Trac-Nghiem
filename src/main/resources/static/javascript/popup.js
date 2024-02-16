@@ -55,14 +55,15 @@ function popup(
             type="text"
             name="noiDungLuaChon"
             id="noiDungLuaChon"
+            autofocus
         />
         <div class="bar"></div>
     </div>`;
         const popup = document.querySelector(".popup");
         const btnGroup = popup.querySelector(".btn-group");
-        console.log(btnGroup);
         btnGroup.insertAdjacentHTML("beforebegin", template);
-
+        const input = popup.querySelector("#noiDungLuaChon");
+        input.focus();
         submitBtn.addEventListener("click", () => {
             const ndlc = document.querySelector("#noiDungLuaChon").value;
             callback(...params, ndlc);

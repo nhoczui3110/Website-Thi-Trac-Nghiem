@@ -14,6 +14,7 @@ function getProfileLecturer(callback) {
         .then((response) => response.json())
         .then((profile) => {
             initialProfile = { ...profile };
+            console.log(initialProfile);
             if (callback) callback(profile);
         })
         .catch((error) => console.log("Error: ", error));
@@ -39,7 +40,7 @@ function renderLuaChon(orderSelection, noiDungLuaChon, isEdit) {
                 <div class="bar"></div>
                 </div>
                 <span class="form-message"></span>`;
-    const addSelectionBtn = modalContainer.querySelector(".add-selection-btn");
+    const addSelectionBtn = modalContainer.querySelector(".add-btn");
     if (addSelectionBtn) {
         addSelectionBtn.insertAdjacentHTML("beforebegin", templateSelection);
     } else {
@@ -175,6 +176,13 @@ function renderQuestion(questions) {
                 });
         }
         function addSelection(order, noiDungLuaChon) {
+            if (!noiDungLuaChon.trim()) {
+                toast({
+                    type: "error",
+                    message: "Vui lòng không bỏ trống nội dung lựa chọn",
+                });
+                return;
+            }
             const numOfSelection = document.querySelectorAll(
                 ".modal-container[data-name='create-cauhoi'] .input-selection"
             ).length;
@@ -208,7 +216,7 @@ function renderQuestion(questions) {
             });
             if (hinhThuc.toUpperCase() !== "YES/NO") {
                 const addSelectionBtn = document.createElement("div");
-                addSelectionBtn.classList.add("add-selection-btn");
+                addSelectionBtn.classList.add("add-btn");
                 addSelectionBtn.innerHTML = `<i class="fa-solid fa-plus"></i>`;
                 const btnController = form.querySelector(".btn-controller");
                 btnController.insertAdjacentElement(
@@ -549,6 +557,8 @@ function checkSaveProfileBtn() {
 }
 
 function renderProfile(profile) {
+    const nameEle = document.querySelector(".profile-left .name");
+    nameEle.textContent = `${initialProfile.ten}`;
     const inputs = document.querySelectorAll(".config-form input");
     const inputGenders = document.querySelectorAll(
         '.config-form input[name="gioiTinh"]'
@@ -766,7 +776,7 @@ function renderSelectionQuestion(orderSelection, typeQuestion) {
     );
     const form = modalContainer.querySelector(".register-form");
     const addSelectionBtn = document.createElement("div");
-    addSelectionBtn.classList.add("add-selection-btn");
+    addSelectionBtn.classList.add("add-btn");
     addSelectionBtn.innerHTML = `<i class="fa-solid fa-plus"></i>`;
     const btnController = form.querySelector(".btn-controller");
     btnController.insertAdjacentElement("beforebegin", addSelectionBtn);
@@ -914,14 +924,148 @@ function renderFormCreateQuestion(typeQuestion) {
     }
 }
 
-(function start() {
-    getProfileLecturer();
-    startTable({
-        cauhoi: () => {
-            getMonhoc(renderSortMonHoc);
-            handleTypeQuestion();
-        },
+function getMaLop(callback) {
+    fetch(`/lecturer/getMaLop/${initialProfile.maGv}`)
+        .then((response) => response.json())
+        .then((listMaLop) => {
+            callback(listMaLop);
+            console.log("first time");
+            getDangKyThi(renderDangKyThi, listMaLop[0]);
+        });
+}
+
+function renderSortMaLop(listMaLop) {
+    const content = document.querySelector(".content-xemdiem");
+    const contentBottom = content.querySelector(".content-bottom");
+    const sortLop = contentBottom.querySelector("select#sort-malop");
+    console.log(sortLop);
+    const template = listMaLop.map((malop) => {
+        return `<option value="${malop.trim()}">${malop.trim()}</option>`;
     });
+    console.log(template);
+    sortLop.innerHTML = template.join("");
+    sortLop.onchange = function () {
+        getDangKyThi(renderDangKyThi, sortLop.value);
+    };
+}
+
+function getDangKyThi(callback, malop) {
+    fetch(`/lecturer/getDangKyThi/${initialProfile.maGv}/${malop}`)
+        .then((response) => response.json())
+        .then((listDangKyThi) => {
+            callback(listDangKyThi);
+        });
+}
+
+function getDiemSinhVien(iddk, callback) {
+    fetch(`/lecturer/getDiemSinhVien/${iddk}`)
+        .then((response) => response.json())
+        .then((listSinhVien) => {
+            callback(listSinhVien);
+        });
+}
+
+function renderListSinhVien(listSinhVien) {
+    const modalContainer = document.querySelector(
+        ".modal-container[data-name='xemdiem']"
+    );
+    openModal(modalContainer);
+    const tbody = modalContainer.querySelector("tbody");
+    const ths = modalContainer.querySelectorAll("th");
+    tbody.innerHTML = "";
+    listSinhVien.forEach((sinhvien) => {
+        const tr = document.createElement("tr");
+        ths.forEach((th) => {
+            const td = document.createElement("td");
+            td.textContent = sinhvien[th.getAttribute("data-name")];
+            tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+    });
+}
+
+function renderDangKyThi(listDangKyThi) {
+    const content = document.querySelector(".content-xemdiem");
+    const contentBottom = content.querySelector(".content-bottom");
+    contentBottom.style.minWidth = "1200px";
+
+    // Xu ly table
+    const tbody = contentBottom.querySelector("tbody");
+    tbody.innerHTML = "";
+    const ths = contentBottom.querySelectorAll("th");
+    listDangKyThi.forEach((dkthi) => {
+        const tr = document.createElement("tr");
+        ths.forEach((th) => {
+            const td = document.createElement("td");
+            if (th.getAttribute("data-name") === "action") {
+                const more = document.createElement("i");
+                more.classList.add("fa-solid", "fa-ellipsis");
+                td.appendChild(more);
+                more.addEventListener("click", () => {
+                    console.log(dkthi);
+                    getDiemSinhVien(dkthi.iddk, renderListSinhVien);
+                });
+            } else {
+                td.textContent = dkthi[th.getAttribute("data-name")];
+            }
+            tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+    });
+    // console.log(listDangKyThi);
+}
+
+// function getProfileLecturerPromise() {
+//     return new Promise((resolve, reject) => {
+//         getProfileLecturer();
+//     });
+// }
+
+// (function start() {
+//     getProfileLecturer().then(getMaLop(renderSortMaLop, true));
+//     startTable({
+//         cauhoi: () => {
+//             getMonhoc(renderSortMonHoc);
+//             handleTypeQuestion();
+//         },
+//         xemdiem: () => {
+//             getMaLop(renderSortMaLop);
+//             getDangKyThi(renderDangKyThi);
+//         },
+//     });
+//     const profileBtn = document.querySelectorAll(".setting-wrapper .item")[0];
+//     profileBtn.addEventListener("click", profileHandler);
+// })();
+
+function getProfileLecturerPromise() {
+    return new Promise((resolve, reject) => {
+        getProfileLecturer(resolve); // Gọi resolve để báo hiệu rằng promise đã hoàn thành
+    });
+}
+
+function showInfo() {
     const profileBtn = document.querySelectorAll(".setting-wrapper .item")[0];
     profileBtn.addEventListener("click", profileHandler);
+    const helloText = document.querySelector(".user-wrapper .text");
+    helloText.textContent = `Hello, ${initialProfile.ten}`;
+}
+
+(async function start() {
+    try {
+        await getProfileLecturerPromise(); // Sử dụng await để đợi cho promise hoàn thành
+        getMaLop(renderSortMaLop);
+        showInfo();
+        startTable({
+            cauhoi: () => {
+                getMonhoc(renderSortMonHoc);
+                handleTypeQuestion();
+            },
+            xemdiem: () => {
+                getMaLop(renderSortMaLop);
+                getDangKyThi(renderDangKyThi);
+            },
+        });
+    } catch (error) {
+        console.log("Error: ", error);
+    }
 })();

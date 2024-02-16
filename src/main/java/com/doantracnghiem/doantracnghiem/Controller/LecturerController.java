@@ -18,13 +18,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.doantracnghiem.doantracnghiem.DTO.ThiInfoDTO;
 import com.doantracnghiem.doantracnghiem.Entity.CauHoi;
+import com.doantracnghiem.doantracnghiem.Entity.DangKyThi;
 import com.doantracnghiem.doantracnghiem.Entity.GiangVien;
 import com.doantracnghiem.doantracnghiem.Service.QuestionService;
-import com.doantracnghiem.doantracnghiem.Service.CauHoiService;
 import com.doantracnghiem.doantracnghiem.Service.DangNhapService;
 import com.doantracnghiem.doantracnghiem.Service.TableGiangVien;
 import com.doantracnghiem.doantracnghiem.Service.UpdateGiangVien;
+import com.doantracnghiem.doantracnghiem.Service.XemDiemService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -43,6 +45,9 @@ public class LecturerController {
 
     @Autowired
     TableGiangVien tableGiangVien;
+
+    @Autowired
+    XemDiemService xemDiemService;
 
     @GetMapping("/profile")
     public GiangVien getInfo(HttpSession session) {
@@ -119,6 +124,11 @@ public class LecturerController {
         return ResponseEntity.ok("Add question successfully");
     }
 
+    @GetMapping("/getDiemSinhVien/{iddk}")
+    public List<ThiInfoDTO> getDiemSinhVien(@PathVariable("iddk") int iddk) {
+        return xemDiemService.getThiInfoFromIddk(iddk);
+    }
+
     // @GetMapping("/finding/{magv}/{keyword}")
     // public double getMaxPageFinding(@PathVariable("magv") String maGv,
     // @PathVariable("keyword") String keyword) {
@@ -133,6 +143,16 @@ public class LecturerController {
         System.out.println("keyword: " + keyword);
         double maxPage = Math.ceil((double) tableGiangVien.getCountCauHoiByFinding(maGv, keyword) / (double) pageSize);
         return maxPage;
+    }
+
+    @GetMapping("/getDangKyThi/{maGv}/{malop}")
+    public List<DangKyThi> getDangKyThi(@PathVariable("maGv") String maGv, @PathVariable("malop") String malop) {
+        return xemDiemService.getListDangKyThi(maGv, malop);
+    }
+
+    @GetMapping("/getMaLop/{maGv}")
+    public List<String> getMalop(@PathVariable("maGv") String maGv) {
+        return xemDiemService.getMaLop(maGv);
     }
 
     // @GetMapping("/getQuestionBySubject/{maGv}")

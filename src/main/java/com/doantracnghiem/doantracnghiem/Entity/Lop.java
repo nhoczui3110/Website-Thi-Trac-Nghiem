@@ -7,31 +7,61 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
+
 @Entity
 @Table(name = "LOP")
 public class Lop implements Serializable {
     @Id
     @Column(name = "MALOP")
-    private String ma_lop;
+    private String maLop;
     @Column(name = "TENLOP")
-    private String ten_lop;
+    private String tenLop;
     @Column(name = "NAMNHAPHOC")
-    private LocalDate nam_nhap_hoc;
+    private LocalDate namNhapHoc;
     @Column(name = "TRANGTHAIXOA")
-    private boolean trang_thai_xoa;
-    public Lop(String ma_lop,String ten_lop,LocalDate nam_nhap_hoc,boolean trang_thai_xoa){
-        this.ma_lop = ma_lop;
-        this.ten_lop = ten_lop;
-        this.nam_nhap_hoc = nam_nhap_hoc;
-        this.trang_thai_xoa = trang_thai_xoa;
+    private boolean trangThaiXoa;
+
+    public Lop(String maLop, String tenLop, LocalDate namNhapHoc, boolean trangThaiXoa) {
+        this.maLop = maLop;
+        this.tenLop = tenLop;
+        this.namNhapHoc = namNhapHoc;
+        this.trangThaiXoa = trangThaiXoa;
     }
-    public String getMaLop(){
-        return this.ma_lop;
+
+    public Lop() {
+
     }
-    public String getTenLop(){
-        return ten_lop;
+
+    public String getMaLop() {
+        return maLop;
     }
-    public LocalDate getNamNhapHoc(){
-        return LocalDate.from(nam_nhap_hoc);
+
+    public void setMaLop(String maLop) {
+        this.maLop = maLop;
     }
+
+    public String getTenLop() {
+        return tenLop;
+    }
+
+    public void setTenLop(String tenLop) {
+        this.tenLop = tenLop;
+    }
+
+    public LocalDate getNamNhapHoc() {
+        return namNhapHoc;
+    }
+
+    public void setNamNhapHoc(LocalDate namNhapHoc) {
+        this.namNhapHoc = namNhapHoc;
+    }
+
+    public boolean isTrangThaiXoa() {
+        return trangThaiXoa;
+    }
+
+    public void setTrangThaiXoa(boolean trangThaiXoa) {
+        this.trangThaiXoa = trangThaiXoa;
+    }
+
 }

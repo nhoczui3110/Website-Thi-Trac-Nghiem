@@ -9,7 +9,10 @@ function startTable(objectGet) {
             contentWrapper = renderContentWrapper(
                 item.getAttribute("data-name")
             );
-            objectGet[item.getAttribute("data-name")]();
+            if (objectGet) {
+                objectGet[item.getAttribute("data-name")]();
+            }
+
             handlerBtnRegister(contentWrapper);
         });
     });
@@ -68,7 +71,11 @@ function handlerBtnRegister(contentWrapper) {
             )}]`
         );
         openModal(modalContainer);
-        Validator(".register-form");
+        Validator(
+            `.modal-container[data-name=${contentWrapper.getAttribute(
+                "data-name"
+            )}] .register-form`
+        );
         // Ngan su kien noi bot ke tu modal container
     });
 }

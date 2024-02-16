@@ -27,4 +27,7 @@ public interface CauHoiRepository extends JpaRepository<CauHoi, Integer> {
 
         @Query(value = "EXEC countQuestionByFinding @MaGv = :magv, @keyword = :keyword", nativeQuery = true)
         int countQuestionByFinding(@Param("magv") String magv, @Param("keyword") String keyword);
+
+        @Query(value = "EXEC countCauHoiByMonHoc @mamh = :mamh", nativeQuery = true)
+        int countCauHoiByMonHoc(@Param("mamh") String mamh);
 }

@@ -20,6 +20,13 @@
             href="../static/assets/css/me-style.css"
             th:href="@{/assets/css/me-style.css}"
         />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+            integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
         <!-- Embed Font -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -258,30 +265,21 @@
                             />
                         </div>
                     </div>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Mã giảng viên</th>
-                                <th>Họ</th>
-                                <th>Tên</th>
-                                <th>Giới tính</th>
-                                <th>Học vị</th>
-                                <th>Học hàm</th>
-                                <th>Username</th>
-                                <th>Password</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                    <div class="table-controller">
-                        <span class="text">Previous</span>
-                        <div class="page-number">
-                            <span class="item">1</span>
-                            <span class="item">2</span>
-                            <span class="item">3</span>
-                        </div>
-                        <span class="text"> Next</span>
+                    <div class="table-wrapper">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th data-name="maGv">Mã giảng viên</th>
+                                    <th data-name="ho">Họ</th>
+                                    <th data-name="ten">Tên</th>
+                                    <th data-name="gioiTinh">Giới tính</th>
+                                    <th data-name="hocVi">Học vị</th>
+                                    <th data-name="hocHam">Học hàm</th>
+                                    <th data-name="action">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
                     </div>
                 </div>
                 <a href="#!" class="btn-trans btn-register">
@@ -516,7 +514,11 @@
             </div>
             <div class="modal-container" data-name="lecturer">
                 <div class="header">Register</div>
-                <form action="/login" class="register-form" method="post">
+                <form
+                    action="/admin/addLecturer"
+                    class="register-form"
+                    method="post"
+                >
                     <div class="form-wrapper">
                         <div class="input-wrapper">
                             <label for="lastname-lecturer">Họ</label>
@@ -526,7 +528,6 @@
                                 name="lastname"
                                 id="lastname-lecturer"
                                 autocomplete="nope"
-                                rules="required"
                             />
                             <div class="bar"></div>
                         </div>
@@ -539,7 +540,6 @@
                                 name="firstname"
                                 id="firstname-lecturer"
                                 autocomplete="nope"
-                                rules="required"
                             />
                             <div class="bar"></div>
                         </div>
@@ -553,7 +553,6 @@
                             name="username"
                             id="username-lecturer"
                             autocomplete="nope"
-                            rules="required"
                         />
                         <div class="bar"></div>
                     </div>
@@ -565,21 +564,6 @@
                             placeholder=""
                             name="password"
                             id="password-lecturer"
-                            rules="required|min:6"
-                        />
-                        <div class="bar"></div>
-                    </div>
-                    <span class="form-message"></span>
-                    <div class="input-wrapper">
-                        <label for="confirm-password-lecturer"
-                            >Confirm Password</label
-                        >
-                        <input
-                            type="password"
-                            placeholder=""
-                            name="confirm-password"
-                            id="confirm-password-lecturer"
-                            rules="required|confirmPassword"
                         />
                         <div class="bar"></div>
                     </div>
@@ -589,22 +573,22 @@
                             type="radio"
                             name="gender"
                             id="male-lecturer"
+                            data-name="male"
                             checked
                         />
-                        <label for="male" checked>Nam</label>
+                        <label for="male-lecturer" checked>Nam</label>
                         <input
                             type="radio"
                             name="gender"
+                            data-name="female"
                             id="female-lecturer"
                         />
-                        <label for="female">Nữ</label>
+                        <label for="female-lecturer">Nữ</label>
                     </div>
                     <span class="form-message"></span>
                     <div class="input-wrapper">
                         <label for="hocvi">Học vị:</label>
                         <select id="hocvi" name="hocvi">
-                            <option value="Tú tài">Tú tài</option>
-                            <option value="Cử nhân">Cử nhân</option>
                             <option value="Thạc sĩ">Thạc sĩ</option>
                             <option value="Tiến sĩ">Tiến sĩ</option>
                         </select>
@@ -614,7 +598,7 @@
                         <label for="hocham">Học hàm:</label>
                         <select id="hocham" name="hocham">
                             <option value="Giáo sư">Giáo sư</option>
-                            <option value="Phó giáo sư">Phó giáo sư</option>
+                            <option value="Phó giáo sư">Không</option>
                         </select>
                     </div>
                     <span class="form-message"></span>
@@ -623,23 +607,25 @@
                         <input
                             type="text"
                             placeholder=""
-                            name="address"
+                            name="magv"
                             id="magv"
-                            rules="required"
                         />
                         <div class="bar"></div>
                     </div>
                     <span class="form-message"></span>
-                    <div class="input-wrapper">
-                        <label for="birthday-lecturer">Ngày sinh</label>
-                        <input
-                            type="date"
-                            name="birthday"
-                            id="birthday-lecturer"
-                            rules="required"
-                        />
+                    <div class="input-wrapper select-subject">
+                        <label for="hocham">Học hàm:</label>
+                        <div class="select-subject-wrapper">
+                            <select id="hocham" name="hocham">
+                                <option value="Giáo sư">Giáo sư</option>
+                                <option value="Phó giáo sư">Không</option>
+                            </select>
+                            <i class="fa-solid fa-xmark"></i>
+                        </div>
                     </div>
-                    <span class="form-message"></span>
+                    <div class="add-btn">
+                        <i class="fa-solid fa-plus"></i>
+                    </div>
                     <div class="btn-controller">
                         <button
                             type="submit"
@@ -654,41 +640,54 @@
             </div>
             <div class="modal-container" data-name="exam">
                 <div class="header">Register</div>
-                <form action="/login" class="register-form" method="post">
+                <form
+                    action="/login"
+                    class="register-form create-exam"
+                    method="post"
+                >
                     <div class="input-wrapper">
-                        <label for="tengv">Mã giảng viên :</label>
-                        <select id="tengv" name="magv">
-                            <option value="GV01">lUU NGUYEN KI THU</option>
-                            <option value="GV02">HUYNH CHI TRUNG</option>
-                        </select>
+                        <label for="magv">Mã giảng viên :</label>
+                        <input
+                            type="text"
+                            placeholder=""
+                            name="magv"
+                            id="magv"
+                            autocomplete="nope"
+                            rules="required"
+                            readonly
+                        />
+                        <div class="bar"></div>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="input-wrapper">
+                        <label for="maNv">Mã Nhân viên :</label>
+                        <input
+                            type="text"
+                            placeholder=""
+                            name="maNv"
+                            id="maNv"
+                            autocomplete="nope"
+                            rules="required"
+                            readonly
+                        />
+                        <div class="bar"></div>
                     </div>
                     <span class="form-message"></span>
                     <div class="input-wrapper">
                         <label for="tenmh">Tên môn học:</label>
-                        <select id="tenmh" name="mamh">
-                            <option value="INIT01">C++</option>
-                            <option value="INIT02">Python</option>
-                        </select>
+                        <select id="tenmh" name="mamh"></select>
                     </div>
                     <span class="form-message"></span>
                     <div class="input-wrapper">
                         <label for="tenlop">Tên lớp: </label>
-                        <select id="tenlop" name="malop">
-                            <option value="D21CQCN01">D21CQCN01</option>
-                            <option value="D21CQCN02">D21CQCN02</option>
-                        </select>
-                    </div>
-                    <span class="form-message"></span>
-                    <div class="input-wrapper">
-                        <label for="lanthi">Lần thi</label>
                         <input
-                            type="number"
-                            name="lanthi"
-                            id="lanthi"
-                            autocomplete="nope"
-                            rules="required"
+                            type="text"
+                            list="tenlop"
+                            required
+                            id="malop"
+                            autocomplete="off"
                         />
-                        <div class="bar"></div>
+                        <datalist id="tenlop"></datalist>
                     </div>
                     <span class="form-message"></span>
                     <div class="input-wrapper">
@@ -699,7 +698,7 @@
                             name="socau"
                             id="socau"
                             autocomplete="nope"
-                            rules="required"
+                            required
                         />
                         <div class="bar"></div>
                     </div>
@@ -710,17 +709,18 @@
                             type="date"
                             name="ngaythi"
                             id="ngaythi"
-                            rules="required"
+                            required
                         />
                     </div>
                     <span class="form-message"></span>
                     <div class="input-wrapper">
-                        <label for="thoigianthi">Thời gian thi</label>
+                        <label for="thoigianthi">Phút:</label>
                         <input
-                            type="time"
-                            name="thoigianthi"
+                            type="number"
                             id="thoigianthi"
-                            rules="required"
+                            name="thoigianthi"
+                            min="0"
+                            required
                         />
                     </div>
                     <span class="form-message"></span>
@@ -743,8 +743,20 @@
             src="../static/javascript/validation.js"
         ></script>
         <script
+            th:src="@{/javascript/toast.js}"
+            src="../static/javascript/toast.js"
+        ></script>
+        <script
+            th:src="@{/javascript/popup.js}"
+            src="../static/javascript/popup.js"
+        ></script>
+        <script
             th:src="@{/javascript/XuLyTable.js}"
             src="../static/javascript/XuLyTable.js"
+        ></script>
+        <script
+            th:src="@{/javascript/QuanLiLecturer.js}"
+            src="../static/javascript/QuanLiLecturer.js"
         ></script>
         <script
             th:src="@{/javascript/XuLyAdmin.js}"

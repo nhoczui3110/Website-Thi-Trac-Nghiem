@@ -93,3 +93,40 @@
         transform: translateY(0);
     }
 }
+
+
+.content-wrapper[data-name="lecturer"] .table-wrapper {
+    overflow-y: scroll;
+    height: 600px;
+    width: 100%;
+}
+
+i:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.add-exam-btn {
+    font-size: 1.8rem;
+    color: #48B16E;
+    margin-right: 8px;
+}
+
+.fa-trash {
+    color: #A30D11;
+    font-size: 1.8rem;
+}
+
+.add-btn {
+    margin-top: 16px;
+}
+
+.select-subject-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.select-subject-wrapper select {
+    flex-grow: 1;
+}

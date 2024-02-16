@@ -244,6 +244,7 @@ a {
 .input-wrapper.invalid+.form-message {
     margin-top: 16px;
     color: red;
+    display: block;
 }
 
 .form-wrapper {
@@ -345,7 +346,19 @@ a {
 }
 
 .user-wrapper .img-wrapper {
-    padding-bottom: 10px;
+    position: relative;
+}
+
+.user-wrapper .img-wrapper::before {
+    /* padding-bottom: 10px; */
+    position: absolute;
+    content: "";
+    bottom: -10px;
+    display: block;
+    right: 0;
+    width: 120px;
+    height: 30px;
+    background-color: transparent;
 }
 
 .user-wrapper .img-wrapper:hover .setting-wrapper {
@@ -354,6 +367,7 @@ a {
 
 .setting-wrapper {
     display: none;
+    margin-top: 8px;
     position: absolute;
     right: -10px;
     top: 100%;
@@ -367,22 +381,23 @@ a {
     flex-direction: column;
     row-gap: 16px;
     z-index: 1;
-
+    animation: scaleFromTopRight 0.5s ease;
+    transform-origin: calc(100% - 20px) 0;
 }
 
-.setting-wrapper::after {
-    position: absolute;
-    top: -5px;
-    right: 20px;
-    content: "";
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-bottom: 5px solid #FFF;
-    /* Đổi màu nền tương ứng với nền của setting-wrapper */
-    box-shadow: 0px 8px 24px 0px rgba(149, 157, 165, 0.20);
+@keyframes scaleFromTopRight {
+    from {
+        opacity: 0;
+        scale: 0;
+    }
+
+    to {
+        opacity: 1;
+        scale: 1;
+    }
 }
+
+
 
 .setting-wrapper .item {
     display: block;
@@ -485,7 +500,7 @@ a {
 
 .table {
     width: 100%;
-    height: 50%;
+    max-height: 50%;
     overflow: scroll;
     text-align: center;
 }
@@ -785,4 +800,20 @@ th {
     margin-top: 32px;
     display: flex;
     justify-content: space-between;
+}
+
+.add-btn {
+    display: inline-block;
+}
+
+.add-btn i {
+    background-color: #ccc;
+    padding: 16px;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+}
+
+.add-btn i:hover {
+    opacity: 0.9;
 }
