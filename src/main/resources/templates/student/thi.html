@@ -31,7 +31,7 @@
                     <div class="box-answer">
                         <div class="answer" th:each="luachon,stat : ${cauhoi.getLuaChon()}">
                             <input type="hidden" th:field="*{list[__${itemStat.index}__].LuaChon[__${stat.index}__].noiDung}">
-                            <input type="radio" th:value="${stat.index + 1}"
+                            <input type="radio" th:value="${luachon.getThuTu()}"
                                 th:field="*{list[__${itemStat.index}__].ctBaiThi.dapAnSv}"
                                 th:id="${'radio' + stat.index}" />
                             <label th:for="${'radio' + stat.index}" th:text="${luachon.getNoiDung()}"></label>
