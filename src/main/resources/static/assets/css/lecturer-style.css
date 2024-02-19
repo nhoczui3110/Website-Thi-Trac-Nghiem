@@ -346,3 +346,9 @@ tbody .more {
     border-radius: 16px;
     height: 60px;
 }
+
+.modal-container[data-name="xemdiem"] .table-wrapper {
+    overflow-y: scroll;
+    width: 100%;
+    flex-grow: 1;
+}

@@ -20,6 +20,10 @@ async function start() {
             getAllClasses(renderClassesExam);
             addLecturerHandler();
         },
+        monhoc: () => {
+            getQuanLiMonHoc(renderAllMonHoc);
+            // addMonHocHandler();
+        },
     });
 }
 

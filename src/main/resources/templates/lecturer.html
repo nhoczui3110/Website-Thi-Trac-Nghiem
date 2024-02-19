@@ -232,12 +232,13 @@
                         </div>
                         <div class="sort-wrapper">
                             <label for="sort-malop">Mã lớp</label>
-                            <select id="sort-malop">
+                            <input list="sort-malop" type="text" />
+                            <datalist id="sort-malop">
                                 <option value="">All</option>
                                 <option value="">Toay</option>
                                 <option value="">This Week</option>
                                 <option value="">This Month</option>
-                            </select>
+                            </datalist>
                         </div>
                     </div>
                     <table class="table">
@@ -354,8 +355,8 @@
                         <div class="input-wrapper">
                             <label for="hocham">Học hàm:</label>
                             <select id="hocham" name="hocHam">
-                                <option value="KHÔNG">Không</option>
                                 <option value="GIÁO SƯ">Giáo sư</option>
+                                <option value="KHÔNG">Không</option>
                             </select>
                         </div>
                         <span class="form-message"></span>
@@ -444,17 +445,19 @@
             </div>
             <div class="modal-container" data-name="xemdiem">
                 <i class="fa-solid fa-xmark closeBtn"></i>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th data-name="masv">Mã Sinh Viên</th>
-                            <th data-name="ho">Họ</th>
-                            <th data-name="ten">Tên</th>
-                            <th data-name="diem">Điểm</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+                <div class="table-wrapper">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th data-name="masv">Mã Sinh Viên</th>
+                                <th data-name="ho">Họ</th>
+                                <th data-name="ten">Tên</th>
+                                <th data-name="diem">Điểm</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
             </div>
         </div>
         <!-- Script -->

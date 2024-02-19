@@ -527,11 +527,20 @@ function checkSaveProfileBtn() {
     const checkedValid = Object.keys(currentProfile).every((key) => {
         return currentProfile[key] === initialProfile[key];
     });
+    const allInput = document.querySelectorAll(".config-form input");
+    const checkFilledInput = Array.from(allInput).every((input) => input.value);
     if (checkedValid) {
         toast({
             type: "error", // Default type is "success"
             title: "Error!!", // Default title is "Success!"
             message: "Thông tin người người dùng không thay đổi", // Default message is an empty string
+            duration: 3000, // Default duration is 3000 milliseconds (3 seconds)
+        });
+    } else if (!checkFilledInput) {
+        toast({
+            type: "error", // Default type is "success"
+            title: "Error!!", // Default title is "Success!"
+            message: "Vui lòng nhập đầy đủ thông tin!", // Default message is an empty string
             duration: 3000, // Default duration is 3000 milliseconds (3 seconds)
         });
     } else {
@@ -578,7 +587,7 @@ function renderProfile(profile) {
         inputGenders[0].checked = false;
     }
     selects.forEach((select) => {
-        select.value = profile[select.getAttribute("name")];
+        select.value = profile[select.getAttribute("name")].toUpperCase();
     });
     const saveBtn = document.querySelector(".save-btn");
     const throttleCheckSaveProFileBtn = throttle(checkSaveProfileBtn, 1000);
@@ -937,15 +946,19 @@ function getMaLop(callback) {
 function renderSortMaLop(listMaLop) {
     const content = document.querySelector(".content-xemdiem");
     const contentBottom = content.querySelector(".content-bottom");
-    const sortLop = contentBottom.querySelector("select#sort-malop");
-    console.log(sortLop);
+    const sortLop = contentBottom.querySelector("datalist#sort-malop");
+    const inputSortLop = contentBottom.querySelector(
+        "input[list='sort-malop']"
+    );
+    inputSortLop.value = listMaLop[0];
     const template = listMaLop.map((malop) => {
         return `<option value="${malop.trim()}">${malop.trim()}</option>`;
     });
     console.log(template);
     sortLop.innerHTML = template.join("");
-    sortLop.onchange = function () {
-        getDangKyThi(renderDangKyThi, sortLop.value);
+    inputSortLop.onchange = function () {
+        console.log("sortlop");
+        getDangKyThi(renderDangKyThi, inputSortLop.value);
     };
 }
 
@@ -969,6 +982,8 @@ function renderListSinhVien(listSinhVien) {
     const modalContainer = document.querySelector(
         ".modal-container[data-name='xemdiem']"
     );
+    const tableWrapper = modalContainer.querySelector(".table-wrapper");
+    tableWrapper.s;
     openModal(modalContainer);
     const tbody = modalContainer.querySelector("tbody");
     const ths = modalContainer.querySelectorAll("th");
@@ -993,6 +1008,7 @@ function renderDangKyThi(listDangKyThi) {
     const tbody = contentBottom.querySelector("tbody");
     tbody.innerHTML = "";
     const ths = contentBottom.querySelectorAll("th");
+    if (!listDangKyThi) return;
     listDangKyThi.forEach((dkthi) => {
         const tr = document.createElement("tr");
         ths.forEach((th) => {

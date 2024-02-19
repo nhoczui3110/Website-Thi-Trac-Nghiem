@@ -95,18 +95,15 @@
 }
 
 
-.content-wrapper[data-name="lecturer"] .table-wrapper {
-    overflow-y: scroll;
-    height: 600px;
-    width: 100%;
-}
+
 
 i:hover {
     opacity: 0.8;
     cursor: pointer;
 }
 
-.add-exam-btn {
+.add-exam-btn,
+.edit {
     font-size: 1.8rem;
     color: #48B16E;
     margin-right: 8px;

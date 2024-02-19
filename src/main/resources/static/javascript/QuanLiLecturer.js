@@ -12,6 +12,7 @@ function getMonHocByGiangVien({ callback, maGv }) {
     fetch(`/lecturer/getSubjectByLecturer/${maGv}`)
         .then((response) => response.json())
         .then((listMonHoc) => {
+            console.log(callback);
             callback(listMonHoc);
         });
 }
@@ -105,16 +106,29 @@ function debounce(func, delay) {
         }, delay);
     };
 }
+
+function throttle(func, delay) {
+    let lastCall = 0;
+
+    return function (...args) {
+        const now = new Date().getTime();
+        if (now - lastCall > delay) {
+            lastCall = now;
+            func(...args);
+        }
+    };
+}
 function renderAllGiangVien(listLecturer) {
     const content = document.querySelector(
         ".content-wrapper[data-name='lecturer']"
     );
     const contentBottom = content.querySelector(".content-bottom");
     contentBottom.style.width = "1200px";
+    contentBottom.style.minHeight = null;
+    contentBottom.style.height = "600px";
 
     // Xu ly table
     const searchLecturerEl = content.querySelector("#search-lecturer");
-    console.log(searchLecturerEl);
     if (searchLecturerEl) {
         searchLecturerEl.oninput = () => {
             const keyword =
@@ -133,7 +147,9 @@ function renderAllGiangVien(listLecturer) {
             if (th.getAttribute("data-name") === "action") {
                 const addExam = document.createElement("i");
                 const trashBtn = document.createElement("i");
+                const editBtn = document.createElement("i");
                 trashBtn.classList.add("fa-solid", "fa-trash", "trash");
+                editBtn.classList.add("fa-solid", "fa-pen-to-square", "edit");
                 addExam.classList.add(
                     "fa-solid",
                     "fa-file-circle-question",
@@ -227,8 +243,13 @@ function renderAllGiangVien(listLecturer) {
                             deleteQuestion(lecturer["maGv"]);
                         }
                     );
+                    console.log(lecturer);
+                });
+                editBtn.addEventListener("click", () => {
+                    updateLecturerHandler(lecturer);
                 });
                 td.appendChild(addExam);
+                td.appendChild(editBtn);
                 td.appendChild(trashBtn);
             } else if (th.getAttribute("data-name") == "gioiTinh") {
                 gender = lecturer[th.getAttribute("data-name")];
@@ -262,7 +283,6 @@ function getAllMonHoc() {
         fetch("/admin/getAllMonHoc")
             .then((response) => response.json())
             .then((data) => {
-                console.log("data", data);
                 resolve(data); // Resolve with the fetched data
             });
     });
@@ -270,122 +290,105 @@ function getAllMonHoc() {
 
 async function addLecturerHandler() {
     const btnRegister = document.querySelector(
-        ".content-wrapper[data-name='lecturer']"
+        ".content-wrapper[data-name='lecturer'] .btn-register"
     );
-
-    const formEl = document.querySelector(
-        ".modal-container[data-name='lecturer']"
-    );
+    btnRegister.onclick = null;
+    let subjects = await getAllMonHoc();
     btnRegister.addEventListener("click", () => {
+        const formEl = document.querySelector(
+            ".modal-container[data-name='lecturer']"
+        );
+        if (formEl) {
+            let countSelectSubject = 1;
+            const addBtn = formEl.querySelector(".add-btn");
+            addBtn.onclick = () => {
+                console.log(subjects);
+                renderMonHocGiangVien(countSelectSubject, subjects);
+                countSelectSubject++;
+            };
+            const throttleSubmitLecturer = throttle(checkSubmitLecturer, 1000);
+            const submitBtn = formEl.querySelector(".btn");
+            submitBtn.onclick = (event) => {
+                event.preventDefault();
+                throttleSubmitLecturer(formEl, submitAddLecturer);
+            };
+        }
+        toggleVisibilityLecturer("show");
         formEl.querySelectorAll(".select-subject").forEach((wrapper) => {
             wrapper.remove();
         });
     });
-    let subjects = await getAllMonHoc();
-    console.log("subjects", subjects);
-    if (formEl) {
-        let countSelectSubject = 1;
-        const addBtn = formEl.querySelector(".add-btn");
-        addBtn.onclick = () => {
-            const selectSubjectWrapper = document.createElement("div");
-            selectSubjectWrapper.classList.add("select-subject-wrapper");
-            const inputWrapper = document.createElement("div");
-            inputWrapper.classList.add("input-wrapper", "select-subject");
-            const label = document.createElement("label");
-            label.textContent = "Tên môn học";
-            label.setAttribute("for", `monhoc${countSelectSubject}`);
-            const select = document.createElement("select");
-            select.setAttribute("id", `monhoc${countSelectSubject}`);
-            // select.setAttribute()
-            const templateOption = subjects.map((subject) => {
-                return `<option value="${subject["mamh"]}">${subject["tenmh"]}</option>`;
-            });
-            const formMessage = document.createElement("span");
-            const removeBtn = document.createElement("i");
-            removeBtn.classList.add("fa-solid", "fa-xmark");
-            formMessage.classList.add("form-message");
-            select.innerHTML = templateOption.join();
-            inputWrapper.appendChild(label);
-            selectSubjectWrapper.appendChild(select);
-            selectSubjectWrapper.appendChild(removeBtn);
-            inputWrapper.appendChild(selectSubjectWrapper);
-            addBtn.insertAdjacentElement("beforebegin", inputWrapper);
-            addBtn.insertAdjacentElement("beforebegin", formMessage);
-            removeBtn.onclick = function () {
-                inputWrapper.remove();
-            };
-            countSelectSubject++;
-        };
-        const submitBtn = formEl.querySelector(".btn");
-        submitBtn.onclick = (event) => {
-            event.preventDefault();
-            const allInput = [...formEl.querySelectorAll("input")];
-            const selectSubjects = [
-                ...formEl.querySelectorAll(".select-subject select"),
-            ];
-            let checkMathSubject = false;
-            let checkEmptyInput = allInput.every((input) => input.value);
-            for (let i = 0; i < selectSubjects.length; i++) {
-                const selectSubject = selectSubjects[i];
-                for (let j = i + 1; j < selectSubjects.length; j++) {
-                    const anotherSelectSubject = selectSubjects[j];
-                    if (selectSubject.value === anotherSelectSubject.value) {
-                        checkMathSubject = true;
-                        break;
-                    }
-                }
+}
+function checkSubmitLecturer(formEl, callback) {
+    const allInput = [...formEl.querySelectorAll("input")];
+    const selectSubjects = [
+        ...formEl.querySelectorAll(".select-subject select"),
+    ];
+    let checkMatchSuccess = false;
+    let checkEmptyInput = allInput.every((input) => input.value);
+    for (let i = 0; i < selectSubjects.length; i++) {
+        const selectSubject = selectSubjects[i];
+        for (let j = i + 1; j < selectSubjects.length; j++) {
+            const anotherSelectSubject = selectSubjects[j];
+            if (selectSubject.value === anotherSelectSubject.value) {
+                checkMatchSuccess = true;
+                break;
             }
-            if (!checkEmptyInput) {
+        }
+    }
+    if (!checkEmptyInput) {
+        toast({
+            type: "error",
+            title: "Dữ liệu không đầy đủ",
+            message: "Vui lòng nhập đầy đủ các output",
+        });
+    } else if (checkMatchSuccess) {
+        toast({
+            type: "error",
+            title: "Môn học bị trùng",
+            message: "Vui lòng những môn học không trùng nhau",
+        });
+    } else callback();
+}
+function submitAddLecturer() {
+    const modalContainer = document.querySelector(
+        ".modal-container[data-name='lecturer']"
+    );
+    const formEl = modalContainer.querySelector("form");
+    fetch("/admin/addLecturer", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(getInfoLecturerFromForm(formEl)),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data == 0) {
                 toast({
-                    type: "error",
-                    title: "Dữ liệu không đầy đủ",
-                    message: "Vui lòng nhập đầy đủ các output",
+                    type: "success",
+                    title: "Thành công!",
+                    message: "Bạn đã thêm giảng viên thành công",
                 });
-            } else if (checkMathSubject) {
+                closeModal(modalContainer);
+                getAllGiangVien(renderAllGiangVien);
+            } else if (data == 1) {
                 toast({
                     type: "error",
-                    title: "Môn học bị trùng",
-                    message: "Vui lòng những môn học không trùng nhau",
+                    title: "Thất bại!",
+                    message: "Username đã tồn tại!",
                 });
             } else {
-                fetch("/admin/addLecturer", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(getInfoLecturerFromForm(formEl)),
-                })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        if (data == 0) {
-                            toast({
-                                type: "success",
-                                title: "Thành công!",
-                                message: "Bạn đã thêm giảng viên thành công",
-                            });
-                            closeModal(formEl);
-                            getAllGiangVien(renderAllGiangVien);
-                        } else if (data == 1) {
-                            toast({
-                                type: "error",
-                                title: "Thất bại!",
-                                message: "Username đã tồn tại!",
-                            });
-                        } else {
-                            toast({
-                                type: "error",
-                                title: "Thất bại!",
-                                message: "Mã giảng viên đã bị trùng",
-                            });
-                        }
-                    });
-                console.log(getInfoLecturerFromForm(formEl));
+                toast({
+                    type: "error",
+                    title: "Thất bại!",
+                    message: "Mã giảng viên đã bị trùng",
+                });
             }
-        };
-    }
+        });
 }
-
-function getInfoLecturerFromForm(formEl) {
+function getInfoLecturerFromForm(formEl, isEdit) {
     const lecturer = {};
     const allInput = [...formEl.querySelectorAll("input")];
+    console.log(allInput);
     const allSelect = formEl.querySelectorAll("select[name]");
     const allSelectSubject = formEl.querySelectorAll(".select-subject select");
 
@@ -403,9 +406,199 @@ function getInfoLecturerFromForm(formEl) {
     allSelect.forEach((select) => {
         lecturer[select.getAttribute("name")] = select.value;
     });
-    allSelectSubject.forEach((select) => {
-        lecturer["subjects"] = lecturer["subjects"] || [];
-        lecturer["subjects"].push(select.value);
-    });
+    if (!isEdit) {
+        allSelectSubject.forEach((select) => {
+            lecturer["subjects"] = lecturer["subjects"] || [];
+            lecturer["subjects"].push(select.value);
+        });
+    } else {
+        allSelectSubject.forEach((select) => {
+            lecturer["subjects"] = lecturer["subjects"] || [];
+            data = {};
+            data["iddh"] = parseInt(select.getAttribute("data-id")) || 0;
+            data["mamh"] = select.value;
+            lecturer["subjects"].push(data);
+        });
+    }
     return lecturer;
+}
+
+function btnUpdateLecturer(lecturerInfo) {
+    const modalContainer = document.querySelector(
+        ".modal-container[data-name='lecturer']"
+    );
+    fetch("/admin/updateLecturer", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(lecturerInfo),
+    })
+        .then((response) => response.text())
+        .then((data) => {
+            toast({
+                type: "success",
+                title: "Cập nhật thành công",
+                message: data,
+            });
+            getAllGiangVien(renderAllGiangVien);
+            closeModal(modalContainer);
+        });
+}
+
+function updateLecturerHandler(lecturer) {
+    const modalContainer = document.querySelector(
+        ".modal-container[data-name='lecturer']"
+    );
+    const formEl = modalContainer.querySelector("form");
+    const submitBtn = modalContainer.querySelector(".registerSubmitBtn");
+    const throttleUpdateLecturer = throttle(checkSubmitLecturer, 1000);
+    submitBtn.onclick = function (event) {
+        event.preventDefault();
+        throttleUpdateLecturer(formEl, () => {
+            btnUpdateLecturer(getInfoLecturerFromForm(formEl, true));
+        });
+    };
+    modalContainer.querySelectorAll(".select-subject").forEach((wrapper) => {
+        wrapper.remove();
+    });
+    openModal(modalContainer);
+    renderInfoLecturerForUpdate(lecturer);
+    lecturer;
+}
+
+function renderInfoLecturerForUpdate(lecturer) {
+    const modalContainer = document.querySelector(
+        ".modal-container[data-name='lecturer']"
+    );
+    const formEl = modalContainer.querySelector("form");
+    const allInput = formEl.querySelectorAll("input");
+    toggleVisibilityLecturer("hidden");
+    allInput.forEach((input) => {
+        if (input.getAttribute("name") !== "gender") {
+            input.value = lecturer[`${input.getAttribute("data-name")}`];
+        } else {
+            if (
+                lecturer["gioiTinh"] === false &&
+                input.getAttribute("data-name") === "male"
+            )
+                input.checked = true;
+            else if (
+                lecturer["gioiTinh"] === true &&
+                input.getAttribute("data-name") === "female"
+            )
+                input.checked = true;
+        }
+    });
+    promiseRenderMonHocGiangVien(lecturer);
+}
+
+async function promiseRenderMonHocGiangVien(lecturer) {
+    try {
+        const allSubject = await getAllMonHoc(); // Đợi cho đến khi dữ liệu được nhận từ hàm getAllMonHoc()
+        const subjects = await new Promise((resolve) => {
+            getMonHocByGiangVien({
+                callback: function (subjects) {
+                    resolve(subjects); // Giải quyết promise với dữ liệu từ callback
+                },
+                maGv: lecturer["maGv"],
+            });
+        });
+        let count = 1;
+        subjects.forEach((subject) => {
+            console.log(subject[0]);
+            renderMonHocGiangVien(count, allSubject, {
+                value: subject[0],
+                iddh: subject[2],
+            }); // Sử dụng dữ liệu để render
+            count++;
+        });
+    } catch (error) {
+        console.error("Error rendering subjects:", error);
+    }
+}
+
+function renderMonHocGiangVien(countSelectSubject, subjects, update) {
+    const modalContainer = document.querySelector(
+        ".modal-container[data-name='lecturer']"
+    );
+    const formEl = modalContainer.querySelector("form");
+    const addBtn = formEl.querySelector(".add-btn");
+    const selectSubjectWrapper = document.createElement("div");
+    selectSubjectWrapper.classList.add("select-subject-wrapper");
+    const inputWrapper = document.createElement("div");
+    inputWrapper.classList.add("input-wrapper", "select-subject");
+    const label = document.createElement("label");
+    label.textContent = "Tên môn học";
+    label.setAttribute("for", `monhoc${countSelectSubject}`);
+    const select = document.createElement("select");
+    select.setAttribute("id", `monhoc${countSelectSubject}`);
+    // select.setAttribute()
+    const templateOption = subjects.map((subject) => {
+        return `<option value="${subject["mamh"]}">${subject["tenmh"]}</option>`;
+    });
+    const formMessage = document.createElement("span");
+    const removeBtn = document.createElement("i");
+    removeBtn.classList.add("fa-solid", "fa-xmark", "remove-btn");
+    formMessage.classList.add("form-message");
+    select.innerHTML = templateOption.join();
+    inputWrapper.appendChild(label);
+    selectSubjectWrapper.appendChild(select);
+    selectSubjectWrapper.appendChild(removeBtn);
+    inputWrapper.appendChild(selectSubjectWrapper);
+    addBtn.insertAdjacentElement("beforebegin", inputWrapper);
+    addBtn.insertAdjacentElement("beforebegin", formMessage);
+    if (update) {
+        select.value = update["value"];
+        select.setAttribute("data-id", update["iddh"]);
+        removeBtn.onclick = function () {
+            popup(
+                {
+                    type: "remove",
+                    title: `Xóa môn học có mã ${update["value"]}`,
+                    desc: "Hành động này sẽ xóa môn học của giảng viên này khỏi database!",
+                },
+                false,
+                () => {
+                    fetch("/admin/deleteMonHocGiangVien", {
+                        method: "DELETE",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(update["iddh"]),
+                    });
+                    toast({
+                        type: "success",
+                        title: "Thành công!",
+                        message: `Xóa thành công môn học có mã ${update["value"]}`,
+                    });
+                    inputWrapper.remove();
+                }
+            );
+        };
+    } else {
+        removeBtn.onclick = function () {
+            inputWrapper.remove();
+        };
+    }
+}
+// Dung de an hien input username password, magv
+function toggleVisibilityLecturer(show) {
+    const modalContainer = document.querySelector(
+        ".modal-container[data-name='lecturer']"
+    );
+    const username = modalContainer.querySelector(
+        ".input-wrapper[data-name='username']"
+    );
+    const password = modalContainer.querySelector(
+        ".input-wrapper[data-name='password']"
+    );
+    const magv = modalContainer.querySelector(
+        ".input-wrapper[data-name='magv']"
+    );
+    if (show === "show") {
+        username.style.display = "flex";
+        password.style.display = "flex";
+        magv.style.display = "flex";
+    } else if (show === "hidden") {
+        username.style.display = "none";
+        password.style.display = "none";
+        magv.style.display = "none";
+    }
 }

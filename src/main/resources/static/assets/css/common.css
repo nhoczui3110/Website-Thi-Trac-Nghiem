@@ -200,6 +200,11 @@ a {
     display: block;
 }
 
+.modal.open .modal-container[data-name='xemdiem'].open {
+    display: flex;
+    flex-direction: column;
+}
+
 .modal-container .header {
     display: flex;
     justify-content: center;
@@ -500,8 +505,8 @@ a {
 
 .table {
     width: 100%;
-    max-height: 50%;
-    overflow: scroll;
+    /* max-height: 50%;
+    overflow: scroll; */
     text-align: center;
 }
 
@@ -816,4 +821,18 @@ th {
 
 .add-btn i:hover {
     opacity: 0.9;
+}
+
+tbody .edit {
+    color: var(--primary-color);
+}
+
+tbody .more {
+    color: #5AEF9F;
+}
+
+.table-wrapper {
+    overflow-y: scroll;
+    height: 100%;
+    width: 100%;
 }
