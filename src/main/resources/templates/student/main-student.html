@@ -26,7 +26,7 @@
             <!-- danh sách các chức năng -->
             <ul class="list">
                 <!-- các chức năng cụ thể -->
-                <li class="item" id="item1">
+                <li class="item" id="item1" onclick="switchView(0)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="28" viewBox="0 0 24 28" fill="none"
                         class="icon">
                         <path
@@ -38,7 +38,7 @@
                     </svg>
                     <span>Thi</span>
                 </li>
-                <li class="item" id="item2">
+                <li class="item" id="item2" onclick="switchView(1)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="27" viewBox="0 0 24 27" fill="none"
                         class="icon">
                         <path
@@ -66,7 +66,7 @@
                 <div class="header">
                     <div class="user-wrapper">
                         <span class="text" th:text="'Hello, ' + ${session.username}"></span>
-                        <div class="img-wrapper" id="icon">
+                        <div class="img-wrapper" id="icon" onclick="iconClick(event)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none">
                                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -75,8 +75,7 @@
                             </svg>
                         </div>
                         <div class="list" id="profile-logout">
-                            <li class="item"><a href="https://dictionary.cambridge.org/pronunciation/english/cambridge "
-                                    style="text-decoration: none; color:black">Profile</a></li>
+                            <li class="item" style="text-decoration: none; color:black ;cursor: pointer;" onclick="switchView(2)">Profile</li>
                             <li class="item"><a href="/logout" style="text-decoration: none; color:black">Log out</a>
                             </li>
                         </div>
@@ -109,14 +108,14 @@
                             <td>
                                 <div th:if="${lich.isTrangThai()}">
                                     <form th:action="@{/thi}" method="post">
-                                        <input name = "idthi" th:value = "${lich.getIDTHI()}" type="hidden">
-                                        <input name = "mamh" th:value = "${lich.getMaMH()}" type="hidden">
-                                        <input name = "tenmh" th:value="${lich.getTenMH()}" type="hidden"/>
-                                        <input name = "ngaythi" th:value="${lich.getNgayThi()}" type="hidden"/>
-                                        <input name = "lanthi" th:value="${lich.getSoCau()}" type="hidden"/>
-                                        <input name = "socau" th:value="${lich.getSoCau()}" type="hidden"/>
-                                        <input name = "thoiluong" th:value="${lich.getThoiLuong()}" type="hidden"/>
-                                        <button  type="submit">Thi</button>
+                                        <input name="idthi" th:value="${lich.getIDTHI()}" type="hidden">
+                                        <input name="mamh" th:value="${lich.getMaMH()}" type="hidden">
+                                        <input name="tenmh" th:value="${lich.getTenMH()}" type="hidden" />
+                                        <input name="ngaythi" th:value="${lich.getNgayThi()}" type="hidden" />
+                                        <input name="lanthi" th:value="${lich.getSoCau()}" type="hidden" />
+                                        <input name="socau" th:value="${lich.getSoCau()}" type="hidden" />
+                                        <input name="thoiluong" th:value="${lich.getThoiLuong()}" type="hidden" />
+                                        <button type="submit">Thi</button>
                                     </form>
                                 </div>
                                 <button th:unless="${lich.isTrangThai()}" type="button" th:disabled="true">Thi</button>
@@ -143,9 +142,34 @@
                             <td th:text=${diem.getLanThi()}> </td>
                             <td th:text=${diem.getDiem()}> </td>
                             <td th:text=${diem.getIdThi()}> </td>
+                            <td>
+                                <a th:href="'/xemketqua?idThi=' + ${diem.getIdThi()}">
+                                    Xem chi tiết
+                                </a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="right-child-container-bottom" id="sua-thong-tin">
+                <form action="" class="form" id="myForm" onsubmit="saveInfo(event)" >
+                    <input type="hidden" name="" id="masv" th:value = "${sv.getMasv()}">
+                    <label for="ho" class="label">Họ</label>
+                    <input type="text" name="" id="ho" th:value = "${sv.getHo()}">
+                    <label for="ten">Tên</label>
+                    <input type="text" name="" id="ten" th:value = "${sv.getTen()}">
+                    <label for="gioitinh">Giới tính</label>
+                    <!-- <input type="text" name="" id="gioitinh"> -->
+                    <select id="gioitinh" name="gioitinh">
+                        <option th:if ="${sv.getGioiTinh() == '0'}" selected = "selected" value="0">Nam</option>
+                        <option th:if ="${sv.getGioiTinh() == '0'}" value="1">Nữ</option>
+                        <option th:if ="${sv.getGioiTinh() == '1'}" value="0">Nam</option>
+                        <option th:if ="${sv.getGioiTinh() == '1'}" selected = "selected"  value="1">Nữ</option>
+                      </select>
+                    <label for="diachi">Địa chỉ</label>
+                    <input type="text" name="" id="diachi" th:value = "${sv.getDiaChi()}">
+                    <button type="submit" class="btn">Lưu</button>
+                </form>
             </div>
         </div>
     </div>
