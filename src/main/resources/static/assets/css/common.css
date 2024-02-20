@@ -298,14 +298,10 @@ a {
 .controller-wrapper {
     /* height: 100vh; */
     position: fixed;
-    left: 0;
-    bottom: 0;
-    top: 0;
     background-color: var(--primary-color);
     padding: 63px 63px 90px;
     border-radius: 0px 40px 40px 0px;
-    /* width: 600px; */
-    max-width: 20%;
+    inset: 0 85% 0 0;
 }
 
 .controller-wrapper .admin-text {
@@ -331,6 +327,7 @@ a {
     cursor: pointer;
 }
 
+
 .feature-list .item:hover,
 .feature-list .item.active {
     color: #FFF;
@@ -348,6 +345,10 @@ a {
     justify-content: flex-end;
     align-items: center;
     column-gap: 12px;
+}
+
+.user-wrapper .menu {
+    display: none;
 }
 
 .user-wrapper .img-wrapper {
@@ -835,4 +836,30 @@ tbody .more {
     overflow-y: scroll;
     height: 100%;
     width: 100%;
+}
+
+.mobile-controller-wrapper {
+    display: none;
+}
+
+.mobile-overlay {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s linear;
+}
+
+.mobile-controller {
+    transform: translateX(-100%);
+    transition: transform 0.5s linear;
+}
+
+.mobile-overlay.active {
+    opacity: 1;
+    visibility: visible;
+
+}
+
+.mobile-controller.active {
+    transform: translateX(0);
+
 }
