@@ -1,5 +1,6 @@
 package com.doantracnghiem.doantracnghiem.Entity;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 import jakarta.persistence.Column;
@@ -18,17 +19,79 @@ public class SinhVien {
     @Column(name = "TEN")
     private String ten;
     @Column(name = "GIOITINH")
-    private String gioiTinh;
+    private boolean gioiTinh;
     @Column(name = "DIACHI")
     private String diaChi;
     @Column(name = "NGAYSINH")
-    private LocalDate ngaySinh;
+    private Date ngaySinh;
     @Column(name = "USERNAME")
     private String userName;
     @Column(name = "PASSWORD")
     private String passWord;
     @Column(name = "MALOP")
     private String maLop;
+    public boolean isTrangThaiXoa() {
+        return trangThaiXoa;
+    }
+    public void setTrangThaiXoa(boolean trangThaiXoa) {
+        this.trangThaiXoa = trangThaiXoa;
+    }
+    @Column(name = "TRANGTHAIXOA")
+    private boolean trangThaiXoa;
+    public String getMasv() {
+        return masv;
+    }
+    public void setMasv(String masv) {
+        this.masv = masv;
+    }
+    public String getHo() {
+        return ho;
+    }
+    public void setHo(String ho) {
+        this.ho = ho;
+    }
+    public String getTen() {
+        return ten;
+    }
+    public void setTen(String ten) {
+        this.ten = ten;
+    }
+    public boolean isGioiTinh() {
+        return gioiTinh;
+    }
+    public void setGioiTinh(boolean gioiTinh) {
+        this.gioiTinh = gioiTinh;
+    }
+    public String getDiaChi() {
+        return diaChi;
+    }
+    public void setDiaChi(String diaChi) {
+        this.diaChi = diaChi;
+    }
+    public Date getNgaySinh() {
+        return ngaySinh;
+    }
+    public void setNgaySinh(Date ngaySinh) {
+        this.ngaySinh = ngaySinh;
+    }
+    public String getUserName() {
+        return userName;
+    }
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+    public String getPassWord() {
+        return passWord;
+    }
+    public void setPassWord(String passWord) {
+        this.passWord = passWord;
+    }
+    public String getMaLop() {
+        return maLop;
+    }
+    public void setMaLop(String maLop) {
+        this.maLop = maLop;
+    }
     public String toString(){
         return ten + "  " + maLop;
     }
