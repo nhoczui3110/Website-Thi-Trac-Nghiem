@@ -16,6 +16,36 @@ public class Thi {
     private int idThi;
     @Column(name = "MASV")
     private String masv;
+    public int getIdThi() {
+        return idThi;
+    }
+    public void setIdThi(int idThi) {
+        this.idThi = idThi;
+    }
+    public String getMasv() {
+        return masv;
+    }
+    public void setMasv(String masv) {
+        this.masv = masv;
+    }
+    public int getIddk() {
+        return iddk;
+    }
+    public void setIddk(int iddk) {
+        this.iddk = iddk;
+    }
+    public float getDiem() {
+        return diem;
+    }
+    public void setDiem(float diem) {
+        this.diem = diem;
+    }
+    public boolean isTrangThaiXoa() {
+        return trangThaiXoa;
+    }
+    public void setTrangThaiXoa(boolean trangThaiXoa) {
+        this.trangThaiXoa = trangThaiXoa;
+    }
     @Column(name = "IDDK")
     private int iddk;
     @Column(name = "DIEM")
