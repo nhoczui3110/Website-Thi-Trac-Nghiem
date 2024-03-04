@@ -103,3 +103,295 @@ begin
 		inner join (select * from DANGKYTHI where  CAST(GETDATE() AS DATE)<=NGAYTHI)DANGKYTHI on Thi.IDDK = DANGKYTHI.IDDK
 		inner join MONHOC on DANGKYTHI.MAMH = MONHOC.MAMH
 end
+
+=========================================================QUANG=======================================================
+=========================================================checkUsername===============================================
+USE [WEBTHITRACNGHIEM]
+GO
+/****** Object:  StoredProcedure [dbo].[checkUserName]    Script Date: 3/4/2024 10:20:52 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER proc [dbo].[checkUserName]
+@username varchar(30),
+@result bit output
+as
+begin
+	if exists(select * from NHANVIENGV WHERE USERNAME = @username)
+	begin
+		set @result = 1
+		return
+	end
+		if exists(select * from GIANGVIEN WHERE USERNAME = @username)
+	begin
+		set @result = 1
+		return
+	end
+		if exists(select * from SINHVIEN WHERE USERNAME = @username)
+	begin
+		set @result = 1
+		return
+	end
+	set @result = 0
+end
+============================================countCauHoiByMonHoc=============================================================
+USE [WEBTHITRACNGHIEM]
+GO
+/****** Object:  StoredProcedure [dbo].[countCauHoiByMonHoc]    Script Date: 3/4/2024 10:21:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER Proc [dbo].[countCauHoiByMonHoc] @mamh nvarchar(15)
+as
+begin
+	select count(*) from CAUHOI, DAYHOC where cauhoi.IDDH = DAYHOC.IDDH and MAMH=@mamh
+end
+===========================================countQuestionByFinding============================================================
+USE [WEBTHITRACNGHIEM]
+GO
+/****** Object:  StoredProcedure [dbo].[countQuestionByFinding]    Script Date: 3/4/2024 10:21:34 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER proc [dbo].[countQuestionByFinding] @magv NVARCHAR(15),@keyword nvarchar(100)
+as
+begin
+	SELECT count(*)
+	from (SELECT * FROM CAUHOI WHERE TRANGTHAIXOA=0) CAUHOI INNER JOIN (SELECT IDDH,MAMH FROM DAYHOC WHERE @magv = MAGV and trangthaixoa = 0) DH ON CAUHOI.IDDH = DH.IDDH INNER JOIN (SELECT MAMH, TENMH FROM MONHOC WHERE TRANGTHAIXOA = 0) MONHOC ON DH.MAMH = MONHOC.MAMH
+	WHERE IDCH LIKE  '%' + @keyword + '%' OR TENMH LIKE  '%' + @keyword + '%' OR HINHTHUC LIKE  '%' + @keyword + '%' OR NOIDUNG LIKE  '%' + @keyword + '%'
+END
+==========================================countQuestionByMonHocAndLecturer=====================================================
+USE [WEBTHITRACNGHIEM]
+GO
+/****** Object:  StoredProcedure [dbo].[countQuestionByMonHocAndLecturer]    Script Date: 3/4/2024 10:21:59 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER Proc [dbo].[countQuestionByMonHocAndLecturer] @MaGv nvarchar(15), @MaMh nvarchar(15)
+as
+begin
+	if (@MaMh = 'all')
+	begin
+		select count(*) from CAUHOI, DAYHOC where  CAUHOI.IDDH = DAYHOC.IDDH and cauhoi.TRANGTHAIXOA = 0
+	end
+	else
+	begin
+		select count(*) from CAUHOI, DAYHOC where  CAUHOI.IDDH = DAYHOC.IDDH and DAYHOC.MAMH = @MaMh and cauhoi.TRANGTHAIXOA = 0
+	end
+end
+=============================================findCauHoiByMaGv====================================================================
+USE [WEBTHITRACNGHIEM]
+GO
+/****** Object:  StoredProcedure [dbo].[findCauHoiByMaGv]    Script Date: 3/4/2024 10:22:17 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER Proc [dbo].[findCauHoiByMaGv] @magv nvarchar(15)
+as
+begin
+	select IDCH,TENMH,HINHTHUC, NOIDUNG from CAUHOI, (SELECT IDDH,MAMH FROM DAYHOC WHERE @magv = MAGV) DH, MONHOC WHERE  CAUHOI.IDDH = DH.IDDH AND MONHOC.MAMH = DH.MAMH
+end
+=============================================findCauHoiByMaGvAndMaMh===============================================================
+USE [WEBTHITRACNGHIEM]
+GO
+/****** Object:  StoredProcedure [dbo].[findCauHoiByMaGvAndMaMh]    Script Date: 3/4/2024 10:22:42 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER Proc [dbo].[findCauHoiByMaGvAndMaMh] @magv nvarchar(15), @mamh nvarchar(15), @PageNumber INT, @PageSize INT
+as
+begin
+	DECLARE @Offset INT = (@PageNumber - 1) * @PageSize;
+	if @mamh = 'all' 
+	begin
+		select IDCH,TENMH,HINHTHUC, NOIDUNG , DAPANDUNG
+		from (SELECT * FROM CAUHOI WHERE TRANGTHAIXOA=0) CAUHOI, (SELECT IDDH,MAMH FROM DAYHOC WHERE @magv = MAGV and trangthaixoa = 0) DH, (SELECT MAMH, TENMH FROM MONHOC WHERE TRANGTHAIXOA = 0) MONHOC 
+		WHERE  CAUHOI.IDDH = DH.IDDH AND MONHOC.MAMH = DH.MAMH
+		Order By IDCH
+		OFFSET @Offset ROWS
+		FETCH NEXT @PageSize ROWS ONLY;
+	end
+	ELSE
+	BEGIN
+		select IDCH,TENMH,HINHTHUC, NOIDUNG , DAPANDUNG
+		from (SELECT * FROM CAUHOI WHERE TRANGTHAIXOA=0) CAUHOI, (SELECT IDDH,MAMH FROM DAYHOC WHERE @magv = MAGV and trangthaixoa = 0) DH, (SELECT MAMH, TENMH FROM MONHOC WHERE MAMH = @mamh and TRANGTHAIXOA = 0) MONHOC 
+		WHERE  CAUHOI.IDDH = DH.IDDH AND MONHOC.MAMH = DH.MAMH
+		Order By IDCH
+		OFFSET @Offset ROWS
+		FETCH NEXT @PageSize ROWS ONLY;
+	END
+	
+end
+=======================================================findDangKyThi==================================================================
+USE [WEBTHITRACNGHIEM]
+GO
+/****** Object:  StoredProcedure [dbo].[findDangKyThi]    Script Date: 3/4/2024 10:23:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER proc [dbo].[findDangKyThi] @magv nvarchar(15)
+as
+begin
+	select * from DANGKYTHI where MAGV = @magv
+end
+======================================================findDangKyThiByMaGv=============================================================
+USE [WEBTHITRACNGHIEM]
+GO
+/****** Object:  StoredProcedure [dbo].[findDangKyThi]    Script Date: 3/4/2024 10:23:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER proc [dbo].[findDangKyThi] @magv nvarchar(15)
+as
+begin
+	select * from DANGKYTHI where MAGV = @magv
+end
+======================================================[findIDDHByMaMhAndMaGv]===========================================================
+USE [WEBTHITRACNGHIEM]
+GO
+/****** Object:  StoredProcedure [dbo].[findIDDHByMaMhAndMaGv]    Script Date: 3/4/2024 10:24:22 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER proc [dbo].[findIDDHByMaMhAndMaGv] @MAMH NVARCHAR(15), @MAGV NVARCHAR(15)
+AS
+BEGIN
+	SELECT IDDH FROM DAYHOC WHERE MAMH = @MAMH AND MAGV = @MAGV
+END
+=====================================================[findLuaChocByMaCauHoi]===========================================================
+USE [WEBTHITRACNGHIEM]
+GO
+/****** Object:  StoredProcedure [dbo].[findLuaChocByMaCauHoi]    Script Date: 3/4/2024 10:24:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER proc [dbo].[findLuaChocByMaCauHoi] @maCauHoi INT
+as
+begin
+	select noidungluachon=LUACHON.NOIDUNG, thutu, luachon.IDLC from LUACHON where IDCH = @maCauHoi and TRANGTHAIXOA = 0
+end
+======================================================[findMonHocByMagv]================================================================
+USE [WEBTHITRACNGHIEM]
+GO
+/****** Object:  StoredProcedure [dbo].[findMonHocByMagv]    Script Date: 3/4/2024 10:25:11 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROC [dbo].[findMonHocByMagv] @magv nvarchar(15)
+AS
+BEGIN
+	select MonHOC.MAMH, TENMH, DAYHOC.IDDH from DAYHOC, MONHOC where MAGV=@magv and MONHOC.MAMH=DAYHOC.MAMH and MONHOC.TRANGTHAIXOA = 0
+end
+========================================================[findThiFromIddk]==============================================================
+USE [WEBTHITRACNGHIEM]
+GO
+/****** Object:  StoredProcedure [dbo].[findThiFromIddk]    Script Date: 3/4/2024 10:25:30 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER proc [dbo].[findThiFromIddk] @iddk int
+as
+begin
+	select thi.masv, ho, ten, diem from (select masv, diem from THI where iddk = @iddk AND DATHI = 1) thi, (select ho, ten, masv from SINHVIEN) sinhvien where thi.MASV=SINHVIEN.MASV
+end
+========================================================[findUserByUsername]============================================================
+USE [WEBTHITRACNGHIEM]
+GO
+/****** Object:  StoredProcedure [dbo].[findUserByUsername]    Script Date: 3/4/2024 10:25:45 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER Proc [dbo].[findUserByUsername] @username VARCHAR(30), @type NVARCHAR(10)
+AS
+BEGIN
+	IF (@TYPE = 'SINHVIEN')
+		SELECT * FROM SINHVIEN WHERE SINHVIEN.USERNAME = @username and SINHVIEN.TRANGTHAIXOA=0
+	ELSE IF (@TYPE = 'GIANGVIEN')
+		SELECT * FROM GIANGVIEN WHERE GIANGVIEN.USERNAME = @username and GIANGVIEN.TRANGTHAIXOA=0
+	ELSE IF (@type = 'NHANVIENGV')
+		SELECT * FROM NHANVIENGV WHERE NHANVIENGV.USERNAME = @username and NHANVIENGV.TRANGTHAIXOA=0
+END
+========================================================[insertThiByIddk]==============================================================
+USE [WEBTHITRACNGHIEM]
+GO
+/****** Object:  StoredProcedure [dbo].[insertThiByIddk]    Script Date: 3/4/2024 10:26:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[insertThiByIddk]
+    @iddk INT
+AS
+BEGIN
+    INSERT INTO THI (masv, iddk, diem, trangthaixoa, dathi)
+    SELECT 
+        sv.masv, 
+        dk.iddk, 
+        0 AS diem, 
+        0 AS trangthaixoa, 
+        0 AS dathi
+    FROM 
+        SINHVIEN sv
+    INNER JOIN 
+        (select iddk, malop from DANGKYTHI where iddk = @iddk) dk ON sv.MALOP = dk.MALOP
+END
+==========================================================[searchCauHoi]================================================================
+USE [WEBTHITRACNGHIEM]
+GO
+/****** Object:  StoredProcedure [dbo].[searchCauHoi]    Script Date: 3/4/2024 10:26:46 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER proc [dbo].[searchCauHoi] @magv NVARCHAR(15), @PageNumber INT, @PageSize INT, @keyword nvarchar(100)
+as
+begin
+	declare @offset int = (@PAGENUMBER-1)*@PAGESIZE
+	SELECT IDCH,TENMH,HINHTHUC, NOIDUNG , DAPANDUNG
+	from (SELECT * FROM CAUHOI WHERE TRANGTHAIXOA=0) CAUHOI INNER JOIN (SELECT IDDH,MAMH FROM DAYHOC WHERE @magv = MAGV and trangthaixoa = 0) DH ON CAUHOI.IDDH = DH.IDDH INNER JOIN (SELECT MAMH, TENMH FROM MONHOC WHERE TRANGTHAIXOA = 0) MONHOC ON DH.MAMH = MONHOC.MAMH
+	WHERE @keyword = ' ' or IDCH LIKE  '%' + @keyword + '%' OR TENMH LIKE  '%' + @keyword + '%' OR HINHTHUC LIKE  '%' + @keyword + '%' OR NOIDUNG LIKE  '%' + @keyword + '%'
+	Order By IDCH
+	OFFSET @Offset ROWS
+	FETCH NEXT @PageSize ROWS ONLY;
+END
+============================================================[searchGiangVien]=============================================================
+USE [WEBTHITRACNGHIEM]
+GO
+/****** Object:  StoredProcedure [dbo].[searchGiangVien]    Script Date: 3/4/2024 10:27:15 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER proc [dbo].[searchGiangVien] @keyword nvarchar(100)
+as
+begin
+	select * from giangvien
+	WHERE (MAGV LIKE  '%' + @keyword + '%' OR HO LIKE  '%' + @keyword + '%' OR TEN LIKE  '%' + @keyword + '%' OR GIOITINH LIKE  '%' + @keyword + '%' OR HOCVI LIKE  '%' + @keyword + '%' OR HOCHAM LIKE  '%' + @keyword + '%') and TRANGTHAIXOA = 0
+end
+==========================================================[searchMonHoc]===============================================================
+USE [WEBTHITRACNGHIEM]
+GO
+/****** Object:  StoredProcedure [dbo].[searchMonHoc]    Script Date: 3/4/2024 10:27:43 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER proc [dbo].[searchMonHoc] @keyword nvarchar(100)
+as
+begin
+	select * from MONHOC
+	WHERE (@keyword = ' ' or MAMH LIKE  '%' + @keyword + '%' OR TENMH LIKE  '%' + @keyword + '%' OR SOTIETLT LIKE  '%' + @keyword + '%' OR SOTIETTH LIKE  '%' + @keyword + '%') and TRANGTHAIXOA = 0
+end
