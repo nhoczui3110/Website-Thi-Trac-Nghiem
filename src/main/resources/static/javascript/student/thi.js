@@ -1,7 +1,17 @@
-function showQuestion(index,socau){
-    socau = 5
+var currentIndex = 0
+function showQuestion(index){
+    currentIndex = index 
+    const previous = document.getElementById("previous");
+    const next = document.getElementById("next");
     const li = document.querySelectorAll(".exam-view .question-answer")
-    for(let i = 0;i<socau;i++){
+    console.log(currentIndex)
+    if(currentIndex==li.length -1)
+        next.disabled = true;
+    else next.disabled = false
+    if(currentIndex == 0)
+        previous.disabled = true;
+    else previous.disabled = false
+    for(let i = 0;i<li.length;i++){
         li[i].style.display = "none";
     }
     li[index].style.display = "flex";
@@ -43,4 +53,32 @@ function countdownMinutes(minutes) {
 function subMit(){
     const form = document.getElementById("form");
     form.submit()
+}
+
+function moveQuestion(socau){
+    const previous = document.getElementById("previous");
+    const next = document.getElementById("next");
+    previous.disabled = true;
+    previous.onclick= ()=>{
+        console.log(currentIndex)
+        if(currentIndex == socau -1){
+            next.disabled = false;
+        }
+        currentIndex--;
+        showQuestion(currentIndex)
+        if(currentIndex==0){
+            previous.disabled = true;
+        }
+    }
+    next.onclick= ()=>{
+        console.log(currentIndex)
+        if(currentIndex == 0){
+            previous.disabled = false;
+        }
+        currentIndex++;
+        showQuestion(currentIndex)
+        if(currentIndex==socau -1){
+            next.disabled = true;
+        }
+    }
 }
