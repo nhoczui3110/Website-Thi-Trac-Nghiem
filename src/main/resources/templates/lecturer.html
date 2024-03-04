@@ -26,8 +26,39 @@
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
             rel="stylesheet"
         />
+        <link
+            rel="stylesheet"
+            href="../static/assets/css/reponsive.css"
+            th:href="@{/assets/css/reponsive.css}"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+            integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
     </head>
     <body>
+        <!-- <div class="popup-wrapper">
+            <div class="popup">
+                <div class="top">
+                    <div class="icon-wrapper">
+                        <i class="fa-solid fa-check check"></i>
+                    </div>
+                    <i class="fa-solid fa-xmark close"></i>
+                </div>
+                <span class="title">Blog post published</span>
+                <div class="desc">
+                    This blog post has been published. Team members will be able
+                    to edit this post and republish changes.
+                </div>
+                <div class="btn-group">
+                    <a href="#!" class="cancel-btn">Cancel</a>
+                    <a href="#!" class="confirm-btn">Confirm</a>
+                </div>
+            </div>
+        </div> -->
         <div class="controller-wrapper">
             <div class="logo-wrapper">
                 <img
@@ -38,7 +69,7 @@
                 <span class="admin-text">Lecturer</span>
             </div>
             <ul class="feature-list">
-                <li class="item">
+                <li class="item" data-name="xemdiem">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -58,7 +89,7 @@
                     </svg>
                     <span class="text">Xem điểm</span>
                 </li>
-                <li class="item">
+                <li class="item" data-name="cauhoi">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -97,8 +128,138 @@
             </div>
         </div>
         <div class="content">
-            <div class="content-wrapper"></div>
-            <div class="content-monhoc"></div>
+            <div class="content-wrapper content-cauhoi" data-name="cauhoi">
+                <div class="content-top">
+                    <span class="text">Question Management</span>
+                    <div class="sort-wrapper">
+                        <label for="sort-student">Sort</label>
+                        <select id="sort-student">
+                            <option value="">All</option>
+                            <option value="">Toay</option>
+                            <option value="">This Week</option>
+                            <option value="">This Month</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="content-bottom">
+                    <div class="filter-wrapper">
+                        <div class="find-wrapper">
+                            <label for="search">Entries</label>
+                            <div class="search-wrapper">
+                                <img
+                                    src="../static/assets/img/search-icon.svg"
+                                    th:src="@{/assets/img/search-icon.svg}"
+                                    alt=""
+                                />
+                                <input
+                                    type="text"
+                                    name=""
+                                    id="search-cauhoi"
+                                    placeholder="Search..."
+                                />
+                            </div>
+                        </div>
+                        <div class="sort-wrapper sort-wrapper-monhoc">
+                            <label for="sort-monhoc">Môn học</label>
+                            <select id="sort-monhoc"></select>
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Mã câu hỏi</th>
+                                <th>Môn học</th>
+                                <th>Hình thức</th>
+                                <th>Nội dung</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <div class="table-controller">
+                        <span class="text prev">Previous</span>
+                        <div class="page-number">
+                            <span class="item">1</span>
+                            <span class="item">2</span>
+                            <span class="item">3</span>
+                        </div>
+                        <span class="text next"> Next</span>
+                    </div>
+                </div>
+                <a href="#!" class="btn-trans btn-register">
+                    <div class="circle">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="17"
+                            height="17"
+                            viewBox="0 0 17 17"
+                            fill="none"
+                        >
+                            <path
+                                d="M15.7857 6.67857H10.3214V1.21429C10.3214 0.543772 9.77766 0 9.10714 0H7.89286C7.22234 0 6.67857 0.543772 6.67857 1.21429V6.67857H1.21429C0.543772 6.67857 0 7.22234 0 7.89286V9.10714C0 9.77766 0.543772 10.3214 1.21429 10.3214H6.67857V15.7857C6.67857 16.4562 7.22234 17 7.89286 17H9.10714C9.77766 17 10.3214 16.4562 10.3214 15.7857V10.3214H15.7857C16.4562 10.3214 17 9.77766 17 9.10714V7.89286C17 7.22234 16.4562 6.67857 15.7857 6.67857Z"
+                                fill="currentColor"
+                            ></path>
+                        </svg>
+                    </div>
+                    <span>Thêm câu hỏi</span>
+                </a>
+            </div>
+            <div class="content-wrapper content-xemdiem" data-name="xemdiem">
+                <div class="content-top">
+                    <span class="text">Students</span>
+                    <div class="sort-wrapper">
+                        <label for="sort-student">Sort</label>
+                        <select id="sort-student">
+                            <option value="">All</option>
+                            <option value="">Toay</option>
+                            <option value="">This Week</option>
+                            <option value="">This Month</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="content-bottom">
+                    <div class="filter-wrapper">
+                        <div class="find-wrapper">
+                            <label for="search">Entries</label>
+                            <div class="search-wrapper">
+                                <img
+                                    src="../static/assets/img/search-icon.svg"
+                                    th:src="@{/assets/img/search-icon.svg}"
+                                    alt=""
+                                />
+                                <input
+                                    type="text"
+                                    name=""
+                                    id="search-student"
+                                    placeholder="Search..."
+                                />
+                            </div>
+                        </div>
+                        <div class="sort-wrapper">
+                            <label for="sort-malop">Mã lớp</label>
+                            <input list="sort-malop" type="text" />
+                            <datalist id="sort-malop">
+                                <option value="">All</option>
+                                <option value="">Toay</option>
+                                <option value="">This Week</option>
+                                <option value="">This Month</option>
+                            </datalist>
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th data-name="maLop">Mã Lớp</th>
+                                <th data-name="mamh">Mã MH</th>
+                                <th data-name="lan">Lần thi</th>
+                                <th data-name="ngayThi">Ngày Thi</th>
+                                <th data-name="action">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
             <div class="content-profile">
                 <div class="profile-left">
                     <span class="profile">Profile</span>
@@ -139,7 +300,8 @@
                 </div>
                 <div class="separate"></div>
                 <div class="profile-right">
-                    <form action="/login" class="config-form" method="post">
+                    <form action="" class="config-form" method="post">
+                        <span class="error-message"></span>
                         <div class="form-wrapper">
                             <div class="input-wrapper">
                                 <label for="lastname">Họ</label>
@@ -198,8 +360,8 @@
                         <div class="input-wrapper">
                             <label for="hocham">Học hàm:</label>
                             <select id="hocham" name="hocHam">
-                                <option value="KHÔNG">Không</option>
                                 <option value="GIÁO SƯ">Giáo sư</option>
+                                <option value="KHÔNG">Không</option>
                             </select>
                         </div>
                         <span class="form-message"></span>
@@ -216,7 +378,102 @@
                 </div>
             </div>
         </div>
+        <div class="modal">
+            <div class="modal-container" data-name="cauhoi">
+                <div class="type-wrapper">
+                    <label for="type-question" class="text-type"
+                        >Vui lòng chọn hình thức câu hỏi</label
+                    >
+                    <select name="" id="type-question" class="type-selection">
+                        <option value="ĐIỀN KHUYẾT">Điền khuyết</option>
+                        <option value="CHỌN 1 TRONG NHIỀU LỰA CHỌN">
+                            Chọn một trong nhiều lựa chọn
+                        </option>
+                        <option value="YES/NO">Yes/No</option>
+                    </select>
+                    <div class="btn-controller">
+                        <a href="#!" class="btn-trans closeBtn">Close</a>
+                        <button
+                            type="submit"
+                            href="#!"
+                            class="btn registerSubmitBtn next-btn"
+                        >
+                            next
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-container" data-name="create-cauhoi">
+                <div class="header">Tạo câu hỏi</div>
+                <form action="" class="register-form" method="post">
+                    <div class="input-wrapper">
+                        <label for="monHoc">Chọn môn học:</label>
+                        <select id="monHoc" name="monHoc"></select>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="input-wrapper">
+                        <label for="noiDungCauHoi">Nội dung câu hỏi</label>
+                        <textarea
+                            name="noiDungCauHoi"
+                            id="noiDungCauHoi"
+                            cols="30"
+                            rows="2"
+                            rules="required"
+                        ></textarea>
+                        <div class="bar"></div>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="btn-controller">
+                        <button
+                            type="submit"
+                            href="#!"
+                            class="btn registerSubmitBtn"
+                        >
+                            Register
+                        </button>
+                        <a href="#!" class="btn-trans closeBtn">Close</a>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-container" data-name="question-detail">
+                <div class="question-detail-wrapper">
+                    <div class="top">
+                        <span class="question-id"
+                            >Mã câu hỏi: <span></span
+                        ></span>
+                        <i class="fa-solid fa-xmark"></i>
+                    </div>
+                    <span class="text">Nội dung câu hỏi:</span>
+                    <p class="question-content"></p>
+                    <div class="selection-wrapper"></div>
+                </div>
+            </div>
+            <div class="modal-container" data-name="xemdiem">
+                <i class="fa-solid fa-xmark closeBtn"></i>
+                <div class="table-wrapper">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th data-name="masv">Mã Sinh Viên</th>
+                                <th data-name="ho">Họ</th>
+                                <th data-name="ten">Tên</th>
+                                <th data-name="diem">Điểm</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
         <!-- Script -->
+        <script
+            th:src="@{/javascript/popup.js}"
+            src="../static/javascript/popup.js"
+        ></script>
+        <script
+            th:src="@{/javascript/toast.js}"
+            src="../static/javascript/toast.js"
+        ></script>
         <script
             th:src="@{/javascript/validation.js}"
             src="../static/javascript/validation.js"
@@ -229,5 +486,17 @@
             th:src="@{/javascript/XuLyLecturer.js}"
             src="../static/javascript/XuLyLecturer.js"
         ></script>
+        <!-- <script>
+            popup(
+                {
+                    type: "remove",
+                    title: "Thêm lựa chọn",
+                    desc: "Vui lòng nhập nội dung lựa chọn",
+                },
+                true,
+                console.log,
+                "Hello"
+            );
+        </script> -->
     </body>
 </html>

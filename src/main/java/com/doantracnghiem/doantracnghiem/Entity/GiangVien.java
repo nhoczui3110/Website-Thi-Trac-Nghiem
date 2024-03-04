@@ -57,4 +57,48 @@ public class GiangVien implements Serializable {
     public String getUserName() {
         return userName;
     }
+
+    public void setMaGv(String maGv) {
+        this.maGv = maGv;
+    }
+
+    // Hàm setter cho thuộc tính ho
+    public void setHo(String ho) {
+        this.ho = ho;
+    }
+
+    // Hàm setter cho thuộc tính ten
+    public void setTen(String ten) {
+        this.ten = ten;
+    }
+
+    // Hàm setter cho thuộc tính gioiTinh
+    public void setGioiTinh(boolean gioiTinh) {
+        this.gioiTinh = gioiTinh;
+    }
+
+    // Hàm setter cho thuộc tính hocVi
+    public void setHocVi(String hocVi) {
+        this.hocVi = hocVi;
+    }
+
+    // Hàm setter cho thuộc tính hocHam
+    public void setHocHam(String hocHam) {
+        this.hocHam = hocHam;
+    }
+
+    // Hàm setter cho thuộc tính userName
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    // Hàm setter cho thuộc tính passWord
+    public void setPassWord(String passWord) {
+        this.passWord = passWord;
+    }
+
+    // Hàm setter cho thuộc tính trangThaiXoa
+    public void setTrangThaiXoa(boolean trangThaiXoa) {
+        this.trangThaiXoa = trangThaiXoa;
+    }
 }

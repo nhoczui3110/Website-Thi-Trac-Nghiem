@@ -34,4 +34,85 @@ public class DangKyThi {
     private String magv;
     @Column(name = "TRANGTHAIXOA")
     private boolean trangThaiXoa;
+
+    public int getIddk() {
+        return iddk;
+    }
+
+    public void setIddk(int iddk) {
+        this.iddk = iddk;
+    }
+
+    public String getMamh() {
+        return mamh;
+    }
+
+    public void setMamh(String mamh) {
+        this.mamh = mamh;
+    }
+
+    public String getMaLop() {
+        return maLop;
+    }
+
+    public void setMaLop(String maLop) {
+        this.maLop = maLop;
+    }
+
+    public int getLan() {
+        return lan;
+    }
+
+    public void setLan(int lan) {
+        this.lan = lan;
+    }
+
+    public int getSoCau() {
+        return soCau;
+    }
+
+    public void setSoCau(int soCau) {
+        this.soCau = soCau;
+    }
+
+    public Date getNgayThi() {
+        return ngayThi;
+    }
+
+    public void setNgayThi(Date ngayThi) {
+        this.ngayThi = ngayThi;
+    }
+
+    public int getThoiLuong() {
+        return thoiLuong;
+    }
+
+    public void setThoiLuong(int thoiLuong) {
+        this.thoiLuong = thoiLuong;
+    }
+
+    public String getManv() {
+        return manv;
+    }
+
+    public void setManv(String manv) {
+        this.manv = manv;
+    }
+
+    public String getMagv() {
+        return magv;
+    }
+
+    public void setMagv(String magv) {
+        this.magv = magv;
+    }
+
+    public boolean isTrangThaiXoa() {
+        return trangThaiXoa;
+    }
+
+    public void setTrangThaiXoa(boolean trangThaiXoa) {
+        this.trangThaiXoa = trangThaiXoa;
+    }
+
 }

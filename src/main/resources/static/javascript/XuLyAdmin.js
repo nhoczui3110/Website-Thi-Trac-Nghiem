@@ -1,15 +1,30 @@
-// const featureItems = document.querySelectorAll(".controller-wrapper .item");
-// const quanLiSv = featureItems[1];
-// const quanLiGv = featureItems[2];
-// const quanLiThi = featureItems[3];
+let adminInfo;
+function getAdminInfo() {
+    return new Promise((resolve) => {
+        fetch("/admin/getAdminInfo")
+            .then((response) => response.json())
+            .then((data) => {
+                adminInfo = { ...data };
+                console.log(data);
+                resolve();
+            });
+    });
+}
 
-// featureItems.forEach((item) => {
-//     item.addEventListener("click", () => {
-//         handleClearFeatureList();
-//         item.classList.add("active");
-//     });
-// });
+async function start() {
+    await getAdminInfo();
+    let classes;
+    startTable({
+        lecturer: () => {
+            getAllGiangVien(renderAllGiangVien);
+            getAllClasses(renderClassesExam);
+            addLecturerHandler();
+        },
+        monhoc: () => {
+            getQuanLiMonHoc(renderAllMonHoc);
+            // addMonHocHandler();
+        },
+    });
+}
 
-// quanLiSv.addEventListener("click", () => handleQuanLi("sv"));
-// quanLiGv.addEventListener("click", () => handleQuanLi("gv"));
-// quanLiThi.addEventListener("click", () => handleQuanLi("thi"));
+start();

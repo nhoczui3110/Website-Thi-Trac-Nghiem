@@ -20,4 +20,47 @@ public class DayHoc {
     private String mamh;
     @Column(name = "TRANGTHAIXOA")
     private boolean trangThaiXoa;
+
+    public int getIddh() {
+        return iddh;
+    }
+
+    public void setIddh(int iddh) {
+        this.iddh = iddh;
+    }
+
+    public String getMagv() {
+        return magv;
+    }
+
+    public void setMagv(String magv) {
+        this.magv = magv;
+    }
+
+    public String getMamh() {
+        return mamh;
+    }
+
+    public void setMamh(String mamh) {
+        this.mamh = mamh;
+    }
+
+    public boolean isTrangThaiXoa() {
+        return trangThaiXoa;
+    }
+
+    public void setTrangThaiXoa(boolean trangThaiXoa) {
+        this.trangThaiXoa = trangThaiXoa;
+    }
+
+    public DayHoc(int iddh, String magv, String mamh, boolean trangThaiXoa) {
+        this.iddh = iddh;
+        this.magv = magv;
+        this.mamh = mamh;
+        this.trangThaiXoa = trangThaiXoa;
+    }
+
+    public DayHoc() {
+
+    }
 }
