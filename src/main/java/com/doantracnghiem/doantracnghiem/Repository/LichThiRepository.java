@@ -9,12 +9,12 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 import com.doantracnghiem.doantracnghiem.ConnectDataObject.JDBCUtil;
-import com.doantracnghiem.doantracnghiem.Data_Transfer_Object.LichThi;
+import com.doantracnghiem.doantracnghiem.Data_Transfer_Object.InfoDTO;
 
 @Repository
 public class LichThiRepository {
-    public List<LichThi> layLichThi(String masv) {
-        List<LichThi> lichthi = new ArrayList<>();
+    public List<InfoDTO> layLichThi(String masv) {
+        List<InfoDTO> lichthi = new ArrayList<>();
         Connection c = JDBCUtil.getConnection();
         String spCall = "{call xemLichThi(?)}";
         try (CallableStatement cs = c.prepareCall(spCall)) {
@@ -22,7 +22,7 @@ public class LichThiRepository {
             ResultSet rs = cs.executeQuery();
 
             // Lấy và hiển thị dữ liệu từ ResultSet
-            LichThi tmp = null;
+            InfoDTO tmp = null;
             int IDTHI;
             String maMH;
             String tenMonHoc;
@@ -40,7 +40,7 @@ public class LichThiRepository {
                 soCau = rs.getInt("SOCAU");
                 thoiLuong = rs.getInt("THOILUONG");
                 trangThai = rs.getBoolean("TRANGTHAI");
-                tmp = new LichThi(IDTHI,maMH,tenMonHoc, ngayThi, lanThi, soCau, thoiLuong, trangThai);
+                tmp = new InfoDTO(IDTHI, maMH, lanThi, soCau, thoiLuong, trangThai, tenMonHoc, ngayThi);
                 lichthi.add(tmp);
             }
 
