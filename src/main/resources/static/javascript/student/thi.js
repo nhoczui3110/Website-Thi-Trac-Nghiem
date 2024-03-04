@@ -34,7 +34,7 @@ function countdownMinutes(minutes) {
         displaySeconds = displaySeconds < 10 ? "0" + displaySeconds : displaySeconds;
         showTime.innerHTML = "<p>Thời gian:" +minutes+ ":00 phút</p> <p>Còn lại: "+displayMinutes + ":" + displaySeconds +" phút</p>"
 
-        console.log(displayMinutes + ":" + displaySeconds);
+        // console.log(displayMinutes + ":" + displaySeconds);
     }
 
     // Cập nhật hiển thị mỗi giây
@@ -44,6 +44,8 @@ function countdownMinutes(minutes) {
         if (--seconds < 0) {
             clearInterval(timer);
             console.log("Countdown finished!"); // Thêm hành động khi hết thời gian
+            window.alert("Hết thời gian!")
+            subMit()
         }
     }, 1000);
 
