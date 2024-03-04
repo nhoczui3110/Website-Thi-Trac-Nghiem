@@ -33,6 +33,7 @@ public class SinhVien {
     private String maLop;
     @Column(name = "TRANGTHAIXOA")
     private boolean trangThaiXoa;
+
     public String getMasv() {
         return masv;
     }
