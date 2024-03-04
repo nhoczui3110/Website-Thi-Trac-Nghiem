@@ -10,3 +10,96 @@ StoredProcedureQuery query = entityManager.createStoredProcedureQuery("check_acc
         query.execute();
 
         return (Integer) query.getOutputParameterValue("result");
+
+=======sp layCauHoiDaThi=========================
+USE [WEBTHITRACNGHIEM]
+GO
+/****** Object:  StoredProcedure [dbo].[layCauHoiDaThi]    Script Date: 04/03/2024 9:19:49 CH ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROC [dbo].[layCauHoiDaThi] @idThi INT
+AS
+BEGIN
+	SELECT  CH.IDCH,HINHTHUC,NOIDUNG,IDDH,DAPANDUNG, IDTHI = @idThi,DAPANSV,THUTUCHON FROM (SELECT * FROM CTBAITHI WHERE IDTHI = @idThi) CTBT 
+		INNER JOIN CAUHOI CH ON CTBT.IDCH = CH.IDCH 
+END
+
+==========layDanhSachCauHoi========================
+USE [WEBTHITRACNGHIEM]
+GO
+/****** Object:  StoredProcedure [dbo].[layDanhSachCauHoi]    Script Date: 04/03/2024 9:20:32 CH ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROC [dbo].[layDanhSachCauHoi] @mamh NVARCHAR(10), @socau INT
+AS
+BEGIN
+	SELECT TOP(@socau) IDCH,HINHTHUC,NOIDUNG, IDDH = CH.IDDH, DAPANDUNG
+	FROM (SELECT * FROM DAYHOC WHERE MAMH = @mamh AND trangthaixoa = 0) DH
+	INNER JOIN (SELECT * FROM CAUHOI WHERE TRANGTHAIXOA = 0) CH ON DH.IDDH = CH.IDDH
+	ORDER BY NEWID()
+END
+
+============================ layThongTinKQ======================
+USE [WEBTHITRACNGHIEM]
+GO
+/****** Object:  StoredProcedure [dbo].[layThongTinKQ]    Script Date: 04/03/2024 9:20:49 CH ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROC [dbo].[layThongTinKQ] @idThi INT
+AS 
+BEGIN
+	DECLARE @DIEM FLOAT 
+	DECLARE @TENMH NVARCHAR(50),@MAMH NVARCHAR(10)
+	DECLARE @IDDK INT
+	SELECT @DIEM =DIEM, @IDDK = IDDK FROM THI WHERE @idThi = IDTHI
+	SELECT @MAMH = MAMH FROM DANGKYTHI WHERE IDDK= @IDDK
+	SELECT @TENMH = TENMH FROM MONHOC WHERE MAMH = @MAMH
+
+	SELECT TENMH = @TENMH,NGAYTHI,LAN,SOCAU,THOILUONG,DIEM =CAST(@DIEM AS FLOAT) FROM DANGKYTHI WHERE IDDK = @IDDK
+END
+
+--EXEC layThongTinKQ 3
+
+======================== xemDiemThi======================
+USE [WEBTHITRACNGHIEM]
+GO
+/****** Object:  StoredProcedure [dbo].[xemDiemThi]    Script Date: 04/03/2024 9:21:26 CH ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER proc [dbo].[xemDiemThi] @masv nvarchar(15)
+as
+	begin
+		select TENMH, LANTHI = LAN, DIEM, IDTHI from 
+			(select * from THI where MASV = @masv and DATHI = 1 and TRANGTHAIXOA = 0) thi 
+				inner join DANGKYTHI on thi.IDDK = DANGKYTHI.IDDK
+				inner join MONHOC on MONHOC.MAMH = DANGKYTHI.MAMH
+	end
+
+=========================xemLichThi===============================
+USE [WEBTHITRACNGHIEM]
+GO
+/****** Object:  StoredProcedure [dbo].[xemLichThi]    Script Date: 04/03/2024 9:21:53 CH ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER proc [dbo].[xemLichThi] @masv nvarchar(15)
+as 
+begin
+	select IDTHI,MONHOC.MAMH ,TENMH,NGAYTHI,LANTHI = LAN, SOCAU,THOILUONG,
+	CASE
+        WHEN  CAST(GETDATE() AS DATE) = NGAYTHI THEN 1
+        ELSE 0
+    END AS TRANGTHAI 
+	from (select * from thi where MASV = @masv and DATHI = 0) THI 
+		inner join (select * from DANGKYTHI where  CAST(GETDATE() AS DATE)<=NGAYTHI)DANGKYTHI on Thi.IDDK = DANGKYTHI.IDDK
+		inner join MONHOC on DANGKYTHI.MAMH = MONHOC.MAMH
+end
