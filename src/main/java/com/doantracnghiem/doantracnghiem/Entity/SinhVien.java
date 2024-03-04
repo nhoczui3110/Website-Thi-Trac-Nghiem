@@ -31,7 +31,8 @@ public class SinhVien {
     private String passWord;
     @Column(name = "MALOP")
     private String maLop;
-
+    @Column(name = "TRANGTHAIXOA")
+    private boolean trangThaiXoa;
     public String getMasv() {
         return masv;
     }
@@ -115,6 +116,14 @@ public class SinhVien {
         this.userName = userName;
         this.passWord = passWord;
         this.maLop = maLop;
+    }
+
+    public boolean isTrangThaiXoa() {
+        return trangThaiXoa;
+    }
+
+    public void setTrangThaiXoa(boolean trangThaiXoa) {
+        this.trangThaiXoa = trangThaiXoa;
     }
 
     public SinhVien() {
