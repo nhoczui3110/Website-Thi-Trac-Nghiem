@@ -87,7 +87,8 @@ public class DanhSachCauHoiRepository {
                 tmp1.sort((lc1,lc2)->(lc1.getThuTu() - lc2.getThuTu()));
                 ds.addCauHoiThi(new CauHoiThiDTO(tmp, tmp1, tmp2));
             }
-            ds.getList().sort((ds1,ds2)->(ds1.getCtBaiThi().getThuTuChon() - ds1.getCtBaiThi().getThuTuChon()));
+            ds.getList().sort((ds1,ds2)->(ds1.getCtBaiThi().getThuTuChon() - ds2.getCtBaiThi().getThuTuChon()));
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
