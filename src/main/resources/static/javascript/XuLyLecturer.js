@@ -16,8 +16,8 @@ function getProfileLecturer(callback) {
             initialProfile = { ...profile };
             console.log(initialProfile);
             if (callback) callback(profile);
-        })
-        .catch((error) => console.log("Error: ", error));
+        });
+    // .catch((error) => console.log("Error: ", error));
 }
 
 function renderLuaChon(orderSelection, noiDungLuaChon, isEdit) {
@@ -1067,6 +1067,7 @@ function showInfo() {
 }
 
 (async function start() {
+    console.log("start...");
     try {
         await getProfileLecturerPromise(); // Sử dụng await để đợi cho promise hoàn thành
         getMaLop(renderSortMaLop);

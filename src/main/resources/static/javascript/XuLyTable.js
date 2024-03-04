@@ -3,6 +3,7 @@ function startTable(objectGet) {
 
     featureItems.forEach((item) => {
         item.addEventListener("click", () => {
+            console.log("itemfeature");
             handleclearFeatureList();
             item.classList.add("active");
             clearContentWrapper();
