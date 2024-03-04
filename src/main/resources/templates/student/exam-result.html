@@ -11,15 +11,15 @@
         rel="stylesheet" />
 </head>
 
-<body th:onload="'showQuestion(0, ' + ${socau} + ');'">
+<body th:onload="'showQuestion(0);moveQuestion(' + ${thongTinKq.getSoCau()}+ ');'">
     <div class="main-container">
         <div class="question-index-bar">
-            <div th:each="i: ${#numbers.sequence(0, socau)}">
-                <a th:text="'Câu '+ ${i}" th:onclick="'showQuestion(' + ${i} + ',' + ${socau} + ');'"></a>
+            <div th:each="i: ${#numbers.sequence(1, thongTinKq.getSoCau())}">
+                <a th:text="'Câu '+ ${i}" th:onclick="'showQuestion(' + ${i-1} +');'"></a>
             </div>
         </div>
         <div class="exam-view">
-            <div class="subject-name" th:text="${tenmh}"></div>
+            <div class="subject-name" th:text="${thongTinKq.getTenMH()}"></div>
             <form th:object="${danhsach}" class="form" id = "form">
                 <div th:each="cauhoi,itemStat : *{list}" class="question-answer">
                     <div class="question" th:text="${cauhoi.getCauHoi().getNoiDung()}"></div>
@@ -27,22 +27,22 @@
                         <div class="answer" th:each="luachon,stat : ${cauhoi.getLuaChon()}">
                             <div th:if="${cauhoi.getCtBaiThi().getDapAnSv()} == ${stat.index + 1}">
                                 <div th:if="${cauhoi.getCtBaiThi().getDapAnSv()} == ${cauhoi.getCauHoi().getDapAnDung()}" style="background-color: chartreuse;">
-                                    <input type="radio" th:id = "${'radio' + stat.index}" th:value="${stat.index + 1}"  disabled checked/>
-                                    <label th:for="${'radio' + stat.index}" th:text="${luachon.getNoiDung()}"></label>
+                                    <input type="radio"  th:value="${stat.index + 1}"  disabled checked/>
+                                    <label  th:text="${luachon.getNoiDung()}"></label>
                                 </div>
                                 <div th:unless="${cauhoi.getCtBaiThi().getDapAnSv()} == ${cauhoi.getCauHoi().getDapAnDung()}" style="background-color: rgb(227, 5, 5);">
-                                    <input type="radio" th:id = "${'radio' + stat.index}" th:value="${stat.index + 1}"  disabled checked/>
-                                    <label th:for="${'radio' + stat.index}" th:text="${luachon.getNoiDung()}"></label>
+                                    <input type="radio" th:value="${stat.index + 1}"  disabled checked/>
+                                    <label  th:text="${luachon.getNoiDung()}"></label>
                                 </div>
                             </div>
                             <div th:unless="${cauhoi.getCtBaiThi().getDapAnSv()} == ${stat.index + 1}">
                                 <div th:if="${stat.index + 1} == ${cauhoi.getCauHoi().getDapAnDung()}" style="background-color: chartreuse;">
-                                    <input type="radio" th:id = "${'radio' + stat.index}" th:value="${stat.index + 1}"  disabled/>
-                                    <label th:for="${'radio' + stat.index}" th:text="${luachon.getNoiDung()}"></label>
+                                    <input type="radio"  th:value="${stat.index + 1}"  disabled/>
+                                    <label  th:text="${luachon.getNoiDung()}"></label>
                                 </div>
                                 <div th:unless="${stat.index + 1} == ${cauhoi.getCauHoi().getDapAnDung()}">
-                                    <input type="radio" th:id = "${'radio' + stat.index}" th:value="${stat.index + 1}"  disabled/>
-                                    <label th:for="${'radio' + stat.index}" th:text="${luachon.getNoiDung()}"></label>
+                                    <input type="radio" th:value="${stat.index + 1}"  disabled/>
+                                    <label th:text="${luachon.getNoiDung()}"></label>
                                 </div>
                             </div>
                         </div>
@@ -50,24 +50,24 @@
                 </div>
             </form>
             <div class="navigation">
-                <a href="#" class="previous">&laquo; Previous</a>
-                <a href="#" class="next">Next &raquo;</a>
+                <button id  = "previous" class="previous">&laquo; Previous</button>
+                <button id = "next" class="next">Next &raquo;</button>
             </div>
         </div>
         <div class="info-view">
             <div class="time-left" id = "time">
-                <p>Thời gian: 60:00 phút</p>
+                <p th:text = "${thongTinKq.getThoiLuong()}">Thời gian: 60:00 phút</p>
             </div>
             <div class="candidate-info">
                 <div>THÔNG TIN</div>
-                <div>MASV: N21DCCN067</div>
-                <div>Họ và tên: Nguyễn Bình Phương</div>
-                <div>Lần thi: 1</div>
-                <div>Ngày thi: 1/1/2024</div>
+                <div th:text = "'MASV: '+${sinhvien.getMasv()}">MASV: masv</div>
+                <div th:text = "'Họ và tên: '+${sinhvien.getTen()}">Họ và tên: Nguyễn Bình Phương</div>
+                <div th:text = "'Lần thi: '+${thongTinKq.getLanThi()}">Lần thi: 1</div>
+                <div th:text = "'Ngày thi: '+${thongTinKq.getNgayThi()}">Ngày thi: 1/1/2024</div>
             </div>
             <div class="score">
                 <div>ĐIỂM</div>
-                <div th:text = "${diem}"></div>
+                <div th:text = "${thongTinKq.getDiem()}"></div>
             </div>
             <button class="submit" id = "submitbtn" onclick="exit()"><a>QUAY LẠI</a></button>
         </div>
