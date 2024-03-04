@@ -9,21 +9,19 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.doantracnghiem.doantracnghiem.ConnectDataObject.JDBCUtil;
-import com.doantracnghiem.doantracnghiem.Data_Transfer_Object.Diem;
+import com.doantracnghiem.doantracnghiem.Data_Transfer_Object.InfoDTO;
 
 @Repository
 public class DiemRepository {
-    public List<Diem> layDanhSachDiem(String masv){
-        List<Diem> diems = new ArrayList<>();
+    public List<InfoDTO> layDanhSachDiem(String masv){
+        List<InfoDTO> diems = new ArrayList<>();
         Connection c = JDBCUtil.getConnection();
         String spCall = "{call xemDiemThi(?)}";
         try (CallableStatement cs = c.prepareCall(spCall)) {
             cs.setString(1, masv);
             ResultSet rs = cs.executeQuery();
-
             // Lấy và hiển thị dữ liệu từ ResultSet
-            Diem tmp = null;
-            int stt = 1;
+            InfoDTO tmp = null;
             String tenMH;
             int lanThi;
             float diem;
@@ -33,8 +31,7 @@ public class DiemRepository {
                 lanThi = rs.getInt("LANTHI");
                 diem = rs.getFloat("DIEM");
                 idThi = rs.getInt("IDTHI");
-                tmp = new Diem(stt, tenMH, lanThi, diem, idThi);
-                stt++;
+                tmp = new InfoDTO(idThi, lanThi, tenMH, diem);
                 diems.add(tmp);
             }
 
