@@ -152,6 +152,7 @@ td {
 .user-wrapper .list{
     position: fixed;
     top:98px;
+    right: 109px;
     border: 1px solid;
     background-color: #2FA4E7;
     list-style: none;
