@@ -160,10 +160,10 @@
                     <label for="gioitinh">Giới tính</label>
                     <!-- <input type="text" name="" id="gioitinh"> -->
                     <select id="gioitinh" name="gioitinh">
-                        <option th:if ="${sinhvien.getGioiTinh() == '0'}" selected = "selected" value="0">Nam</option>
-                        <option th:if ="${sinhvien.getGioiTinh() == '0'}" value="1">Nữ</option>
-                        <option th:if ="${sinhvien.getGioiTinh() == '1'}" value="0">Nam</option>
-                        <option th:if ="${sinhvien.getGioiTinh() == '1'}" selected = "selected"  value="1">Nữ</option>
+                        <option th:if ="${sinhvien.isGioiTinh() == flase}" selected = "selected" value="0">Nam</option>
+                        <option th:if ="${sinhvien.isGioiTinh() == flase}" value="1">Nữ</option>
+                        <option th:if ="${sinhvien.isGioiTinh() == true}" value="0">Nam</option>
+                        <option th:if ="${sinhvien.isGioiTinh() == true}" selected = "selected"  value="1">Nữ</option>
                       </select>
                     <label for="diachi">Địa chỉ</label>
                     <input type="text" name="" id="diachi" th:value = "${sinhvien.getDiaChi()}">
