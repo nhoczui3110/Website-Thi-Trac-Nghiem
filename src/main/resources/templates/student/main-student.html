@@ -106,19 +106,19 @@
                             <td th:text=${lich.getSoCau()}> </td>
                             <td th:text=${lich.getThoiLuong()}> </td>
                             <td>
-                                <div th:if="${lich.isTrangThai()}">
+                                <div th:if="${lich.getTrangThai()}">
                                     <form th:action="@{/thi}" method="post">
                                         <input name="idthi" th:value="${lich.getIDTHI()}" type="hidden">
                                         <input name="mamh" th:value="${lich.getMaMH()}" type="hidden">
                                         <input name="tenmh" th:value="${lich.getTenMH()}" type="hidden" />
                                         <input name="ngaythi" th:value="${lich.getNgayThi()}" type="hidden" />
-                                        <input name="lanthi" th:value="${lich.getSoCau()}" type="hidden" />
+                                        <input name="lanthi" th:value="${lich.getLanThi()}" type="hidden" />
                                         <input name="socau" th:value="${lich.getSoCau()}" type="hidden" />
                                         <input name="thoiluong" th:value="${lich.getThoiLuong()}" type="hidden" />
                                         <button type="submit">Thi</button>
                                     </form>
                                 </div>
-                                <button th:unless="${lich.isTrangThai()}" type="button" th:disabled="true">Thi</button>
+                                <button th:unless="${lich.getTrangThai()}" type="button" th:disabled="true">Thi</button>
                             </td>
                         </tr>
                     </tbody>
@@ -136,14 +136,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="diem: ${diemthi}">
-                            <td th:text=${diem.getStt()}> </td>
+                        <tr th:each="diem,status: ${diemthi}">
+                            <td th:text=${status.index+1}> </td>
                             <td th:text=${diem.getTenMH()}> </td>
                             <td th:text=${diem.getLanThi()}> </td>
                             <td th:text=${diem.getDiem()}> </td>
-                            <td th:text=${diem.getIdThi()}> </td>
-                            <td>
-                                <a th:href="'/xemketqua?idThi=' + ${diem.getIdThi()}">
+                            <td style="width: 10%;">
+                                <a th:href="'/xemketqua?idThi=' + ${diem.getIDTHI()}">
                                     Xem chi tiết
                                 </a>
                             </td>
@@ -153,21 +152,21 @@
             </div>
             <div class="right-child-container-bottom" id="sua-thong-tin">
                 <form action="" class="form" id="myForm" onsubmit="saveInfo(event)" >
-                    <input type="hidden" name="" id="masv" th:value = "${sv.getMasv()}">
+                    <input type="hidden" name="" id="masv" th:value = "${sinhvien.getMasv()}">
                     <label for="ho" class="label">Họ</label>
-                    <input type="text" name="" id="ho" th:value = "${sv.getHo()}">
+                    <input type="text" name="" id="ho" th:value = "${sinhvien.getHo()}">
                     <label for="ten">Tên</label>
-                    <input type="text" name="" id="ten" th:value = "${sv.getTen()}">
+                    <input type="text" name="" id="ten" th:value = "${sinhvien.getTen()}">
                     <label for="gioitinh">Giới tính</label>
                     <!-- <input type="text" name="" id="gioitinh"> -->
                     <select id="gioitinh" name="gioitinh">
-                        <option th:if ="${sv.getGioiTinh() == '0'}" selected = "selected" value="0">Nam</option>
-                        <option th:if ="${sv.getGioiTinh() == '0'}" value="1">Nữ</option>
-                        <option th:if ="${sv.getGioiTinh() == '1'}" value="0">Nam</option>
-                        <option th:if ="${sv.getGioiTinh() == '1'}" selected = "selected"  value="1">Nữ</option>
+                        <option th:if ="${sinhvien.getGioiTinh() == '0'}" selected = "selected" value="0">Nam</option>
+                        <option th:if ="${sinhvien.getGioiTinh() == '0'}" value="1">Nữ</option>
+                        <option th:if ="${sinhvien.getGioiTinh() == '1'}" value="0">Nam</option>
+                        <option th:if ="${sinhvien.getGioiTinh() == '1'}" selected = "selected"  value="1">Nữ</option>
                       </select>
                     <label for="diachi">Địa chỉ</label>
-                    <input type="text" name="" id="diachi" th:value = "${sv.getDiaChi()}">
+                    <input type="text" name="" id="diachi" th:value = "${sinhvien.getDiaChi()}">
                     <button type="submit" class="btn">Lưu</button>
                 </form>
             </div>
