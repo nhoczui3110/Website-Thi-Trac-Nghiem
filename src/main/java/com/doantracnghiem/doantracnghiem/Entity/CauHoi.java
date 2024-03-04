@@ -48,10 +48,6 @@ public class CauHoi {
         this.idch = idch;
     }
 
-    public String getHinhThuc() {
-        return hinhThuc;
-    }
-
     public void setHinhThuc(String hinhThuc) {
         this.hinhThuc = hinhThuc;
     }

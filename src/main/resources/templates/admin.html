@@ -211,6 +211,26 @@
                     </svg>
                     <span class="text">Quản lí GV</span>
                 </li>
+                <li class="item" data-name="lophoc">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="27"
+                        viewBox="0 0 24 27"
+                        fill="none"
+                        class="icon"
+                    >
+                        <path
+                            d="M15 25.3561H9C3.57 25.3561 1.25 22.8247 1.25 16.9V10.3533C1.25 4.42859 3.57 1.89722 9 1.89722H14C14.41 1.89722 14.75 2.26819 14.75 2.71555C14.75 3.16291 14.41 3.53388 14 3.53388H9C4.39 3.53388 2.75 5.32331 2.75 10.3533V16.9C2.75 21.93 4.39 23.7194 9 23.7194H15C19.61 23.7194 21.25 21.93 21.25 16.9V11.4444C21.25 10.9971 21.59 10.6261 22 10.6261C22.41 10.6261 22.75 10.9971 22.75 11.4444V16.9C22.75 22.8247 20.43 25.3561 15 25.3561Z"
+                            fill="currentColor"
+                        />
+                        <path
+                            d="M22 12.2606H18C14.58 12.2606 13.25 10.8094 13.25 7.07777V2.71333C13.25 2.386 13.43 2.08048 13.71 1.96046C13.99 1.82953 14.31 1.90591 14.53 2.13504L22.53 10.8639C22.6343 10.9786 22.7052 11.1243 22.7338 11.2828C22.7624 11.4412 22.7474 11.6054 22.6908 11.7546C22.6342 11.9038 22.5384 12.0315 22.4155 12.1215C22.2926 12.2115 22.148 12.2599 22 12.2606ZM14.75 4.68824V7.07777C14.75 9.89284 15.42 10.6239 18 10.6239H20.19L14.75 4.68824Z"
+                            fill="currentColor"
+                        />
+                    </svg>
+                    <span class="text">Quản lí lớp học</span>
+                </li>
                 <li class="item" data-name="monhoc">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -342,15 +362,15 @@
                     <!-- <table class="table">
                         <thead>
                             <tr>
-                                <th>Mã sinh viên</th>
-                                <th>Họ</th>
-                                <th>Tên</th>
-                                <th>Giới tính</th>
-                                <th>Địa chỉ</th>
-                                <th>Ngày sinh</th>
-                                <th>Username</th>
-                                <th>Password</th>
-                                <th>Action</th>
+                                <th data-name="masv">Mã sinh viên</th>
+                                <th data-name="ho">Họ</th>
+                                <th data-name="ten">Tên</th>
+                                <th data-name="gioiTinh">Giới tính</th>
+                                <th data-name="diaChi">Địa chỉ</th>
+                                <th data-name="ngaySinh">Ngày sinh</th>
+                                <th data-name="userName">Username</th>
+                                <!-- <th data-name="passWord">Password</th> -->
+                                <th data-name="action">Action</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -738,6 +758,75 @@
                     <span>Thêm sinh viên</span>
                 </a>
             </div>
+            <div class="content-wrapper" data-name="lophoc">
+                <div class="content-top">
+                    <span class="text">Students</span>
+                    <div class="sort-wrapper">
+                        <label for="sort-student">Sort</label>
+                        <select id="sort-student">
+                            <option value="">All</option>
+                            <option value="">Toay</option>
+                            <option value="">This Week</option>
+                            <option value="">This Month</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="content-bottom">
+                    <div class="find-wrapper">
+                        <label for="search">Entries</label>
+                        <div class="search-wrapper">
+                            <img
+                                src="../static/assets/img/search-icon.svg"
+                                th:src="@{/assets/img/search-icon.svg}"
+                                alt=""
+                            />
+                            <input
+                                type="text"
+                                name=""
+                                id="search-student"
+                                placeholder="Search..."
+                            />
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th data-name="maLop">Mã Lớp</th>
+                                <th data-name = "tenLop">Tên Lớp</th>
+                                <th data-name="namNhapHoc">Năm nhập học</th>
+                                <th data-name="action">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <div class="table-controller">
+                        <span class="text">Previous</span>
+                        <div class="page-number">
+                            <span class="item">1</span>
+                            <span class="item">2</span>
+                            <span class="item">3</span>
+                        </div>
+                        <span class="text"> Next</span>
+                    </div>
+                </div>
+                <a href="#!" class="btn-trans btn-register">
+                    <div class="circle">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="17"
+                            height="17"
+                            viewBox="0 0 17 17"
+                            fill="none"
+                        >
+                            <path
+                                d="M15.7857 6.67857H10.3214V1.21429C10.3214 0.543772 9.77766 0 9.10714 0H7.89286C7.22234 0 6.67857 0.543772 6.67857 1.21429V6.67857H1.21429C0.543772 6.67857 0 7.22234 0 7.89286V9.10714C0 9.77766 0.543772 10.3214 1.21429 10.3214H6.67857V15.7857C6.67857 16.4562 7.22234 17 7.89286 17H9.10714C9.77766 17 10.3214 16.4562 10.3214 15.7857V10.3214H15.7857C16.4562 10.3214 17 9.77766 17 9.10714V7.89286C17 7.22234 16.4562 6.67857 15.7857 6.67857Z"
+                                fill="currentColor"
+                            ></path>
+                        </svg>
+                    </div>
+                    <span>Thêm lớp</span>
+                </a>
+            </div>
             <div class="content-wrapper" data-name="lecturer">
                 <div class="content-top">
                     <span class="text">Lecturers</span>
@@ -986,7 +1075,7 @@
                     <div class="input-wrapper">
                         <label for="password-student">Password</label>
                         <input
-                            type="password"
+                            type="text"
                             placeholder=""
                             name="password"
                             id="password-student"
@@ -1000,7 +1089,7 @@
                             >Confirm Password</label
                         >
                         <input
-                            type="password"
+                            type="text"
                             placeholder=""
                             name="confirm-password"
                             id="confirm-password-student"
@@ -1014,10 +1103,11 @@
                             type="radio"
                             name="gender"
                             id="male-student"
+                            value="false"
                             checked
                         />
                         <label for="male" checked>Nam</label>
-                        <input type="radio" name="gender" id="female-student" />
+                        <input type="radio" name="gender" id="female-student" value="true"/>
                         <label for="female">Nữ</label>
                     </div>
                     <div class="input-wrapper">
@@ -1058,6 +1148,216 @@
                             type="date"
                             name="birthday"
                             id="birthday-student"
+                            rules="required"
+                        />
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="btn-controller">
+                        <button
+                            type="submit"
+                            href="#!"
+                            class="btn registerSubmitBtn"
+                        >
+                            Register
+                        </button>
+                        <a href="#!" class="btn-trans closeBtn">Close</a>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-container" data-name="modify-student">
+                <div class="header">Register</div>
+                <form
+                    action="/admin/addLecturer"
+                    class="register-form"
+                    method="post"
+                >
+                    <div class="form-wrapper">
+                        <div class="input-wrapper">
+                            <label for="m-lastname-student">Họ</label>
+                            <input
+                                type="text"
+                                placeholder=""
+                                name="lastname"
+                                id="m-lastname-student"
+                                autocomplete="nope"
+                            />
+                            <div class="bar"></div>
+                        </div>
+                        <span class="form-message"></span>
+                        <div class="input-wrapper">
+                            <label for="m-firstname-student">Tên</label>
+                            <input
+                                type="text"
+                                placeholder=""
+                                name="firstname"
+                                id="m-firstname-student"
+                                autocomplete="nope"
+                            />
+                            <div class="bar"></div>
+                        </div>
+                        <span class="form-message"></span>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="box-wrapper">
+                        <input
+                            type="radio"
+                            name="gender"
+                            id="m-male-student"
+                            value="false"
+                            checked
+                        />
+                        <label for="male" checked>Nam</label>
+                        <input type="radio" name="gender" id="m-female-student" value="true" />
+                        <label for="female">Nữ</label>
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="m-address">Địa chỉ</label>
+                        <input
+                            type="text"
+                            placeholder=""
+                            name="m-address"
+                            id="m-address"
+                            rules="required"
+                        />
+                        <div class="bar"></div>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="input-wrapper">
+                        <label for="m-masv">Mã Sinh Viên</label>
+                        <input
+                            type="text"
+                            placeholder=""
+                            name="address"
+                            id="m-masv"
+                            rules="required"
+                            disabled
+                        />
+                        <div class="bar"></div>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="input-wrapper">
+                        <label for="classes">Chọn lớp:</label>
+                        <select id="m-classes" name="class">
+                            <option value="D21CQCN01-N">D21CQCN01-N</option>
+                            <option value="D21CQCN02-N">D21CQCN02-N</option>
+                        </select>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="input-wrapper">
+                        <label for="birthday-student">Ngày sinh</label>
+                        <input
+                            type="date"
+                            name="birthday"
+                            id="m-birthday-student"
+                            rules="required"
+                        />
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="btn-controller">
+                        <button
+                            type="submit"
+                            href="#!"
+                            class="btn registerSubmitBtn"
+                        >
+                            Register
+                        </button>
+                        <a href="#!" class="btn-trans closeBtn">Close</a>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-container" data-name="lophoc">
+                <div class="header">Register</div>
+                <form action="/login" class="register-form" method="post">
+                    <div class="form-wrapper">
+                        <div class="input-wrapper">
+                            <label for="classId">Mã lớp</label>
+                            <input
+                                type="text"
+                                placeholder=""
+                                name="class"
+                                id="classId"
+                                autocomplete="nope"
+                                rules="required"
+                            />
+                            <div class="bar"></div>
+                        </div>
+                        <span class="form-message"></span>
+                        <div class="input-wrapper">
+                            <label for="classname">Tên Lớp</label>
+                            <input
+                                type="text"
+                                placeholder=""
+                                name="classname"
+                                id="classname"
+                                autocomplete="nope"
+                                rules="required"
+                            />
+                            <div class="bar"></div>
+                        </div>
+                        <span class="form-message"></span>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="input-wrapper">
+                        <label for="year-admission">Năm nhập học</label>
+                        <input
+                            type="date"
+                            name="year-admission"
+                            id="year-admission"
+                            rules="required"
+                        />
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="btn-controller">
+                        <button
+                            type="submit"
+                            href="#!"
+                            class="btn registerSubmitBtn"
+                        >
+                            Register
+                        </button>
+                        <a href="#!" class="btn-trans closeBtn">Close</a>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-container" data-name="m-lophoc">
+                <div class="header">Register</div>
+                <form action="/login" class="register-form" method="post">
+                    <div class="form-wrapper">
+                        <div class="input-wrapper">
+                            <label for="classId">Mã lớp</label>
+                            <input
+                                type="text"
+                                placeholder=""
+                                name="class"
+                                id="classId"
+                                autocomplete="nope"
+                                rules="required"
+                                disabled
+                            />
+                            <div class="bar"></div>
+                        </div>
+                        <span class="form-message"></span>
+                        <div class="input-wrapper">
+                            <label for="classname">Tên Lớp</label>
+                            <input
+                                type="text"
+                                placeholder=""
+                                name="classname"
+                                id="classname"
+                                autocomplete="nope"
+                                rules="required"
+                            />
+                            <div class="bar"></div>
+                        </div>
+                        <span class="form-message"></span>
+                    </div>
+                    <span class="form-message"></span>
+                    <div class="input-wrapper">
+                        <label for="year-admission">Năm nhập học</label>
+                        <input
+                            type="date"
+                            name="year-admission"
+                            id="year-admission"
                             rules="required"
                         />
                     </div>
@@ -1385,6 +1685,14 @@
         <script
             th:src="@{/javascript/QuanLyMonHoc.js}"
             src="../static/javascript/QuanLyMonHoc.js"
+        ></script>
+        <script
+            th:src="@{/javascript/QuanlySinhVien.js}"
+            src="../static/javascript/QuanlySinhVien.js"
+        ></script>
+        <script
+            th:src="@{/javascript/QuanLyLopHoc.js}"
+            src="../static/javascript/QuanLyLopHoc.js"
         ></script>
         <script
             th:src="@{/javascript/XuLyAdmin.js}"

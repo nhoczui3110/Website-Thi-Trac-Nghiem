@@ -1,6 +1,5 @@
 package com.doantracnghiem.doantracnghiem.Service;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -69,7 +68,7 @@ public class QuanLiGiangVienService {
         dangKyThi.setTrangThaiXoa(false);
         dangKyThi.setMamh((String) examInfo.get("maMh"));
         try {
-            Date date = Date.valueOf(LocalDate.parse((String) examInfo.get("ngayThi"), formatter));
+            LocalDate date = LocalDate.parse((String) examInfo.get("ngayThi"), formatter);
             dangKyThi.setNgayThi(date);
         } catch (DateTimeParseException e) {
             System.out.println("Không thể chuyển đổi chuỗi thành LocalDate: " + e.getMessage());

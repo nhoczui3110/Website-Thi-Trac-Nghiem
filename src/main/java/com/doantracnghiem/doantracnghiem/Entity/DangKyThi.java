@@ -75,11 +75,19 @@ public class DangKyThi {
         this.soCau = soCau;
     }
 
+<<<<<<< HEAD
     public Date getNgayThi() {
         return ngayThi;
     }
 
     public void setNgayThi(Date ngayThi) {
+=======
+    public LocalDate getNgayThi() {
+        return ngayThi;
+    }
+
+    public void setNgayThi(LocalDate ngayThi) {
+>>>>>>> quang
         this.ngayThi = ngayThi;
     }
 
