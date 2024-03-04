@@ -1,13 +1,15 @@
 package com.doantracnghiem.doantracnghiem.Service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.doantracnghiem.doantracnghiem.Data_Transfer_Object.CauHoiThiDTO;
 import com.doantracnghiem.doantracnghiem.Data_Transfer_Object.DanhSachCauHoiThiDTO;
-import com.doantracnghiem.doantracnghiem.Data_Transfer_Object.KetQuaThiDTO;
+import com.doantracnghiem.doantracnghiem.Data_Transfer_Object.InfoDTO;
 import com.doantracnghiem.doantracnghiem.Entity.CTBaiThi;
 import com.doantracnghiem.doantracnghiem.Entity.CauHoi;
 import com.doantracnghiem.doantracnghiem.Entity.LuaChon;
@@ -69,8 +71,5 @@ public class CauHoiThiService {
             danhSachCauHoiThiDTO.getList().get(i).getCauHoi().setDapAnDung(dap_an.get(i));
         }
     }
-    public KetQuaThiDTO layKetQua(int idThi){
-        KetQuaThiDTO kq = ctBaiThiRepository.layThongTinKQ(idThi);
-        return kq;
-    }
+    
 }
