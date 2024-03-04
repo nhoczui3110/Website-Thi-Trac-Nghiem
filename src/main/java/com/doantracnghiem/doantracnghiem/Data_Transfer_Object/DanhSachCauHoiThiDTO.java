@@ -27,6 +27,8 @@ public class DanhSachCauHoiThiDTO {
 			System.out.println(tmp);
 		}
 	}
-
+	public int getIdThi(){
+		return this.list.get(0).getCtBaiThi().getIdThi();
+	}
 
 }
