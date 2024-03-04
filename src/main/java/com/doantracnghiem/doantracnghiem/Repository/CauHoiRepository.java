@@ -9,11 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import com.doantracnghiem.doantracnghiem.Entity.CauHoi;
 import java.util.*;
-<<<<<<< HEAD
 
 
-=======
->>>>>>> quang
 
 @Repository
 public interface CauHoiRepository extends JpaRepository<CauHoi, Integer> {

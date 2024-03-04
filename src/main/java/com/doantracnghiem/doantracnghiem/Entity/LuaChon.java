@@ -18,13 +18,6 @@ public class LuaChon {
 
     @Column(name = "NOIDUNG")
     private String noiDung;
-<<<<<<< HEAD
-=======
-
-    @Column(name = "THUTU")
-    private int thuTu;
-
->>>>>>> quang
     @Column(name = "IDCH")
     private int idch;
 
@@ -34,7 +27,6 @@ public class LuaChon {
     public LuaChon() {
     }
 
-<<<<<<< HEAD
     public LuaChon(int idlc, String noiDung, int thuTu, int idch, boolean trangThaiXoa) {
         this.idlc = idlc;
         this.noiDung = noiDung;
@@ -46,8 +38,6 @@ public class LuaChon {
     @Column(name = "THUTU")
     private int thuTu;
 
-=======
->>>>>>> quang
     public int getIdlc() {
         return idlc;
     }
