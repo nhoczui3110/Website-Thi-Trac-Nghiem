@@ -37,8 +37,8 @@ public class QuanSinhVienController {
         return quanLySinhVienService.deleteStudent(masv);
     }
     //sinh viên cập nhật thông tin
-    @PatchMapping("/student/{masv}")
-    public int updateInfo(@PathVariable(name = "masv") String masv, @RequestBody Map<String,Object> studentInfo){
+    @PatchMapping("/student")
+    public int updateInfo(@RequestBody Map<String,Object> studentInfo){
         System.out.println(studentInfo.toString());
         try{
             quanLySinhVienService.updateInfo(studentInfo);

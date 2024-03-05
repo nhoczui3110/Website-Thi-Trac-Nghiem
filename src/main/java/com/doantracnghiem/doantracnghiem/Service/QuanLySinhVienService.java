@@ -32,7 +32,7 @@ public class QuanLySinhVienService {
                                       (String)studentInfo.get("ten"), 
                                       Boolean.parseBoolean((String)studentInfo.get("gioiTinh")),
                                       (String)studentInfo.get("diaChi"),
-                                      (Date)studentInfo.get("ngaySinh"),
+                                      Date.valueOf(String.valueOf(studentInfo.get("ngaySinh"))),
                                       (String)studentInfo.get("passWord"));
     }
     public void modifyInfo(Map<String,Object> studentInfo){

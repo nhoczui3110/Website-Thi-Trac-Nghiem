@@ -17,7 +17,6 @@ function setView() {
     sua_thong_tin.style.display = "none";
 }
 function iconClick(event) {
-    window.alert('je')
     const li = document.getElementById("profile-logout");
     let status = li.style.display;
     if (status === "none" || status === "") {
@@ -33,25 +32,104 @@ function bodyClick() {
     li.style.display = "none";
 }
 
+function setCheckInput() {
+    const errorList = document.querySelectorAll('.error')
+    const ho = document.getElementById('ho')
+    const ten = document.getElementById('ten')
+    const diaChi = document.getElementById('diachi')
+    const ngaySinh = document.getElementById('ngaysinh')
+    const passWord = document.getElementById('password')
+    const confirmPassword = document.getElementById('confirm-password')
+    ho.addEventListener('input', function () {
+        if (ho.value === '') {
+            errorList[0].innerHTML = "Vui lòng nhập thông tin"
+            permitBtn(false)
+        }
+        else {
+            errorList[0].innerHTML = ''
+            permitBtn(null)
+        }
+    })
+    ten.addEventListener('input', function () {
+        if (ten.value === '') {errorList[1].innerHTML = "Vui lòng nhập thông tin";permitBtn(false)}
+        else {errorList[1].innerHTML = '';permitBtn(null)}
+    })
+    diaChi.addEventListener('input', function () {
+        if (diaChi.value === '') {errorList[3].innerHTML = "Vui lòng nhập thông tin";permitBtn(false)}
+        else {errorList[3].innerHTML = '';permitBtn(null)}
+    })
+    ngaySinh.addEventListener('input', function () {
+        if (ngaySinh.value === '') {errorList[4].innerHTML = "Vui lòng nhập thông tin";permitBtn(false)}
+        else {errorList[4].innerHTML = '';permitBtn(null)}
+    })
+    passWord.addEventListener('input', function () {
+        if (passWord.value === '') {errorList[5].innerHTML = "Vui lòng nhập thông tin";permitBtn(false)}
+        else {errorList[5].innerHTML = '';permitBtn(null)}
+    })
+    confirmPassword.addEventListener('input', function () {
+        if (confirmPassword.value === '') errorList[6].innerHTML = "Vui lòng nhập thông tin"
+        else if (confirmPassword.value != passWord.value) errorList[6].innerHTML = "Mật khẩu không khớp"
+        else errorList[6].innerHTML = ''
+        permitBtn()
+    })
+}
+setCheckInput()
+
+function permitBtn(checkAllow) {
+    const btn = document.getElementById("infoBtn")
+    if (checkAllow != null && checkAllow == false) {
+        btn.disabled = true;
+        return
+    }
+    var formData = {
+        ho: document.getElementById('ho').value,
+        ten: document.getElementById('ten').value,
+        gioiTinh: document.getElementById('gioitinh').value,
+        diaChi: document.getElementById('diachi').value,
+        ngaySinh: document.getElementById('ngaysinh').value,
+        passWord: document.getElementById('password').value,
+        confirmPassword: document.getElementById('confirm-password').value
+    }
+    for (var key in formData) {
+        console.log(key)
+        if (formData.hasOwnProperty(key) && formData[key].trim() === '') {
+            btn.disabled = true
+            return; // Nếu có trường trống thì dừng vòng lặp
+        }
+    }
+    console.log(formData['passWord'])
+    console.log(formData['confirmPassword'])
+    if (formData['passWord'] != formData['confirmPassword']) {
+        btn.disabled = true;
+        return
+    }
+    btn.disabled = false;
+}
 function saveInfo(event) {
     event.preventDefault();
-    var formData = {
+    var dataInfo = {
         masv: document.getElementById("masv").value,
         ho: document.getElementById('ho').value,
         ten: document.getElementById('ten').value,
         gioiTinh: document.getElementById('gioitinh').value,
-        diaChi: document.getElementById('diachi').value
+        diaChi: document.getElementById('diachi').value,
+        ngaySinh: document.getElementById('ngaysinh').value,
+        passWord: document.getElementById('password').value
     }
-    window.alert('abc')
-    console.log(formData)
-    var url = 'http://localhost:8080/api/updateInfo'
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-    })
+    console.log(dataInfo)
+
+    console.log(dataInfo)
+    fetch("/admin/student",
+            {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(dataInfo)
+            }).then(() => {
+                
+            }
+            ).catch((error) => { window.alert(error) })
 
 }
 
@@ -66,19 +144,19 @@ setView()
 main_container.addEventListener("click", bodyClick);
 
 // function showViewXemLichThi(){
-    //     const xem_lich_thi = document.getElementById("xem-lich-thi");
-    //     const xem_diem = document.getElementById("xem-diem");
-    //     var status = xem_lich_thi.style.display;
-    //     if (status === "none"){
-        //         xem_lich_thi.style.display = "block";
-        //         xem_diem.style.display = "none";
-        //     }
+//     const xem_lich_thi = document.getElementById("xem-lich-thi");
+//     const xem_diem = document.getElementById("xem-diem");
+//     var status = xem_lich_thi.style.display;
+//     if (status === "none"){
+//         xem_lich_thi.style.display = "block";
+//         xem_diem.style.display = "none";
+//     }
 // }
 // function showViewXemDiem(){
-    //     const xem_lich_thi = document.getElementById("xem-lich-thi");
-    //     const xem_diem = document.getElementById("xem-diem");
-    //     var status = xem_diem.style.display;
-    //     if (status === "none"){
+//     const xem_lich_thi = document.getElementById("xem-lich-thi");
+//     const xem_diem = document.getElementById("xem-diem");
+//     var status = xem_diem.style.display;
+//     if (status === "none"){
 //         xem_lich_thi.style.display = "none";
 //         xem_diem.style.display = "block";
 //     }
