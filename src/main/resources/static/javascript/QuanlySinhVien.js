@@ -9,6 +9,14 @@ function getALLStudent(callback) {
             }
         });
 }
+function searchStudents(keyword){
+    fetch('/admin/student/search?keyword=' + keyword)
+        .then((response)=>response.json())
+        .then((listStudent)=>{
+            console.log(listStudent)
+            renderAllStudent(listStudent)
+        })
+}
 function renderAllStudent(listStudent) {
     const content = document.querySelector(
         ".content-wrapper[data-name='student']"
@@ -18,16 +26,13 @@ function renderAllStudent(listStudent) {
     contentBottom.style.minHeight = null;
     contentBottom.style.height = "600px";
 
-    // Xu ly table
-    // const searchLecturerEl = content.querySelector("#search-lecturer");
-    // if (searchLecturerEl) {
-    //     searchLecturerEl.oninput = () => {
-    //         const keyword =
-    //             searchLecturerEl.value === "" ? " " : searchLecturerEl.value;
-    //         const debounceSeachGiangVien = debounce(searchGiangVien, 300);
-    //         debounceSeachGiangVien(keyword);
-    //     };
-    // }
+    const searchStudent = content.querySelector("#search-student");
+    const debounceSeachStudent = debounce(searchStudents, 1500);
+    if (searchStudent) {
+        searchStudent.oninput = () => {
+            debounceSeachStudent(searchStudent.value);
+        };
+    }
     const tbody = contentBottom.querySelector("tbody");
     tbody.innerHTML = "";
     const ths = contentBottom.querySelectorAll("th");
@@ -81,23 +86,22 @@ function renderAllStudent(listStudent) {
 }
 
 function editStudent(student) {
-    renderClassOption("m-classes")
     const modalContainer = document.querySelector(
-        ".modal-container[data-name='modify-student']"
+    ".modal-container[data-name='modify-student']"
     );
     const inputMaSV =
-        modalContainer.querySelector("input#m-masv");
+    modalContainer.querySelector("input#m-masv");
     inputMaSV.value = student["masv"];
     const inputHo =
-        modalContainer.querySelector("input#m-lastname-student");
+    modalContainer.querySelector("input#m-lastname-student");
     inputHo.value = student["ho"];
     const inputTen =
-        modalContainer.querySelector("input#m-firstname-student");
+    modalContainer.querySelector("input#m-firstname-student");
     inputTen.value = student["ten"];
-
+    
     const inputDiaChi = modalContainer.querySelector("input#m-address")
     inputDiaChi.value = student["diaChi"]
-
+    
     const inputNgaySinh = modalContainer.querySelector("input#m-birthday-student")
     inputNgaySinh.value = student["ngaySinh"]
     const inputGioiTinhNam = modalContainer.querySelector("input#m-male-student")
@@ -113,8 +117,9 @@ function editStudent(student) {
         event.preventDefault();
     };
     openModal(modalContainer);
+    
     const submitBtn =
-        modalContainer.querySelector(".registerSubmitBtn");
+    modalContainer.querySelector(".registerSubmitBtn");
     submitBtn.onclick = function (event) {
         let gt;
         if (inputGioiTinhNam.checked === true) gt = false;
@@ -144,7 +149,8 @@ function editStudent(student) {
                 closeModal(modalContainer)
             }
             ).catch((error) => { window.alert(error) })
-    };
+        };
+        switchClass(1)
 }
 
 function deleteStudent(student) {
@@ -177,10 +183,10 @@ function deleteStudent(student) {
 }
 
 function addNewStudent() {
-    renderClassOption("classes")
+    
     const modalContainer = document.querySelector(
         ".modal-container[data-name='student']"
-    );
+        );
     const inputMaSV = modalContainer.querySelector("input#masv")
     const inputHo = modalContainer.querySelector("input#lastname-student")
     const inputTen = modalContainer.querySelector("input#firstname-student")
@@ -191,7 +197,10 @@ function addNewStudent() {
     const inputDiaChi = modalContainer.querySelector("input#address")
     const inputMaLop = modalContainer.querySelector("#classes")
     const btnSubmit = modalContainer.querySelector(".registerSubmitBtn")
-    btnSubmit.onclick = function () {
+        
+    const form = modalContainer.querySelector("form");
+    btnSubmit.onclick = function (event) {
+        event.preventDefault();
         gioiTinh = inputGioiTinh.querySelector('input[name = "gender"]:checked').value
         dataInfo = {
             masv: inputMaSV.value,
@@ -218,17 +227,18 @@ function addNewStudent() {
                         title: "Thành công!",
                         message: message,
                     });
+                    closeModal(modalContainer)
                 }
                 if(message === "User name đã tồn tại trong cơ sở dữ liệu"){
                     toast({
-                        type: "success",
+                        type: "error",
                         title: "Thất bại!",
                         message: message,
                     });
                 }
                 if(message === "Mã sinh viên đã tồn tại trong cơ sở dữ liệu"){
                     toast({
-                        type: "success",
+                        type: "error",
                         title: "Thất bại!",
                         message: message,
                     });
@@ -238,19 +248,63 @@ function addNewStudent() {
                 console.error("Error during fetch:", error);
             })
 
-        closeModal(modalContainer)
     }
 }
 
+function getStudentByClass(callback,maLop) {
+    fetch("/admin/studentbyclass/"+maLop, { method: "GET" })
+        .then((response) => response.json())
+        .then((listStudent) => {
+            if (callback) {
+                console.log(listStudent);
+                callback(listStudent);
+            }
+        });
+}
 function renderClassOption(id){
      fetch("/admin/class")
     .then( (response)=>response.json())
     .then((data)=>{
+        
         const classes = document.getElementById(id)
         console.log(data)
+        let maLop = data[0].maLop;
         const template = data.map((classItem)=>{
                 return `<option value="${classItem.maLop}">${classItem.tenLop}</option>`;
         })
         classes.innerHTML = template.join();
+        if(maLop !=null && id === 'cmb-class'){
+            getStudentByClass(renderAllStudent,maLop)
+        }
     })
 }
+
+
+function checkClassSelected(){
+    const classes = document.getElementById('cmb-class')
+    classes.addEventListener('change',()=>{
+        let maLop = classes.options[classes.selectedIndex].value
+        if(maLop !=null){
+            getStudentByClass(renderAllStudent,maLop)
+        }
+    })
+}
+checkClassSelected()
+
+const switchClass = debounce((option = 0)=>{
+    const classes = document.getElementById('cmb-class')
+    if(option === 0){
+        const studenClass = document.getElementById('classes')
+        studenClass.selectedIndex = classes.selectedIndex
+    }
+    else{
+        const studenClass1 = document.getElementById('m-classes')
+        studenClass1.selectedIndex = classes.selectedIndex
+    }
+},100)
+renderClassOption("m-classes")
+renderClassOption("classes")
+const tmp = document.getElementById('addStudent')
+tmp.addEventListener('click',()=>{
+    switchClass(0)
+})
