@@ -368,8 +368,8 @@
                                 <th data-name="gioiTinh">Giới tính</th>
                                 <th data-name="diaChi">Địa chỉ</th>
                                 <th data-name="ngaySinh">Ngày sinh</th>
-                                <th data-name="userName">Username</th>
-                                <!-- <th data-name="passWord">Password</th> -->
+                                <th data-name="userName">Userna     me</th> -->
+                    <!-- <th data-name="passWord">Password</th>
                                 <th data-name="action">Action</th>
                             </tr>
                         </thead>
@@ -792,7 +792,7 @@
                         <thead>
                             <tr>
                                 <th data-name="maLop">Mã Lớp</th>
-                                <th data-name = "tenLop">Tên Lớp</th>
+                                <th data-name="tenLop">Tên Lớp</th>
                                 <th data-name="namNhapHoc">Năm nhập học</th>
                                 <th data-name="action">Action</th>
                             </tr>
@@ -1107,7 +1107,12 @@
                             checked
                         />
                         <label for="male" checked>Nam</label>
-                        <input type="radio" name="gender" id="female-student" value="true"/>
+                        <input
+                            type="radio"
+                            name="gender"
+                            id="female-student"
+                            value="true"
+                        />
                         <label for="female">Nữ</label>
                     </div>
                     <div class="input-wrapper">
@@ -1207,7 +1212,12 @@
                             checked
                         />
                         <label for="male" checked>Nam</label>
-                        <input type="radio" name="gender" id="m-female-student" value="true" />
+                        <input
+                            type="radio"
+                            name="gender"
+                            id="m-female-student"
+                            value="true"
+                        />
                         <label for="female">Nữ</label>
                     </div>
                     <div class="input-wrapper">
@@ -1553,8 +1563,10 @@
                             placeholder=""
                             name="socau"
                             id="socau"
+                            min="0"
                             autocomplete="nope"
                             required
+                            oninput="validity.valid||(value='');"
                         />
                         <div class="bar"></div>
                     </div>
@@ -1577,6 +1589,7 @@
                             name="thoigianthi"
                             min="0"
                             required
+                            oninput="validity.valid||(value='');"
                         />
                     </div>
                     <span class="form-message"></span>

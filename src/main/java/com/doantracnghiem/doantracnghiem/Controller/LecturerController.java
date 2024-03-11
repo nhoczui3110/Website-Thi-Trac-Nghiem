@@ -155,6 +155,11 @@ public class LecturerController {
         return xemDiemService.getMaLop(maGv);
     }
 
+    @GetMapping("/canEditOrDeleteCauHoi/{idch}")
+    public boolean canEditOrDeleteCauHoi(@PathVariable("idch") int idch) {
+        return questionService.canEditOrDelete(idch);
+    }
+
     // @GetMapping("/getQuestionBySubject/{maGv}")
     // public List<Object[]> getQuestionBySubject(@PathVariable("maGv") String maGv)
 }

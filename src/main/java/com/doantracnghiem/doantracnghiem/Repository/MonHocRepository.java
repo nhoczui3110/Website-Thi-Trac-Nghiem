@@ -15,4 +15,5 @@ public interface MonHocRepository extends JpaRepository<MonHoc, String> {
 
     @Query(value = "exec searchMonHoc @keyword = :keyword", nativeQuery = true)
     public List<MonHoc> searchMonHoc(@Param("keyword") String keyword);
+
 }

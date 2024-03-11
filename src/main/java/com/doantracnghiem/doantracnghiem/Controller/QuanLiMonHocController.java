@@ -50,4 +50,9 @@ public class QuanLiMonHocController {
         return quanLyMonHocService.updateMonHoc(monHoc);
     }
 
+    @GetMapping("/canDeleteMonHoc/{mamh}")
+    public boolean canEditOrDelete(@PathVariable("mamh") String mamh) {
+        return quanLyMonHocService.canDeleteMonHoc(mamh);
+    }
+
 }

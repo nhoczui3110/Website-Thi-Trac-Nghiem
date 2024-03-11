@@ -2,6 +2,7 @@ package com.doantracnghiem.doantracnghiem.Repository;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,6 +13,7 @@ import java.util.*;
 
 @Repository
 public interface CauHoiRepository extends JpaRepository<CauHoi, Integer> {
+
         @Query(value = "EXEC findCauHoiByMaGvAndMaMh @magv = :magv, @mamh = :mamh, @pageNumber = :pageNumber, @pageSize = :pageSize", nativeQuery = true)
         List<Object[]> findCauHoiByMaGvAndMaMh(@Param("magv") String magv, @Param("mamh") String mamh,
                         @Param("pageNumber") int pageNumber, @Param("pageSize") int pageSize);
@@ -32,4 +34,6 @@ public interface CauHoiRepository extends JpaRepository<CauHoi, Integer> {
 
         @Query(value = "EXEC countCauHoiByMonHoc @mamh = :mamh", nativeQuery = true)
         int countCauHoiByMonHoc(@Param("mamh") String mamh);
+
+        long countByIddhAndTrangThaiXoa(int iddh, boolean trangThaiXoa);
 }

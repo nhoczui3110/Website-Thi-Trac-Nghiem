@@ -118,6 +118,18 @@ function throttle(func, delay) {
         }
     };
 }
+
+function checkGiangVien(magv) {
+    return new Promise((resolve) => {
+        fetch(`admin/canDeleteGiangVien/${magv}`)
+            .then((response) => response.json())
+            .then((result) => {
+                console.log(result);
+                resolve(result);
+            });
+    });
+}
+
 function renderAllGiangVien(listLecturer) {
     const content = document.querySelector(
         ".content-wrapper[data-name='lecturer']"
@@ -231,7 +243,17 @@ function renderAllGiangVien(listLecturer) {
                             });
                     };
                 });
-                trashBtn.addEventListener("click", () => {
+                trashBtn.onclick = async () => {
+                    check = await checkGiangVien(lecturer["maGv"]);
+                    console.log(check);
+                    if (!check) {
+                        toast({
+                            type: "error",
+                            title: "Không thể xóa giảng viên!",
+                            message: `Giảng viên đang giảng dạy hoặc đã cho đăng ký thi không thể xóa`,
+                        });
+                        return;
+                    }
                     popup(
                         {
                             type: "remove",
@@ -244,7 +266,7 @@ function renderAllGiangVien(listLecturer) {
                         }
                     );
                     console.log(lecturer);
-                });
+                };
                 editBtn.addEventListener("click", () => {
                     updateLecturerHandler(lecturer);
                 });
@@ -302,7 +324,6 @@ async function addLecturerHandler() {
             let countSelectSubject = 1;
             const addBtn = formEl.querySelector(".add-btn");
             addBtn.onclick = () => {
-                console.log(subjects);
                 renderMonHocGiangVien(countSelectSubject, subjects);
                 countSelectSubject++;
             };
@@ -450,8 +471,8 @@ function updateLecturerHandler(lecturer) {
     );
     const formEl = modalContainer.querySelector("form");
     const submitBtn = modalContainer.querySelector(".registerSubmitBtn");
-    const throttleUpdateLecturer = throttle(checkSubmitLecturer, 1000);
     submitBtn.onclick = function (event) {
+        const throttleUpdateLecturer = throttle(checkSubmitLecturer, 1000);
         event.preventDefault();
         throttleUpdateLecturer(formEl, () => {
             btnUpdateLecturer(getInfoLecturerFromForm(formEl, true));
@@ -462,7 +483,6 @@ function updateLecturerHandler(lecturer) {
     });
     openModal(modalContainer);
     renderInfoLecturerForUpdate(lecturer);
-    lecturer;
 }
 
 function renderInfoLecturerForUpdate(lecturer) {
@@ -504,16 +524,33 @@ async function promiseRenderMonHocGiangVien(lecturer) {
         });
         let count = 1;
         subjects.forEach((subject) => {
-            console.log(subject[0]);
             renderMonHocGiangVien(count, allSubject, {
                 value: subject[0],
                 iddh: subject[2],
+                magv: lecturer["maGv"],
             }); // Sử dụng dữ liệu để render
             count++;
         });
+        const modalContainer = document.querySelector(
+            ".modal-container[data-name='lecturer']"
+        );
+        const formEl = modalContainer.querySelector("form");
+        const addBtn = formEl.querySelector(".add-btn");
+        addBtn.onclick = () => {
+            count++;
+            renderMonHocGiangVien(count, allSubject);
+        };
     } catch (error) {
         console.error("Error rendering subjects:", error);
     }
+}
+
+function checkCanDeleteMonHocGiangVien(iddh, mamh, magv) {
+    return new Promise((resolve) => {
+        fetch(`/admin/canDeleteMonHocGiangVien/${iddh}/${magv}/${mamh}`)
+            .then((response) => response.json())
+            .then((result) => resolve(result));
+    });
 }
 
 function renderMonHocGiangVien(countSelectSubject, subjects, update) {
@@ -531,6 +568,7 @@ function renderMonHocGiangVien(countSelectSubject, subjects, update) {
     label.setAttribute("for", `monhoc${countSelectSubject}`);
     const select = document.createElement("select");
     select.setAttribute("id", `monhoc${countSelectSubject}`);
+
     // select.setAttribute()
     const templateOption = subjects.map((subject) => {
         return `<option value="${subject["mamh"]}">${subject["tenmh"]}</option>`;
@@ -547,9 +585,24 @@ function renderMonHocGiangVien(countSelectSubject, subjects, update) {
     addBtn.insertAdjacentElement("beforebegin", inputWrapper);
     addBtn.insertAdjacentElement("beforebegin", formMessage);
     if (update) {
+        select.disabled = true;
         select.value = update["value"];
         select.setAttribute("data-id", update["iddh"]);
-        removeBtn.onclick = function () {
+        removeBtn.onclick = async function () {
+            const check = await checkCanDeleteMonHocGiangVien(
+                update["iddh"],
+                update["value"],
+                update["magv"]
+            );
+            if (!check) {
+                toast({
+                    type: "error",
+                    title: "Lỗi xóa môn học",
+                    message:
+                        "Không thể xóa môn học đã đăng ký thi hoặc đã thêm câu hỏi",
+                });
+                return;
+            }
             popup(
                 {
                     type: "remove",

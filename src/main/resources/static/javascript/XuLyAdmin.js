@@ -24,18 +24,15 @@ async function start() {
             getQuanLiMonHoc(renderAllMonHoc);
             // addMonHocHandler();
         },
-<<<<<<< HEAD
-=======
-        student: ()=>{
+        student: () => {
             getALLStudent(renderAllStudent);
-           
+
             addNewStudent();
         },
-        lophoc:()=>{
+        lophoc: () => {
             getALLClass(renderAllClass);
             addNewClass();
-        }
->>>>>>> quang
+        },
     });
 }
 

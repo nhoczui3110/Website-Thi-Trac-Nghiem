@@ -319,7 +319,7 @@ a {
     row-gap: 40px;
 }
 
-.controller-wrapper .feature-list .item {
+.feature-list .item {
     display: flex;
     align-items: center;
     column-gap: 16px;

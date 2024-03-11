@@ -16,4 +16,10 @@ public interface DangKyThiRepository extends JpaRepository<DangKyThi, Integer> {
     List<String> findMaLopByMaGv(String maGv);
 
     List<DangKyThi> findByMaLopAndMamh(String maLop, String mamh);
+
+    long countByMamhAndTrangThaiXoa(String mamh, boolean trangThaiXoa);
+
+    long countByMagvAndTrangThaiXoa(String magv, boolean trangThaiXoa);
+
+    long countByMamhAndMagvAndTrangThaiXoa(String mamh, String magv, boolean trangThaiXoa);
 }

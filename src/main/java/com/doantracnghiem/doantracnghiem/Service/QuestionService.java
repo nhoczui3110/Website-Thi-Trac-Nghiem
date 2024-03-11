@@ -8,8 +8,10 @@ import org.apache.commons.lang3.ObjectUtils.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.doantracnghiem.doantracnghiem.Entity.CTBaiThi;
 import com.doantracnghiem.doantracnghiem.Entity.CauHoi;
 import com.doantracnghiem.doantracnghiem.Entity.LuaChon;
+import com.doantracnghiem.doantracnghiem.Repository.CTBaiThiRepository;
 import com.doantracnghiem.doantracnghiem.Repository.CauHoiRepository;
 import com.doantracnghiem.doantracnghiem.Repository.DayHocRepository;
 import com.doantracnghiem.doantracnghiem.Repository.LuaChonRepository;
@@ -24,6 +26,9 @@ public class QuestionService {
 
     @Autowired
     private LuaChonRepository luaChonRepository;
+
+    @Autowired
+    private CTBaiThiRepository ctBaiThiRepository;
 
     public void addQuestion(String magv, Map<String, Object> question) {
         Integer iddh = dayHocRepository.findIDDHByMaMhAndMaGv((String) question.get("monHoc"), magv);
@@ -105,5 +110,11 @@ public class QuestionService {
         luaChon.setThuTu((int) selection.get("thuTuLuaChon"));
         luaChon.setTrangThaiXoa(false);
         luaChonRepository.save(luaChon);
+    }
+
+    public boolean canEditOrDelete(int idch) {
+        long count = ctBaiThiRepository.countByIdchAndTrangThaiXoa(idch, false);
+        System.out.println("count " + count);
+        return count == 0;
     }
 }
