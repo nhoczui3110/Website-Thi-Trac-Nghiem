@@ -23,6 +23,9 @@ public class QuanLyLopHocService {
     public Lop getClassById(String malop){
         return lopRepository.getClassById(malop);
     }
+    public List<Lop> getAllClassByKeyword(String keyword){
+        return lopRepository.getAllClassByKeyword(keyword);
+    }
     public ResponseEntity<String> updateInfo(Map<String,Object> lop){
         String maLop,tenLop;
         Date namNhapHoc;
