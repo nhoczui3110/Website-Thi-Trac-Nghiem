@@ -21,7 +21,8 @@ public interface LopRepository extends JpaRepository<Lop, String> {
 
     @Query(value = "SELECT * FROM Lop WHERE maLop =:malop and trangThaiXoa = 'false'", nativeQuery = true)
     public Lop getClassById(@Param("malop") String malop);
-
+    @Query(value =  "exec searchClass :keyword" , nativeQuery = true)
+    public List<Lop> getAllClassByKeyword(@Param("keyword") String keyword);
     @Modifying
     @Query(value = "UPDATE Lop SET tenLop =:tenLop,namNhapHoc=:namNhapHoc WHERE maLop = :maLop", nativeQuery = true)
     public void updateInfo(@Param("maLop") String malop, @Param("tenLop") String tenLop,
