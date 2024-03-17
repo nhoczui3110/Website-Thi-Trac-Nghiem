@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.doantracnghiem.doantracnghiem.Entity.DayHoc;
 import com.doantracnghiem.doantracnghiem.Entity.GiangVien;
+import java.util.List;
 
 @Repository
 public interface DayHocRepository extends JpaRepository<DayHoc, Integer> {
@@ -20,4 +21,9 @@ public interface DayHocRepository extends JpaRepository<DayHoc, Integer> {
 
     @Query(value = "EXEC findIDDHByMaMhAndMaGv @MAMH = :mamh, @MAGV = :magv", nativeQuery = true)
     Integer findIDDHByMaMhAndMaGv(@Param("mamh") String mamh, @Param("magv") String magv);
+
+    long countByMamhAndTrangThaiXoa(String mamh, boolean trangThaiXoa);
+
+    long countByMagvAndTrangThaiXoa(String magv, boolean trangThaiXoa);
+
 }

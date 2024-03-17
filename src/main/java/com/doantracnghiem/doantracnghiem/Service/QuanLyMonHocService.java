@@ -6,12 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.doantracnghiem.doantracnghiem.Entity.MonHoc;
+import com.doantracnghiem.doantracnghiem.Repository.DangKyThiRepository;
+import com.doantracnghiem.doantracnghiem.Repository.DayHocRepository;
 import com.doantracnghiem.doantracnghiem.Repository.MonHocRepository;
 
 @Service
 public class QuanLyMonHocService {
     @Autowired
     MonHocRepository monHocRepository;
+
+    @Autowired
+    DayHocRepository dayHocRepository;
+
+    @Autowired
+    DangKyThiRepository dangKyThiRepository;
 
     public void deleteMonHoc(String mamh) {
         MonHoc monHoc = monHocRepository.findById(mamh).orElse(null);
@@ -53,5 +61,12 @@ public class QuanLyMonHocService {
         }
         monHoc.setTrangThaiXoa(false);
         monHocRepository.save(monHoc);
+    }
+
+    // Kiem tra xem mon hoc co dang duoc day hay da duoc thi hay chua
+    public boolean canDeleteMonHoc(String mamh) {
+        long count = dayHocRepository.countByMamhAndTrangThaiXoa(mamh, false)
+                + dangKyThiRepository.countByMamhAndTrangThaiXoa(mamh, false);
+        return count == 0;
     }
 }

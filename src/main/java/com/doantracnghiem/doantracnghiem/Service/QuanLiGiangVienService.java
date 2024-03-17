@@ -186,4 +186,17 @@ public class QuanLiGiangVienService {
 
         return ResponseEntity.status(HttpStatus.OK).body("Cập nhật dữ liệu không thành công");
     }
+
+    // Kiem tra xem giang co dang day hay da dang ky thi hay chua
+    public boolean canDeleteGiangVien(String magv) {
+        long count = dayHocRepository.countByMagvAndTrangThaiXoa(magv, false)
+                + dangKyThiRepository.countByMagvAndTrangThaiXoa(magv, false);
+        return count == 0;
+    }
+
+    public boolean canDeleteMonHocGiangVien(int iddh, String mamh, String magv) {
+        long count = cauHoiRepository.countByIddhAndTrangThaiXoa(iddh, false)
+                + dangKyThiRepository.countByMamhAndMagvAndTrangThaiXoa(mamh, magv, false);
+        return count == 0;
+    }
 }

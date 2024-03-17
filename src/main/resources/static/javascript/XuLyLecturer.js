@@ -60,6 +60,14 @@ function renderLuaChon(orderSelection, noiDungLuaChon, isEdit) {
     }
 }
 
+function checkCanDeleteCauHoi(idch) {
+    return new Promise((resolve) => {
+        fetch(`/lecturer/canEditOrDeleteCauHoi/${idch}`)
+            .then((response) => response.json())
+            .then((result) => resolve(result));
+    });
+}
+
 function renderQuestion(questions) {
     const contentBottom = document.querySelector(".content-bottom");
     contentBottom.style.minWidth = "1200px";
@@ -365,7 +373,16 @@ function renderQuestion(questions) {
                     });
                 });
         }
-        trashBtn.onclick = function () {
+        trashBtn.onclick = async function () {
+            const check = await checkCanDeleteCauHoi(maCauHoi);
+            if (!check) {
+                toast({
+                    type: "error",
+                    title: "Không thể xóa câu hỏi!",
+                    message: "Câu hỏi đã được cho thi không thể xóa",
+                });
+                return;
+            }
             popup(
                 {
                     type: "remove",
@@ -377,7 +394,16 @@ function renderQuestion(questions) {
                 maCauHoi
             );
         };
-        editBtn.onclick = function () {
+        editBtn.onclick = async function () {
+            const check = await checkCanDeleteCauHoi(maCauHoi);
+            if (!check) {
+                toast({
+                    type: "error",
+                    title: "Không thể sửa câu hỏi!",
+                    message: "Câu hỏi đã được cho thi không thể sửa",
+                });
+                return;
+            }
             getQuestionDetail(maCauHoi, renderQuestionEdit);
         };
     });

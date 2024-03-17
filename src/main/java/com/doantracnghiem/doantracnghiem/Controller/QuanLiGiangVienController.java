@@ -81,4 +81,16 @@ public class QuanLiGiangVienController {
     public ResponseEntity<String> updateLecturer(@RequestBody Map<String, Object> lecturerInfo) {
         return quanLiGiangVienService.updateGiangVien(lecturerInfo);
     }
+
+    @GetMapping("/canDeleteGiangVien/{magv}")
+    public boolean canEditOrDelete(@PathVariable("magv") String magv) {
+        return quanLiGiangVienService.canDeleteGiangVien(magv);
+    }
+
+    @GetMapping("/canDeleteMonHocGiangVien/{iddh}/{magv}/{mamh}")
+    public boolean canDeleteMonHocGiangVien(@PathVariable("iddh") int iddh, @PathVariable("mamh") String mamh,
+            @PathVariable("magv") String magv) {
+        return quanLiGiangVienService.canDeleteMonHocGiangVien(iddh, mamh, magv);
+    }
+
 }

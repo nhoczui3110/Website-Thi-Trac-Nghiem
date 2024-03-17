@@ -30,7 +30,7 @@ async function start() {
            
             // addNewStudent();
         },
-        lophoc:()=>{
+        lophoc: () => {
             getALLClass(renderAllClass);
             addNewClass();
         }

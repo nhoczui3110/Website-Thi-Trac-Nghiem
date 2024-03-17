@@ -32,6 +32,17 @@ function searchMonHoc(keyword) {
         });
 }
 
+function checkMonHoc(mamh) {
+    return new Promise((resolve) => {
+        fetch(`admin/canDeleteMonHoc/${mamh}`)
+            .then((response) => response.json())
+            .then((result) => {
+                console.log("check mon hoc", result);
+                resolve(result);
+            });
+    });
+}
+
 function renderAllMonHoc(listMonHoc) {
     const content = document.querySelector(
         ".content-wrapper[data-name='monhoc']"
@@ -65,7 +76,18 @@ function renderAllMonHoc(listMonHoc) {
                 const editBtn = document.createElement("i");
                 editBtn.classList.add("fa-solid", "fa-pen-to-square", "edit");
                 trashBtn.classList.add("fa-solid", "fa-trash", "trash");
-                trashBtn.addEventListener("click", () => {
+                trashBtn.onclick = async () => {
+                    // neu co the xoa tra ve true
+                    check = await checkMonHoc(monHoc["mamh"]);
+                    console.log("trash btn", check);
+                    if (!check) {
+                        toast({
+                            type: "error",
+                            title: "Không thể xóa môn học!",
+                            message: `Môn học đang được giảng dạy hoặc đã cho thi`,
+                        });
+                        return;
+                    }
                     popup(
                         {
                             type: "remove",
@@ -77,7 +99,7 @@ function renderAllMonHoc(listMonHoc) {
                             deleteMonHoc(monHoc["mamh"]);
                         }
                     );
-                });
+                };
                 editBtn.onclick = function () {
                     updateMonHocHandler(monHoc);
                 };
