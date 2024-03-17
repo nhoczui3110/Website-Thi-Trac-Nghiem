@@ -52,4 +52,8 @@ public class Lop implements Serializable {
         return (Date) nam_nhap_hoc.clone();
     }
 
+    public void setNamNhapHoc(Date nam_nhap_hoc) {
+        this.nam_nhap_hoc = nam_nhap_hoc;
+    }
+
 }
