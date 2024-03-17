@@ -9,7 +9,30 @@ function getALLClass(callback) {
             }
         });
 }
+function debounce(func, delay) {
+    let timeout;
+    return function executedFunc(...args) {
+        console.log(...args)
+        if (timeout) {
+            clearTimeout(timeout);//loại bỏ đối tượng timeout
+        }
+
+        timeout = setTimeout(() => {//sau một thời gian(delay) mà timeout vẫn tồn tại thì mới chạy
+            func(...args);
+            timeout = null;
+        }, delay);
+    };
+}
+function searchLopHoc(keyword){
+    fetch('/admin/class/search?keyword='+keyword)
+        .then((respone)=>respone.json())   
+        .then((listClass)=>{
+            console.log(listClass)
+            renderAllClass(listClass)}
+            )
+}
 function renderAllClass(listClass) {
+    console.log('a')
     const content = document.querySelector(
         ".content-wrapper[data-name='lophoc']"
     );
@@ -19,15 +42,13 @@ function renderAllClass(listClass) {
     contentBottom.style.height = "600px";
 
     // Xu ly table
-    // const searchLecturerEl = content.querySelector("#search-lecturer");
-    // if (searchLecturerEl) {
-    //     searchLecturerEl.oninput = () => {
-    //         const keyword =
-    //             searchLecturerEl.value === "" ? " " : searchLecturerEl.value;
-    //         const debounceSeachGiangVien = debounce(searchGiangVien, 300);
-    //         debounceSeachGiangVien(keyword);
-    //     };
-    // }
+    const debounceSeachLopHoc = debounce(searchLopHoc, 1500);
+    const searchSubject = content.querySelector("#search-subject");
+    if (searchSubject) {
+        searchSubject.oninput = () => {
+            debounceSeachLopHoc(searchSubject.value);
+        };
+    }
     const tbody = contentBottom.querySelector("tbody");
     tbody.innerHTML = "";
     const ths = contentBottom.querySelectorAll("th");
@@ -51,8 +72,8 @@ function renderAllClass(listClass) {
                     popup(
                         {
                             type: "remove",
-                            title: `Xóa giảng viên có mã magv`,
-                            desc: "Hành động này sẽ xóa giảng viên của bạn!",
+                            title: `Xác nhân xóa lớp`,
+                            desc: "Hành động này sẽ xóa lớp của bạn!",
                         },
                         false,
                         () => {
@@ -158,13 +179,38 @@ function addNewClass() {
     const inputTenLop = modalContainer.querySelector("input#classname");
     const inputNamNhapHoc = modalContainer.querySelector("input#year-admission");
     const btnSubmit = modalContainer.querySelector(".registerSubmitBtn")
-    btnSubmit.onclick = function () {
+
+    const errorMessage = modalContainer.querySelectorAll('.form-message')
+    console.log(errorMessage)
+    btnSubmit.onclick = function (event) {
+        event.preventDefault()
         dataInfo = {
             maLop:inputMaLop.value,
             tenLop:inputTenLop.value,
             namNhapHoc:inputNamNhapHoc.value
         }
-        fetch(`/admin/class`, {
+        let check = false, index =0
+        for(let key in dataInfo){
+            errorMessage[index].style.color = 'red'
+            if(dataInfo[key] === '') {
+                errorMessage[index].innerHTML='Vui lòng nhập trường này';
+                check = true
+            }
+            else{
+                errorMessage[index].innerHTML='';
+            }
+            index +=1
+        }
+        if(!isNaN(dataInfo['maLop'][0])){
+            errorMessage[0].innerHTML = 'Mã lớp phải bắt đầu bằng ký tự';
+            check = true;
+        }
+        if(!isNaN(dataInfo['tenLop'][0])){
+            errorMessage[1].innerHTML = 'Tên lớp phải bắt đầu bằng ký tự';
+            check = true;
+        }
+        if(check ===true )return
+        fetch('/admin/class', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -179,6 +225,7 @@ function addNewClass() {
                         title: "Thành công!",
                         message: message,
                     });
+                    closeModal(modalContainer)
                 }
                 if(message === "Mã lớp học đã tồn tại"){
                     toast({
@@ -193,6 +240,5 @@ function addNewClass() {
                 console.error("Error during fetch:", error);
             })
 
-        closeModal(modalContainer)
     }
 }
