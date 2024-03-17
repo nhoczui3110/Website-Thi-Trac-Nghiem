@@ -74,6 +74,26 @@
                         </svg>
                         <span class="text">abc</span>
                     </li>
+                    <li class="item" data-name="lophoc">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="28"
+                            viewBox="0 0 24 28"
+                            fill="none"
+                            class="icon"
+                        >
+                            <path
+                                d="M12 21.4073C11.59 21.4073 11.25 21.0363 11.25 20.5889V17.3156C11.25 16.8682 11.59 16.4973 12 16.4973C12.41 16.4973 12.75 16.8682 12.75 17.3156V20.5889C12.75 21.0363 12.41 21.4073 12 21.4073Z"
+                                fill="currentColor"
+                            />
+                            <path
+                                d="M17.6 25.5644H6.39996C4.57996 25.5644 2.91996 24.0368 2.61996 22.0837L1.28996 13.3876C1.06996 12.0346 1.67996 10.2997 2.66996 9.43775L9.59996 3.38209C10.94 2.20369 13.05 2.2146 14.4 3.393L21.33 9.43775C22.31 10.2997 22.91 12.0346 22.71 13.3876L21.38 22.0728C21.08 24.0041 19.38 25.5644 17.6 25.5644ZM11.99 4.14586C11.46 4.14586 10.93 4.32044 10.54 4.65869L3.60996 10.7253C3.04996 11.2163 2.64996 12.351 2.76996 13.1257L4.09996 21.811C4.27996 22.9566 5.32996 23.9277 6.39996 23.9277H17.6C18.67 23.9277 19.72 22.9566 19.9 21.8L21.23 13.1148C21.34 12.351 20.94 11.1944 20.39 10.7144L13.46 4.6696C13.06 4.32044 12.52 4.14586 11.99 4.14586Z"
+                                fill="currentColor"
+                            />
+                        </svg>
+                        <span class="text">Quảng lý lớp học</span>
+                    </li>
                     <li class="item" data-name="student">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -325,16 +345,13 @@
             });
         </script>
         <div class="content">
-            <div
-                class="content-wrapper"
-                data-name="student"
-                style="display: block"
+            <div class="content-wrapper"data-name="student"
             >
                 <div class="content-top">
                     <span class="text">Students</span>
                     <div class="sort-wrapper">
-                        <label for="sort-student">Sort</label>
-                        <select id="sort-student">
+                        <label for="cmb-class">CHỌN LỚP: </label>
+                        <select id="cmb-class">
                             <option value="">All</option>
                             <option value="">Toay</option>
                             <option value="">This Week</option>
@@ -359,7 +376,7 @@
                             />
                         </div>
                     </div>
-                    <!-- <table class="table">
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th data-name="masv">Mã sinh viên</th>
@@ -374,362 +391,7 @@
                             </tr>
                         </thead>
                         <tbody></tbody>
-                    </table> -->
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th data-name="maGv">Mã giảng viên</th>
-                                <th data-name="ho">Họ</th>
-                                <th data-name="ten">Tên</th>
-                                <th data-name="gioiTinh">Giới tính</th>
-                                <th data-name="hocVi">Học vị</th>
-                                <th data-name="hocHam">Học hàm</th>
-                                <th data-name="action">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>333</td>
-                                <td>anh</td>
-                                <td>iu em</td>
-                                <td>Nữ</td>
-                                <td>Thạc sĩ</td>
-                                <td>Giáo sư</td>
-                                <td>
-                                    <i
-                                        class="fa-solid fa-file-circle-question add-exam-btn"
-                                    ></i
-                                    ><i
-                                        class="fa-solid fa-pen-to-square edit"
-                                    ></i
-                                    ><i class="fa-solid fa-trash trash"></i>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>ádá</td>
-                                <td>Võ</td>
-                                <td>Nhi</td>
-                                <td>Nữ</td>
-                                <td>TIẾN SĨ</td>
-                                <td>KHÔNG</td>
-                                <td>
-                                    <i
-                                        class="fa-solid fa-file-circle-question add-exam-btn"
-                                    ></i
-                                    ><i
-                                        class="fa-solid fa-pen-to-square edit"
-                                    ></i
-                                    ><i class="fa-solid fa-trash trash"></i>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>ÁDSA</td>
-                                <td>á</td>
-                                <td>FREW</td>
-                                <td>Nam</td>
-                                <td>Thạc sĩ</td>
-                                <td>Giáo sư</td>
-                                <td>
-                                    <i
-                                        class="fa-solid fa-file-circle-question add-exam-btn"
-                                    ></i
-                                    ><i
-                                        class="fa-solid fa-pen-to-square edit"
-                                    ></i
-                                    ><i class="fa-solid fa-trash trash"></i>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>asda</td>
-                                <td>sad</td>
-                                <td>sadas</td>
-                                <td>Nam</td>
-                                <td>Thạc sĩ</td>
-                                <td>Giáo sư</td>
-                                <td>
-                                    <i
-                                        class="fa-solid fa-file-circle-question add-exam-btn"
-                                    ></i
-                                    ><i
-                                        class="fa-solid fa-pen-to-square edit"
-                                    ></i
-                                    ><i class="fa-solid fa-trash trash"></i>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>GV02</td>
-                                <td>TRAN</td>
-                                <td>GIA HAN</td>
-                                <td>Nữ</td>
-                                <td>THẠC SĨ</td>
-                                <td>KHÔNG</td>
-                                <td>
-                                    <i
-                                        class="fa-solid fa-file-circle-question add-exam-btn"
-                                    ></i
-                                    ><i
-                                        class="fa-solid fa-pen-to-square edit"
-                                    ></i
-                                    ><i class="fa-solid fa-trash trash"></i>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>GV03</td>
-                                <td>TRAN</td>
-                                <td>PHUONG NHA</td>
-                                <td>Nữ</td>
-                                <td>THẠC SĨ</td>
-                                <td>KHÔNG</td>
-                                <td>
-                                    <i
-                                        class="fa-solid fa-file-circle-question add-exam-btn"
-                                    ></i
-                                    ><i
-                                        class="fa-solid fa-pen-to-square edit"
-                                    ></i
-                                    ><i class="fa-solid fa-trash trash"></i>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>GV04</td>
-                                <td>HA</td>
-                                <td>LIÊN</td>
-                                <td>Nữ</td>
-                                <td>THẠC SĨ</td>
-                                <td>KHÔNG</td>
-                                <td>
-                                    <i
-                                        class="fa-solid fa-file-circle-question add-exam-btn"
-                                    ></i
-                                    ><i
-                                        class="fa-solid fa-pen-to-square edit"
-                                    ></i
-                                    ><i class="fa-solid fa-trash trash"></i>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>GV05</td>
-                                <td>TRẦN</td>
-                                <td>PHƯƠNG NAM</td>
-                                <td>Nữ</td>
-                                <td>THẠC SĨ</td>
-                                <td>KHÔNG</td>
-                                <td>
-                                    <i
-                                        class="fa-solid fa-file-circle-question add-exam-btn"
-                                    ></i
-                                    ><i
-                                        class="fa-solid fa-pen-to-square edit"
-                                    ></i
-                                    ><i class="fa-solid fa-trash trash"></i>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>GV06</td>
-                                <td>LÊ</td>
-                                <td>NGỌC HẢI</td>
-                                <td>Nam</td>
-                                <td>THẠC SĨ</td>
-                                <td>KHÔNG</td>
-                                <td>
-                                    <i
-                                        class="fa-solid fa-file-circle-question add-exam-btn"
-                                    ></i
-                                    ><i
-                                        class="fa-solid fa-pen-to-square edit"
-                                    ></i
-                                    ><i class="fa-solid fa-trash trash"></i>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>GV07</td>
-                                <td>NGUYÊN</td>
-                                <td>TRÃI</td>
-                                <td>Nam</td>
-                                <td>THẠC SĨ</td>
-                                <td>KHÔNG</td>
-                                <td>
-                                    <i
-                                        class="fa-solid fa-file-circle-question add-exam-btn"
-                                    ></i
-                                    ><i
-                                        class="fa-solid fa-pen-to-square edit"
-                                    ></i
-                                    ><i class="fa-solid fa-trash trash"></i>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>GV08</td>
-                                <td>TRẦN</td>
-                                <td>ĐẠI NGHĨA</td>
-                                <td>Nam</td>
-                                <td>THẠC SĨ</td>
-                                <td>KHÔNG</td>
-                                <td>
-                                    <i
-                                        class="fa-solid fa-file-circle-question add-exam-btn"
-                                    ></i
-                                    ><i
-                                        class="fa-solid fa-pen-to-square edit"
-                                    ></i
-                                    ><i class="fa-solid fa-trash trash"></i>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>GV09</td>
-                                <td>TRẦN</td>
-                                <td>HẠNH PHÚC</td>
-                                <td>Nam</td>
-                                <td>THẠC SĨ</td>
-                                <td>GIÁO SƯ</td>
-                                <td>
-                                    <i
-                                        class="fa-solid fa-file-circle-question add-exam-btn"
-                                    ></i
-                                    ><i
-                                        class="fa-solid fa-pen-to-square edit"
-                                    ></i
-                                    ><i class="fa-solid fa-trash trash"></i>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>gv10</td>
-                                <td>tran</td>
-                                <td>viet hai</td>
-                                <td>Nam</td>
-                                <td>thạc sĩ</td>
-                                <td>không</td>
-                                <td>
-                                    <i
-                                        class="fa-solid fa-file-circle-question add-exam-btn"
-                                    ></i
-                                    ><i
-                                        class="fa-solid fa-pen-to-square edit"
-                                    ></i
-                                    ><i class="fa-solid fa-trash trash"></i>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>GV11</td>
-                                <td>TRAN</td>
-                                <td>THE DUC</td>
-                                <td>Nam</td>
-                                <td>Thạc sĩ</td>
-                                <td>Giáo sư</td>
-                                <td>
-                                    <i
-                                        class="fa-solid fa-file-circle-question add-exam-btn"
-                                    ></i
-                                    ><i
-                                        class="fa-solid fa-pen-to-square edit"
-                                    ></i
-                                    ><i class="fa-solid fa-trash trash"></i>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>gv12</td>
-                                <td>ANH</td>
-                                <td>DI BO</td>
-                                <td>Nam</td>
-                                <td>THẠC SĨ</td>
-                                <td>KHÔNG</td>
-                                <td>
-                                    <i
-                                        class="fa-solid fa-file-circle-question add-exam-btn"
-                                    ></i
-                                    ><i
-                                        class="fa-solid fa-pen-to-square edit"
-                                    ></i
-                                    ><i class="fa-solid fa-trash trash"></i>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>gv13</td>
-                                <td>ANH</td>
-                                <td>DI BO</td>
-                                <td>Nam</td>
-                                <td>THẠC SĨ</td>
-                                <td>KHÔNG</td>
-                                <td>
-                                    <i
-                                        class="fa-solid fa-file-circle-question add-exam-btn"
-                                    ></i
-                                    ><i
-                                        class="fa-solid fa-pen-to-square edit"
-                                    ></i
-                                    ><i class="fa-solid fa-trash trash"></i>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>test1</td>
-                                <td>tran</td>
-                                <td>quang</td>
-                                <td>Nữ</td>
-                                <td>Thạc sĩ</td>
-                                <td>Không</td>
-                                <td>
-                                    <i
-                                        class="fa-solid fa-file-circle-question add-exam-btn"
-                                    ></i
-                                    ><i
-                                        class="fa-solid fa-pen-to-square edit"
-                                    ></i
-                                    ><i class="fa-solid fa-trash trash"></i>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>test2</td>
-                                <td>a</td>
-                                <td>a</td>
-                                <td>Nữ</td>
-                                <td>Thạc sĩ</td>
-                                <td>Không</td>
-                                <td>
-                                    <i
-                                        class="fa-solid fa-file-circle-question add-exam-btn"
-                                    ></i
-                                    ><i
-                                        class="fa-solid fa-pen-to-square edit"
-                                    ></i
-                                    ><i class="fa-solid fa-trash trash"></i>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>test3</td>
-                                <td>Qunag</td>
-                                <td>Tran</td>
-                                <td>Nam</td>
-                                <td>Thạc sĩ</td>
-                                <td>Giáo sư</td>
-                                <td>
-                                    <i
-                                        class="fa-solid fa-file-circle-question add-exam-btn"
-                                    ></i
-                                    ><i
-                                        class="fa-solid fa-pen-to-square edit"
-                                    ></i
-                                    ><i class="fa-solid fa-trash trash"></i>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>thientan</td>
-                                <td>Trần</td>
-                                <td>Thiện Tấn</td>
-                                <td>Nam</td>
-                                <td>THẠC SĨ</td>
-                                <td>GIÁO SƯ</td>
-                                <td>
-                                    <i
-                                        class="fa-solid fa-file-circle-question add-exam-btn"
-                                    ></i
-                                    ><i
-                                        class="fa-solid fa-pen-to-square edit"
-                                    ></i
-                                    ><i class="fa-solid fa-trash trash"></i>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    </table> 
                     <div class="table-controller">
                         <span class="text">Previous</span>
                         <div class="page-number">
@@ -740,7 +402,7 @@
                         <span class="text"> Next</span>
                     </div>
                 </div>
-                <a href="#!" class="btn-trans btn-register">
+                <a href="#!" class="btn-trans btn-register" id = 'addStudent'>
                     <div class="circle">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -783,7 +445,7 @@
                             <input
                                 type="text"
                                 name=""
-                                id="search-student"
+                                id="search-subject"
                                 placeholder="Search..."
                             />
                         </div>
@@ -1041,6 +703,7 @@
                                 id="lastname-student"
                                 autocomplete="nope"
                                 rules="required"
+                                maxlength="30"
                             />
                             <div class="bar"></div>
                         </div>
@@ -1054,6 +717,7 @@
                                 id="firstname-student"
                                 autocomplete="nope"
                                 rules="required"
+                                maxlength="10"
                             />
                             <div class="bar"></div>
                         </div>
@@ -1068,6 +732,7 @@
                             id="username-student"
                             autocomplete="nope"
                             rules="required"
+                            maxlength="50"
                         />
                         <div class="bar"></div>
                     </div>
@@ -1075,11 +740,12 @@
                     <div class="input-wrapper">
                         <label for="password-student">Password</label>
                         <input
-                            type="text"
+                            type="password"
                             placeholder=""
                             name="password"
                             id="password-student"
                             rules="required|min:6"
+                            maxlength="50"
                         />
                         <div class="bar"></div>
                     </div>
@@ -1089,11 +755,12 @@
                             >Confirm Password</label
                         >
                         <input
-                            type="text"
+                            type="password"
                             placeholder=""
                             name="confirm-password"
                             id="confirm-password-student"
                             rules="required|confirmPassword"
+                            maxlength="50"
                         />
                         <div class="bar"></div>
                     </div>
@@ -1110,6 +777,7 @@
                         <input type="radio" name="gender" id="female-student" value="true"/>
                         <label for="female">Nữ</label>
                     </div>
+                    <span class="form-message"></span>
                     <div class="input-wrapper">
                         <label for="address">Địa chỉ</label>
                         <input
@@ -1118,6 +786,7 @@
                             name="address"
                             id="address"
                             rules="required"
+                            maxlength="100"
                         />
                         <div class="bar"></div>
                     </div>
@@ -1130,6 +799,7 @@
                             name="address"
                             id="masv"
                             rules="required"
+                            maxlength="15"
                         />
                         <div class="bar"></div>
                     </div>
@@ -1180,6 +850,7 @@
                                 name="lastname"
                                 id="m-lastname-student"
                                 autocomplete="nope"
+                                maxlength="30"
                             />
                             <div class="bar"></div>
                         </div>
@@ -1192,6 +863,7 @@
                                 name="firstname"
                                 id="m-firstname-student"
                                 autocomplete="nope"
+                                maxlength="10"
                             />
                             <div class="bar"></div>
                         </div>
@@ -1218,6 +890,7 @@
                             name="m-address"
                             id="m-address"
                             rules="required"
+                            maxlength="100"
                         />
                         <div class="bar"></div>
                     </div>
@@ -1278,6 +951,7 @@
                                 id="classId"
                                 autocomplete="nope"
                                 rules="required"
+                                maxlength="15"
                             />
                             <div class="bar"></div>
                         </div>
@@ -1291,12 +965,13 @@
                                 id="classname"
                                 autocomplete="nope"
                                 rules="required"
+                                maxlength="50"
                             />
                             <div class="bar"></div>
                         </div>
                         <span class="form-message"></span>
                     </div>
-                    <span class="form-message"></span>
+                    <!-- <span class="form-message"></span> -->
                     <div class="input-wrapper">
                         <label for="year-admission">Năm nhập học</label>
                         <input
@@ -1346,6 +1021,7 @@
                                 id="classname"
                                 autocomplete="nope"
                                 rules="required"
+                                maxlength="50"
                             />
                             <div class="bar"></div>
                         </div>
