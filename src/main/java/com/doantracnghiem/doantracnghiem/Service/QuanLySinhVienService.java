@@ -20,11 +20,19 @@ public class QuanLySinhVienService {
     private SinhVienRepository sinhVienRepository;
     @Autowired 
     private ThiRepository thiRepository;
+    @Autowired
+    private DangKyService dangKyService;
     public List<SinhVien> getAllStudent(){
         return sinhVienRepository.getAllStudent();
     }
     public SinhVien getStudent(String masv){
         return sinhVienRepository.findSinhVienByMasv(masv);
+    }
+    public List<SinhVien> getStudentByClass(String malop){
+        return sinhVienRepository.getStudentByClass(malop);
+    }
+    public List<SinhVien> searchStudetnsByKeyword(String keyword,String maLop){
+        return sinhVienRepository.searchStudetnsByKeyword(keyword,maLop);
     }
     public void updateInfo(Map<String,Object> studentInfo){
         sinhVienRepository.updateInfo((String)studentInfo.get("masv"),
@@ -51,7 +59,7 @@ public class QuanLySinhVienService {
         if (sinhVienRepository.findSinhVienByMasv(sv.getMasv()) != null){
             return ResponseEntity.ok().body("Mã sinh viên đã tồn tại trong cơ sở dữ liệu");
         }
-        if(sinhVienRepository.findSinhVienByUserName(sv.getUserName())!=null){
+        if(dangKyService.checkExistUserName(sv.getUserName())==true){
             return ResponseEntity.ok().body("User name đã tồn tại trong cơ sở dữ liệu");
         }
         sinhVienRepository.save(sv);
