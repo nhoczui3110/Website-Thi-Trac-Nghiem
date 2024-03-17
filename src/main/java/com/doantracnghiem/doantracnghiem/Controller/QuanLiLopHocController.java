@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.doantracnghiem.doantracnghiem.Entity.Lop;
@@ -29,6 +30,10 @@ public class QuanLiLopHocController {
     @GetMapping("/class/{malop}")
     public Lop getClassById(@PathVariable("malop") String malop){
         return quanLyLopHocService.getClassById(malop);
+    }
+    @GetMapping("/class/search")
+    public List<Lop> searchLopHoc(@RequestParam(value = "keyword",defaultValue = "",required = false) String keyword){
+        return quanLyLopHocService.getAllClassByKeyword(keyword);
     }
     @PatchMapping("/class")
     public ResponseEntity<String> updateInfo(@RequestBody Map<String,Object> lop){
