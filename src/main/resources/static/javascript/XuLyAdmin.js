@@ -23,19 +23,17 @@ async function start() {
         monhoc: () => {
             getQuanLiMonHoc(renderAllMonHoc);
             // addMonHocHandler();
-        },
-<<<<<<< HEAD
-=======
+        },        
         student: ()=>{
-            getALLStudent(renderAllStudent);
+            Student.run()
+            // renderClassOption('cmb-class')
            
-            addNewStudent();
+            // addNewStudent();
         },
         lophoc:()=>{
             getALLClass(renderAllClass);
             addNewClass();
         }
->>>>>>> quang
     });
 }
 
