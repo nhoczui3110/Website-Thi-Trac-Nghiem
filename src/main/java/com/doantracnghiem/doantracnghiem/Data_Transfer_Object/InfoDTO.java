@@ -8,7 +8,7 @@ public class InfoDTO {
     private Integer lanThi;
     private Integer soCau;
     private Integer thoiLuong;
-    public InfoDTO(Integer lanThi, Integer soCau, Integer thoiLuong, String tenMH, Date ngayThi, float diem) {
+    public InfoDTO(Integer lanThi, Integer soCau, Integer thoiLuong, String tenMH, Date ngayThi, Float diem) {
         this.lanThi = lanThi;
         this.soCau = soCau;
         this.thoiLuong = thoiLuong;
@@ -17,7 +17,7 @@ public class InfoDTO {
         this.diem = diem;
     }
     private Boolean trangThai;
-    public InfoDTO(Integer iDTHI, Integer lanThi, String tenMH, float diem) {
+    public InfoDTO(String tenMH, Integer lanThi,  Float diem,Integer iDTHI) {
         IDTHI = iDTHI;
         this.lanThi = lanThi;
         this.tenMH = tenMH;
@@ -25,7 +25,7 @@ public class InfoDTO {
     }
     private String tenMH;
     private Date ngayThi;
-    private float diem;
+    private Float diem;
     public InfoDTO() {
     }
     public Integer getIDTHI() {
@@ -43,14 +43,14 @@ public class InfoDTO {
     public Integer getLanThi() {
         return lanThi;
     }
-    public InfoDTO(Integer IDTHI, String maMH, Integer lanThi, Integer soCau, Integer thoiLuong, Boolean trangThai,
-            String tenMH, Date ngayThi) {
+    public InfoDTO(Integer IDTHI, String maMH, Integer lanThi, Integer soCau, Integer thoiLuong,
+            String tenMH, Date ngayThi, String trangThai) {
         this.IDTHI = IDTHI;
         this.maMH = maMH;
         this.lanThi = lanThi;
         this.soCau = soCau;
         this.thoiLuong = thoiLuong;
-        this.trangThai = trangThai;
+        this.trangThai = Boolean.valueOf(trangThai);
         this.tenMH = tenMH;
         this.ngayThi = ngayThi;
     }
@@ -95,10 +95,10 @@ public class InfoDTO {
     public void setNgayThi(Date ngayThi) {
         this.ngayThi = ngayThi;
     }
-    public float getDiem() {
+    public Float getDiem() {
         return diem;
     }
-    public void setDiem(float diem) {
+    public void setDiem(Float diem) {
         this.diem = diem;
     }
     
