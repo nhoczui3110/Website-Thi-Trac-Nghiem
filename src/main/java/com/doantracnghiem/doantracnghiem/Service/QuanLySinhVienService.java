@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -34,14 +35,38 @@ public class QuanLySinhVienService {
     public List<SinhVien> searchStudetnsByKeyword(String keyword,String maLop){
         return sinhVienRepository.searchStudetnsByKeyword(keyword,maLop);
     }
-    public void updateInfo(Map<String,Object> studentInfo){
-        sinhVienRepository.updateInfo((String)studentInfo.get("masv"),
-                                      (String)studentInfo.get("ho"),
-                                      (String)studentInfo.get("ten"), 
-                                      Boolean.parseBoolean((String)studentInfo.get("gioiTinh")),
-                                      (String)studentInfo.get("diaChi"),
-                                      Date.valueOf(String.valueOf(studentInfo.get("ngaySinh"))),
-                                      (String)studentInfo.get("passWord"));
+    public ResponseEntity<String> updatePassword(Map<String,Object> passInfo){
+        String password =sinhVienRepository.getOldPassword(String.valueOf(passInfo.get("masv")));
+        if(!password.equals(String.valueOf(passInfo.get("password"))))
+        return ResponseEntity.ok().body("Sai mật khẩu");
+        sinhVienRepository.updatePassword((String) passInfo.get("masv"),
+                                            (String) passInfo.get("newPassword"));
+         return ResponseEntity.ok().body("Thành công");
+    }
+    public ResponseEntity<String> updateInfo(Map<String,Object> studentInfo){
+        String masv = (String)studentInfo.get("masv");
+        String ho = (String)studentInfo.get("ho");
+        String ten =  (String)studentInfo.get("ten");
+        Boolean gioiTinh =  Boolean.parseBoolean((String)studentInfo.get("gioiTinh"));
+        String diachi =  (String)studentInfo.get("diaChi");
+        Date ngaySinh =  Date.valueOf(String.valueOf(studentInfo.get("ngaySinh")));
+        if(masv.trim().equals(""))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Mã sinh viên trống");
+        if(ho.trim().equals(""))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Họ của sinh viên trống");    
+        if(ten.trim().equals(""))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Tên của sinh viên trống"); 
+        if(diachi.trim().equals(""))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Địa chỉ của sinh viên trống"); 
+        if(getStudent(masv) == null)
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Mã sinh viên không tồn tại");
+        try{
+            sinhVienRepository.updateInfo(masv,ho,ten,gioiTinh,diachi,ngaySinh);
+            return ResponseEntity.ok().body("Cập nhật thành công");
+        }catch(Exception ex){
+            
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cập nhật thất bại");
+        }
     }
     public void modifyInfo(Map<String,Object> studentInfo){
         System.out.println("hello");

@@ -109,12 +109,17 @@ a:hover {
     background-color: #4A3AFF;
     color: white;
     margin-left: 3%;
+    height: 40px;
+    border-radius: 5px;
 }
 
 .exam-view .navigation .next {
     margin-left: 75%;
     background-color: #4A3AFF;
     color: white;
+    height: 40px;
+    border-radius: 5px;
+    width: 80px;
 }
 /* ==================info========================= */
 .info-view .time-left{
@@ -156,4 +161,7 @@ a:hover {
     background-color: #4A3AFF;
     padding: 10px 20px;
     border-radius: 10px;
+}
+.info-view .submit:hover{
+    cursor: pointer;
 }

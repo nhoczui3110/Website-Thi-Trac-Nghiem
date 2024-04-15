@@ -56,7 +56,7 @@
         </div>
         <div class="info-view">
             <div class="time-left" id = "time">
-                <p th:text = "${thongTinKq.getThoiLuong()}">Thời gian: 60:00 phút</p>
+                <p th:text = "'Thời gian: ' + ${thongTinKq.getThoiLuong()}">Thời gian: 60:00 phút</p>
             </div>
             <div class="candidate-info">
                 <div>THÔNG TIN</div>
@@ -69,7 +69,7 @@
                 <div>ĐIỂM</div>
                 <div th:text = "${thongTinKq.getDiem()}"></div>
             </div>
-            <button class="submit" id = "submitbtn" onclick="exit()"><a>QUAY LẠI</a></button>
+            <button class="submit" id = "submitbtn" onclick="exit()">QUAY LẠI</button>
         </div>
     </div>
     <script src="./../../static/javascript/student/thi.js" th:src="@{/javascript/student/thi.js}"></script>

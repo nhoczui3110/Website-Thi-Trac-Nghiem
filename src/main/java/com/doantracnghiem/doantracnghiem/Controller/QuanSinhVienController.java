@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.doantracnghiem.doantracnghiem.Entity.SinhVien;
 import com.doantracnghiem.doantracnghiem.Service.QuanLySinhVienService;
 
+import jakarta.servlet.http.HttpSession;
+
 
 @RestController
 @RequestMapping("/admin")
@@ -43,17 +45,15 @@ public class QuanSinhVienController {
     public ResponseEntity<String> deleteStudent(@PathVariable(name = "masv") String masv){
         return quanLySinhVienService.deleteStudent(masv);
     }
+    @PatchMapping("/studentpassword")
+    public ResponseEntity<String> updatePassword(@RequestBody Map<String,Object> passInfo){
+        return quanLySinhVienService.updatePassword(passInfo);
+    }
     //sinh viên cập nhật thông tin
     @PatchMapping("/student")
-    public int updateInfo(@RequestBody Map<String,Object> studentInfo){
-        try{
-            quanLySinhVienService.updateInfo(studentInfo);
-            return 1;
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            return 0;
-        }
+    public ResponseEntity<String> updateInfo(@RequestBody Map<String,Object> studentInfo,HttpSession session){
+        System.out.println((String)session.getAttribute("masv"));
+        return quanLySinhVienService.updateInfo(studentInfo);
     }
     // nhan vien sửa thông tin
     @PatchMapping("/mstudent/{masv}")
